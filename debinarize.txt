@@ -1,0 +1,18 @@
+void debinarize(&tree<string> tr){
+  tree<string>::iterator it = tr.begin();
+  while(it != tr.end()){
+  //if '@' is present in the name, then 
+    if (it.find('@')!=string::npos) {
+	//move left child before the non-term with @
+	it++;
+	tr.move_before(parent(it), it);
+	//next node is right child
+	it++
+	//place the remaining right subtree on top of the non-term with @
+	tr.move_ontop(parent(it), it);
+    }
+    else {
+	  //look at next node
+	  it++;
+    }
+}
