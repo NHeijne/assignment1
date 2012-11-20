@@ -14,6 +14,10 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <fstream>
+#include <stdexcept>
+#include <cassert>
+#include <cstdlib>
 
 using namespace std;
 
@@ -22,10 +26,10 @@ class Grammar {
   public:
     /* attributes and other stuff */
     typedef pair <string, double> stringAndDouble;
-    typedef pair <string, stringAndDouble> l2rEntry;
+    typedef pair <string, stringAndDouble> tableKeyAndValue;
 
     /* constructors */
-    Grammar();
+    Grammar(string treeBankFile);
     Grammar(const Grammar& orig);
     virtual ~Grammar();
     
@@ -33,6 +37,9 @@ class Grammar {
     vector<stringAndDouble> getRHS(string LHS);
     vector<stringAndDouble> getLHS(string RHS);
     
+    void fillR2lTable() ;
+    void readGrammar();
+
 private:
     /* attributes and other stuff */
     multimap<string, stringAndDouble> l2rTable;
@@ -41,9 +48,9 @@ private:
     pair<multimap<string, stringAndDouble>::iterator, multimap<string, stringAndDouble>::iterator> ruleRangeIterator;
     multimap<string, stringAndDouble>::iterator ruleIterator;
 
-    /* methods */
+    string treeBankFileName;
 
-    void fillR2lTable() ;
+    /* methods */
 
 };
 

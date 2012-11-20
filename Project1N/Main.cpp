@@ -11,39 +11,56 @@
 
 using namespace std;
 
+/* header */
 class Main {
-
   public:
     void readTreeBank();
     void parse();
+    void testStuff1();
+
+  private:
+    Grammar * myGrammar;
+
 };
+
+/* implementation */
+void Main::testStuff1() {
+  myGrammar = new Grammar("treebank.dat");
+
+  vector<Grammar::stringAndDouble> RHSs = myGrammar->getRHS("NP");
+  for (int i = 0; i < RHSs.size(); i++) {
+    cout << RHSs[i].first << " " << RHSs[i].second << endl;
+  }  cout << endl;
+
+  myGrammar->fillR2lTable();
+
+  vector<Grammar::stringAndDouble> LHSs = myGrammar->getLHS("VP NNP");
+  for (int i = 0; i < LHSs.size(); i++) {
+    cout << LHSs[i].first << " " << LHSs[i].second << endl;
+  }  cout << endl;
+}
 
 void Main::readTreeBank() {
 
-   Grammar * myGrammar = new Grammar();
-   vector<Grammar::stringAndDouble> LHSs = myGrammar->getRHS("NP");
-   
-   for(int i=0; i < LHSs.size(); i++) {
-     cout << LHSs[i].first << " " << LHSs[i].second << endl;
-   }
-
+  //  myGrammar = new Grammar();
   // corpusReader * reader = new CorpusReader(grammar);
   // reader->makeGrammar();
 
 }
 
 void Main::parse() {
-    // PCYKParser * parser = new PCYKParser(grammar);
+  // PCYKParser * parser = new PCYKParser(grammar);
   // parser->produceDerivations("Dit is een zin");
   // parser->printDerivations();
 }
 
-int main (int argc, const char * argv[]) {
+int main(int argc, const char * argv[]) {
 
   Main * main = new Main();
 
-  main->readTreeBank();
-  main->parse();
+ // main->readTreeBank();
+ // main->parse();
+  main->testStuff1();
   return 0;
 
 }

@@ -11,11 +11,15 @@
 /**
  * Constructor
  */
-Grammar::Grammar() {
+Grammar::Grammar(string treeBankFile) {
 
-  l2rTable.insert( l2rEntry("NP",stringAndDouble("VP NNP",0.9)));
-  l2rTable.insert( l2rEntry("NP",stringAndDouble("NNP NP",0.1)));
-  l2rTable.insert( l2rEntry("VP",stringAndDouble("V PP",0.3)));
+  treeBankFileName = treeBankFile;
+
+  l2rTable.insert( tableKeyAndValue("NP",stringAndDouble("VP NNP",0.9)));
+  l2rTable.insert( tableKeyAndValue("NP",stringAndDouble("NNP NP",0.1)));
+  l2rTable.insert( tableKeyAndValue("VP",stringAndDouble("V PP",0.3)));
+
+  readGrammar();
 }
 
 /**
@@ -58,5 +62,30 @@ vector<Grammar::stringAndDouble> Grammar::getLHS(string RHS) {
 }
 
 void Grammar::fillR2lTable() {
+  for ( ruleIterator=l2rTable.begin() ; ruleIterator != l2rTable.end(); ruleIterator++ ) {
+    r2lTable.insert( tableKeyAndValue((*ruleIterator).second.first, stringAndDouble((*ruleIterator).first,(*ruleIterator).second.second)));
+  }
+}
+
+void Grammar::readGrammar() {
+   try {
+    ifstream myfile (treeBankFileName.c_str());
+    string line;
+ 
+    if (myfile.is_open()){
+      while (myfile.good()){
+        getline (myfile,line);
+        //cout << line << endl << endl;
+      }
+      myfile.close();
+    }
+    else {
+      throw ("Unable to open treebank file") ;
+    }
+  }
+  catch(const char * e) {   
+   cerr << "Exception caught: " << e << endl;
+   exit(1);
+  }
   
 }
