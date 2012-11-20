@@ -1,0 +1,51 @@
+function CYK(words,grammar) returns The most probable parse
+                             and its probability
+ 
+     create and clear prob[num_words, num_words, num_nonterminals]
+ 
+     # base case
+     for i <-- 1 to num_words
+         for A <-- 1 to num_nonterminals
+             if (A --> wi) is in grammar then
+                 prob [i, i, A] = P(A --> wi)
+		//handle unaries
+		boolean added = true
+		while added
+			added = false
+			for A, B in nonterms
+				if prob[i][i+1][B] > 0 && A->B in grammar
+					tempProb = P(A->B)*prob[i][i+1][B]
+					if(tempProb > prob[i][i+1][A])
+						prob[i][i+1][A] = tempProb
+						back[i][i+1] [A] = B
+						added = true
+			
+     # recursive case
+     for span <-- 2 to num_words
+         for begin <-- 1 to num_words - span + 1
+             end <-- begin + span - 1
+             for m = begin to end - 1
+ 
+                 for A = 1 to num nonterminals
+                     for B = 1 to num nonterminals
+						 
+                         for C = 1 to num nonterminals
+ 
+                             tempProb = prob [begin, m, B] * prob [m + 1, end, C] * P(A --> BC)
+ 
+                             if (tempProb > prob[begin, end, A]) then
+                                 prob [begin, end, A] = tempProb
+                                 back[begin, end, A] = {m, B, C}
+				 //handle unaries
+				 boolean added = true
+				 while added
+					added = false
+					for A, B in nonterms
+						tempProb = P(A->B)*prob[begin][end][B];
+						if(tempProb > prob[begin][end] [A])
+							prob[begin][end] [A] = tempProb
+							back[begin][end] [A] = B
+							added = true
+							
+	 return buildTree(prob, back)
+ 
