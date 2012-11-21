@@ -67,6 +67,11 @@ void Grammar::fillR2lTable() {
   }
 }
 
+
+void Grammar::parseLine(string line) {
+  // LIFO stack
+
+}
 void Grammar::readGrammar() {
    try {
     ifstream myfile (treeBankFileName.c_str());
@@ -76,6 +81,7 @@ void Grammar::readGrammar() {
       while (myfile.good()){
         getline (myfile,line);
         //cout << line << endl << endl;
+        parseLine(line);
       }
       myfile.close();
     }

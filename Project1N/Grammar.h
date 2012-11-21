@@ -52,6 +52,8 @@ private:
 
     /* methods */
 
+    void parseLine(string line);
+
 };
 
 #endif	/* GRAMMAR_H */

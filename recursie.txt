@@ -3,31 +3,33 @@
 //recursie boom inlezen, args: &stack<list of strings>, &tableA->B &tableB<-A
 
 //lees next char (ignore spaces) 
-//if next char == ')'
-	//rightHandSide = stack.pop()
-	//leftHandSide = stack.top().last()
-	//A -> B table lookup leftHandSide -> rightHandSide
-		//found then leftHandSide -> <rightHandSide, count++>
-		//not found then add leftHandSide -> <rightHandSide, 1>
-	//B <- A table lookup rightHandSide <- leftHandSide 
-		//found then rightHandSide <- <leftHandSide, count++>
-		//not found then add rightHandSide <- <leftHandSide, 1>
-	//return
-//if next char != ')' || next char != '('
-	//add char to list
-	//read and add till " " is read
-	//add non-terminal to list on top of stack
-	//read next char
-//if next char == '('
-	//recursie (&stack, &table, &table)
-//else 
-	//add char to term (list)
-	//read next char until ")" is read
-	//non-term = stack.top()
-	//A -> B table lookup non-term -> term
-		//found then non-term -> <term, count++>
-		//not found then add non-term -> <term, 1>
-	//B <- A table lookup term<- non-term 
-		//found then term<- <non-term, count++>
-		//not found then add term<- <non-term, 1>
-	//return
+// if next char doesn't exist --> STOP
+// else 
+	//if next char == ')'
+		//rightHandSide = stack.pop() // RHS1 + evt. RHS2
+		//leftHandSide = stack.top().last()
+		//A -> B table lookup leftHandSide -> rightHandSide
+			//found then leftHandSide -> <rightHandSide, count++>
+			//not found then add leftHandSide -> <rightHandSide, 1>
+		//B <- A table lookup rightHandSide <- leftHandSide 
+			//found then rightHandSide <- <leftHandSide, count++>
+			//not found then add rightHandSide <- <leftHandSide, 1>
+		//recursie (-1)
+	//if next char != ')' || next char != '('
+		//add char to list
+		//read and add till " " is read
+		//add non-terminal to list on top of stack
+		//read next char
+	//if next char == '('
+		//recursie (&stack, &table, &table) (+1)
+	//else 
+		//add char to term (list)
+		//read next char until ")" is read
+		//non-term = stack.top()
+		//A -> B table lookup non-term -> term
+			//found then non-term -> <term, count++>
+			//not found then add non-term -> <term, 1>
+		//B <- A table lookup term<- non-term 
+			//found then term<- <non-term, count++>
+			//not found then add term<- <non-term, 1>
+		//recursie (-1)
