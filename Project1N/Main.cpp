@@ -25,7 +25,7 @@ class Main {
 
 /* implementation */
 void Main::testStuff1() {
-  myGrammar = new Grammar("treebank.dat");
+  myGrammar = new Grammar("example.dat");
 
 //  vector<Grammar::stringAndDouble> RHSs = myGrammar->getRHS("NP");
 //  for (int i = 0; i < RHSs.size(); i++) {
@@ -39,7 +39,12 @@ void Main::testStuff1() {
 //    cout << LHSs[i].first << " " << LHSs[i].second << endl;
 //  }  cout << endl;
 
-  myGrammar->printL2rTable();
+  myGrammar->printR2lTable();
+//  vector<Grammar::stringAndDouble> LHSs = myGrammar->getRHSs("NP");
+//  for (int i = 0; i < LHSs.size(); i++) {
+//    cout << LHSs[i].first << " " << LHSs[i].second << endl;
+//  }  cout << endl;
+
 }
 
 void Main::readTreeBank() {

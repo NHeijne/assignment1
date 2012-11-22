@@ -30,6 +30,8 @@ using namespace std;
  * iteration through a subset of their elements. "
  * (source: http://www.cplusplus.com/reference/stl/unordered_map/ )
  * And we need to range-iterate a lot because we have multiple RHS's per LHS.
+ *
+ * NOTE: multimap allows duplicate <key,value> pairs!
  */
 
  
@@ -47,12 +49,13 @@ class Grammar {
     virtual ~Grammar();
     
     /* methods */
-    vector<stringAndDouble> getRHS(string LHS);
-    vector<stringAndDouble> getLHS(string RHS);
+    vector<stringAndDouble> getRHSs(string LHS);
+    vector<stringAndDouble> getLHSs(string RHS);
     
     void fillR2lTableFromL2rTable() ;
     void readGrammar();
     void printL2rTable();
+    void printR2lTable();
     void init();
     
 private:
@@ -63,6 +66,8 @@ private:
     pair<multimap<string, stringAndDouble>::iterator, multimap<string, stringAndDouble>::iterator> ruleRangeIterator;
     multimap<string, stringAndDouble>::iterator ruleIterator;
 
+    map<string, int> lhsCountTable;
+
     string treeBankFileName;
 
     /* methods */
@@ -71,6 +76,7 @@ private:
     void parseLineRecursively (const char * line, int linePos, stack <stringAndInt> , int  level);
     void insertL2rTable(string key, string valueString) ;
     bool validCharacter(char nextChar);
+    void l2rTableCountToProbability();
 };
 
 #endif	/* GRAMMAR_H */

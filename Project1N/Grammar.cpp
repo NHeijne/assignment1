@@ -37,8 +37,12 @@ Grammar::~Grammar() {
   
 }
 
+/**
+ * Start
+ */
 void Grammar::init() {
   readGrammar();
+  l2rTableCountToProbability();
   fillR2lTableFromL2rTable();
 }
 
@@ -47,31 +51,31 @@ void Grammar::init() {
  * @param string LHS
  * @return Vector with Pairs denoting <the right hand sides,  their accompanying probability (of LHS -> RHS)>
  */
-vector<Grammar::stringAndDouble> Grammar::getRHS(string LHS) {
+vector<Grammar::stringAndDouble> Grammar::getRHSs(string LHS) {
   vector<stringAndDouble> result;
   ruleRangeIterator = l2rTable.equal_range(LHS);
   
   for (ruleIterator = ruleRangeIterator.first; ruleIterator != ruleRangeIterator.second; ruleIterator++) {
     result.push_back((*ruleIterator).second);
   }
-  cout << endl;
   return result;
-
 }
 
 /**
  *
  * @param string RHS
  * @return Vector with Pairs denoting <the left hand sides,  their accompanying probability (of LHS -> RHS)>
+ *
+ * Note: Intuitively each RHS should only have one LHS (?)
+ * but this may not be true in practice
  */
-vector<Grammar::stringAndDouble> Grammar::getLHS(string RHS) {
+vector<Grammar::stringAndDouble> Grammar::getLHSs(string RHS) {
   vector<stringAndDouble> result;
   ruleRangeIterator = r2lTable.equal_range(RHS);
   
   for (ruleIterator = ruleRangeIterator.first; ruleIterator != ruleRangeIterator.second; ruleIterator++) {
     result.push_back((*ruleIterator).second);
   }
-  cout << endl;
   return result;
 }
 
@@ -82,9 +86,25 @@ void Grammar::printL2rTable() {
   for(ruleIterator = l2rTable.begin(); ruleIterator != l2rTable.end(); ruleIterator++) {
     printf("%s \t ==>  \t %s  \t (prob/count %f ) \n", (*ruleIterator).first.c_str() , (*ruleIterator).second.first.c_str() ,(*ruleIterator).second.second);
   }
-
 }
 
+/**
+ * Print all rules in LHS->RHS format
+ */
+void Grammar::printR2lTable() {
+  for(ruleIterator = r2lTable.begin(); ruleIterator != r2lTable.end(); ruleIterator++) {
+    printf("%s \t <== \t %s  \t (prob/count %f ) \n",  (*ruleIterator).first.c_str() , (*ruleIterator).second.first.c_str() ,(*ruleIterator).second.second);
+  }
+}
+
+/**
+ * Transforms counts per rule in l2rTable to probability
+ */
+void Grammar::l2rTableCountToProbability() {
+  for(ruleIterator = l2rTable.begin(); ruleIterator != l2rTable.end(); ruleIterator++) {   
+    ruleIterator->second.second /=  lhsCountTable.find(ruleIterator->first)->second;
+  }
+}
 /**
  * Given the LHS->RHS lookup table (l2rTable), fill the table with the RHS->LHS lookup function (r2lTable)
  */
@@ -102,19 +122,42 @@ void Grammar::fillR2lTableFromL2rTable() {
  * @param valueString
  */
 void Grammar::insertL2rTable(string key, string valueString) {
-  double count = 0;
+ 
   ruleRangeIterator = l2rTable.equal_range(key);
-  for (ruleIterator = ruleRangeIterator.first; ruleIterator != ruleRangeIterator.second; ruleIterator++) {
-    if (ruleIterator->second.first == valueString) {    
-     count = ruleIterator->second.second;
-     l2rTable.erase(ruleIterator); // erase occurence - multimap allows duplicate <key,value> pairs!
-     break;
-    }
+
+  if (ruleRangeIterator.first == ruleRangeIterator.second) { // LHS didnt occur yet
+    lhsCountTable.insert(stringAndInt(key, 1)); // keep track of number of rules per LHS
+    l2rTable.insert( tableKeyAndValue(key,stringAndDouble(valueString,1))); // insert rule in l2rTable
   }
-  l2rTable.insert( tableKeyAndValue(key,stringAndDouble(valueString,count+1)));
+  else { // LHS did occur
+    map<string, int>::iterator it =  lhsCountTable.find(key);
+    it->second++;
+
+    bool RHSfound = false;
+    for (ruleIterator = ruleRangeIterator.first; ruleIterator != ruleRangeIterator.second; ruleIterator++) {
+      if (ruleIterator->second.first == valueString) {
+       ruleIterator->second.second++;
+       RHSfound = true;
+       break;
+      }
+    }
+     if (!RHSfound)
+    l2rTable.insert( tableKeyAndValue(key,stringAndDouble(valueString,1)));
+  }
+ 
+  //lhsCountTable.insert()
+
+
+  // lhsCountTable.insert (stringAndInt('z',500) );
 }
 
-
+/**
+ * Check if the character is a character we need to process anyway
+ * and not e.g. the TAB or DEL character
+ *
+ * @param nextChar
+ * @return
+ */
 bool Grammar::validCharacter(char nextChar) {
   return !(static_cast<int>(nextChar) < 33 ||  static_cast<int>(nextChar) > 126);
 }
