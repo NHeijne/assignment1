@@ -59,7 +59,7 @@ LDLIBSOPTIONS=
 
 dist/Debug/MinGW-Windows/project1n.exe: ${OBJECTFILES}
 	${MKDIR} -p dist/Debug/MinGW-Windows
-	${LINK.cc} -static-libgcc -static -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/project1n ${OBJECTFILES} ${LDLIBSOPTIONS} 
+	${LINK.cc} -static-libgcc -static -std=gnu++0x -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/project1n ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
 ${OBJECTDIR}/Grammar.o: Grammar.cpp 
 	${MKDIR} -p ${OBJECTDIR}

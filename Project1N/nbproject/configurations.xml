@@ -41,7 +41,7 @@
       </toolsSet>
       <compileType>
         <linkerTool>
-          <commandLine>-static-libgcc -static</commandLine>
+          <commandLine>-static-libgcc -static -std=gnu++0x</commandLine>
         </linkerTool>
       </compileType>
     </conf>
