@@ -51,12 +51,10 @@ class Grammar {
     /* methods */
     vector<stringAndDouble> getRHSs(string LHS);
     vector<stringAndDouble> getLHSs(string RHS);
-    
-    void fillR2lTableFromL2rTable() ;
-    void readGrammar();
+        
     void printL2rTable();
     void printR2lTable();
-    void init();
+    void init(bool print = true);
     
 private:
     /* attributes and other stuff */
@@ -71,12 +69,13 @@ private:
     string treeBankFileName;
 
     /* methods */
-
+    void readGrammar(bool print);
     void parseLine(string line);
-    void parseLineRecursively (const char * line, int linePos, stack <stringAndInt> , int  level);
+    void parseLineRecursively (const char * line, int linePos, stack <stringAndInt> , int level);
     void insertL2rTable(string key, string valueString) ;
     bool validCharacter(char nextChar);
     void l2rTableCountToProbability();
+    void fillR2lTableFromL2rTable() ;
 };
 
 #endif	/* GRAMMAR_H */

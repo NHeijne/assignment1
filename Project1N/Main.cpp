@@ -26,6 +26,7 @@ class Main {
 /* implementation */
 void Main::testStuff1() {
   myGrammar = new Grammar("example.dat");
+  myGrammar->init();
 
 //  vector<Grammar::stringAndDouble> RHSs = myGrammar->getRHS("NP");
 //  for (int i = 0; i < RHSs.size(); i++) {
@@ -49,14 +50,13 @@ void Main::testStuff1() {
 
 void Main::readTreeBank() {
 
-  //  myGrammar = new Grammar();
-  // corpusReader * reader = new CorpusReader(grammar);
-  // reader->makeGrammar();
+  // myGrammar = new Grammar();
+  // myGrammar->init();
 
 }
 
 void Main::parse() {
-  // PCYKParser * parser = new PCYKParser(grammar);
+  // CYKParser * parser = new CYKParser(grammar);
   // parser->produceDerivations("Dit is een zin");
   // parser->printDerivations();
 }

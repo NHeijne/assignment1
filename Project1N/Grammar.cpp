@@ -19,7 +19,7 @@ Grammar::Grammar(string treeBankFile) {
 //  l2rTable.insert( tableKeyAndValue("NP",stringAndDouble("NNP NP",0.1)));
 //  l2rTable.insert( tableKeyAndValue("VP",stringAndDouble("V PP",0.3)));
 
-  init();
+ 
 }
 
 /**
@@ -40,8 +40,8 @@ Grammar::~Grammar() {
 /**
  * Start
  */
-void Grammar::init() {
-  readGrammar();
+void Grammar::init(bool print /* = true */) {
+  readGrammar(print);
   l2rTableCountToProbability();
   fillR2lTableFromL2rTable();
 }
@@ -98,7 +98,7 @@ void Grammar::printR2lTable() {
 }
 
 /**
- * Transforms counts per rule in l2rTable to probability
+ * Transforms counts per rule in l2rTable to probability per rule
  */
 void Grammar::l2rTableCountToProbability() {
   for(ruleIterator = l2rTable.begin(); ruleIterator != l2rTable.end(); ruleIterator++) {   
@@ -144,11 +144,6 @@ void Grammar::insertL2rTable(string key, string valueString) {
      if (!RHSfound)
     l2rTable.insert( tableKeyAndValue(key,stringAndDouble(valueString,1)));
   }
- 
-  //lhsCountTable.insert()
-
-
-  // lhsCountTable.insert (stringAndInt('z',500) );
 }
 
 /**
@@ -179,8 +174,7 @@ void Grammar::parseLineRecursively(const char * line, int linePos, stack <string
   }
   if ((linePos >= strlen(line)-1) || !validCharacter(nextChar)) // check for e.g. tab-characters in input file
     return;
-  else {
-   
+  else {   
     if (nextChar == ')') {                   // ========> non-terminal rule (RHS end) found
       stringAndInt RHS1, RHS2, LHS;
       RHS2 = stringLevelStack.top(); stringLevelStack.pop();
@@ -247,7 +241,7 @@ void Grammar::parseLine(string line) {
  * Read treebank file
  * parse it, fill l2rTable accordingly
  */
-void Grammar::readGrammar() {
+void Grammar::readGrammar(bool print) {
    try {
     ifstream myfile (treeBankFileName.c_str());
     string line;
@@ -259,7 +253,7 @@ void Grammar::readGrammar() {
         if (!line.empty()) {
           parseLine(line);
           numberLines++;
-          if (numberLines % 100 == 0)
+          if (print && numberLines % 100 == 0)
             cout << "processed " << numberLines << " lines " << endl;
         }
       }

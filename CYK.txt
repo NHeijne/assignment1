@@ -21,10 +21,10 @@ function CYK(words,grammar) returns The most probable parse
 						added = true
 			
      # recursive case
-     for span <-- 2 to num_words
-         for begin <-- 1 to num_words - span + 1
-             end <-- begin + span - 1
-             for m = begin to end - 1
+     for span <-- 2 to num_words // {2, 3, 4}
+         for begin <-- 1 to num_words - span + 1 // {{1,2,3},{1,2},{1}}
+             end <-- begin + span - 1            // {{2,3,4},{3,4},{4}} 
+             for m = begin to end - 1		 // {{{1},{2},{3}},{{1,2},{2,3}},{{1,2,3}}}
  
                  for A = 1 to num nonterminals
                      for B = 1 to num nonterminals
