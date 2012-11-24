@@ -40,21 +40,27 @@ using namespace std;
 
 class Grammar {
 
+ 
+
   public:
     /* attributes and other stuff */  
     typedef pair <string, int> stringAndInt;
     typedef pair <string, double> stringAndDouble;
     typedef pair <string, stringAndDouble> tableKeyAndValue;
 
-
+    // a nonterminal specifier is added to all nonterminal symbols,
+    // so we can distinguish between terminals and nonterminals
+    // (is convenient for in CYKParser)
+    static const string nonTerminalSymbol; /* nt_ */
+    
     /* constructors */
     Grammar(string treeBankFile);
     Grammar(const Grammar& orig);
     virtual ~Grammar();
 
     /* methods */
-    vector<stringAndDouble> getRHSs(string LHS);
-    vector<stringAndDouble> getLHSs(string RHS);
+    void getRHSs(string LHS, vector<stringAndDouble>&);
+    void getLHSs(string RHS, vector<stringAndDouble>&);
 
     void printL2rTable();
     void printR2lTable();
@@ -86,6 +92,8 @@ class Grammar {
     void fillR2lTableFromL2rTable();
 
     bool archiveExists();
+
+    
 };
 
 

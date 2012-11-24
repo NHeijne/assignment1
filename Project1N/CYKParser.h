@@ -28,8 +28,6 @@ class CYKParser {
       // what seperates the terms/words in a sentence
       static const char termDelimiter = ' ';
 
-      vector<vector<vector<string> > > table; //3D vector
-
        /* constructors */
       CYKParser(Grammar * aGrammar);
       CYKParser(const CYKParser &orig);
@@ -38,22 +36,41 @@ class CYKParser {
       /* methods */
       void parseLine(const string line);
 
+      void printCYKTable();
       
 
     private:
       /* attributes and other stuff */
       Grammar * myCFG;
 
+      struct location {
+        int i;
+        int j;
+        int k;
+      };
+
       struct tableEntry {
         string nonTerm;
         double prob;
-        vector <tableEntry*> backs;
+        vector <location> backs;
+        bool backIsTerminal;
       };
+      
+      // will be changed per line
+      vector<string> lineTerms;
+      int nrTerms;      
+      vector<vector<vector<tableEntry> > > CYKTable; //3D vector
+      vector<tableEntry> terminalEntries;
 
       /* methods */
       void splitHelper(const string line, vector<string> &terms);
       vector<string> split(const string line);
+      
+      void CYKLine();
+      void CYKLineBaseCase() ;
 
+
+      
     
 };
 

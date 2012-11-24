@@ -43,14 +43,22 @@ void Main::testStuff1() {
 //    cout << LHSs[i].first << " " << LHSs[i].second << endl;
 //  }  cout << endl;
 
-  //myGrammar->printR2lTable();
+ myGrammar->printL2rTable();
+// cout <<"r 2 l: " << endl;
+// myGrammar->printR2lTable();
 //  vector<Grammar::stringAndDouble> LHSs = myGrammar->getRHSs("NP");
 //  for (int i = 0; i < LHSs.size(); i++) {
 //    cout << LHSs[i].first << " " << LHSs[i].second << endl;
 //  }  cout << endl;
 
   parser = new CYKParser(myGrammar);
-  parser->parseLine("On the exchange floor , `` as soon as UAL stopped trading , we braced for a panic , '' said one top floor trader .  ");
+  parser->parseLine("Ms. Haag plays Elianti . ");
+  //parser->parseLine("He plays, and he plays superbly . ");
+  parser->printCYKTable();
+
+  
+ 
+  cout << endl << endl;
 }
 
 void Main::readTreeBank() {
