@@ -5,6 +5,8 @@
                    displayName="Header Files"
                    projectFiles="true"
                    kind="SOURCE_LOGICAL_FOLDER">
+      <itemPath>CYKParser.cpp</itemPath>
+      <itemPath>CYKParser.h</itemPath>
       <itemPath>Grammar.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -40,7 +42,18 @@
         <platform>3</platform>
       </toolsSet>
       <compileType>
+        <ccTool>
+          <incDir>
+            <pElem>C:/boost_1_52_0</pElem>
+          </incDir>
+        </ccTool>
         <linkerTool>
+          <linkerAddLib>
+            <pElem>C:/boost_1_52_0/stage/lib</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibLibItem>boost_serialization-mgw46-d-1_52</linkerLibLibItem>
+          </linkerLibItems>
           <commandLine>-static-libgcc -static -std=gnu++0x</commandLine>
         </linkerTool>
       </compileType>
@@ -57,6 +70,9 @@
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
+          <incDir>
+            <pElem>C:/boost_1_52_0</pElem>
+          </incDir>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -65,7 +81,13 @@
           <developmentMode>5</developmentMode>
         </asmTool>
         <linkerTool>
-          <commandLine>-static-libgcc</commandLine>
+          <linkerAddLib>
+            <pElem>C:/boost_1_52_0/stage/lib</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibLibItem>boost_serialization-mgw46-1_52</linkerLibLibItem>
+          </linkerLibItems>
+          <commandLine>-static -static-libgcc -static-libstdc++ -std=gnu++0x</commandLine>
         </linkerTool>
       </compileType>
     </conf>

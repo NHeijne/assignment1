@@ -33,6 +33,7 @@ OBJECTDIR=build/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/CYKParser.o \
 	${OBJECTDIR}/Grammar.o \
 	${OBJECTDIR}/Main.o
 
@@ -51,7 +52,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=-L/C/boost_1_52_0/stage/lib -lboost_serialization-mgw46-1_52
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -59,17 +60,22 @@ LDLIBSOPTIONS=
 
 dist/Release/MinGW-Windows/project1n.exe: ${OBJECTFILES}
 	${MKDIR} -p dist/Release/MinGW-Windows
-	${LINK.cc} -static-libgcc -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/project1n ${OBJECTFILES} ${LDLIBSOPTIONS} 
+	${LINK.cc} -static -static-libgcc -static-libstdc++ -std=gnu++0x -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/project1n ${OBJECTFILES} ${LDLIBSOPTIONS} 
+
+${OBJECTDIR}/CYKParser.o: CYKParser.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -I/C/boost_1_52_0 -MMD -MP -MF $@.d -o ${OBJECTDIR}/CYKParser.o CYKParser.cpp
 
 ${OBJECTDIR}/Grammar.o: Grammar.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Grammar.o Grammar.cpp
+	$(COMPILE.cc) -O2 -I/C/boost_1_52_0 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Grammar.o Grammar.cpp
 
 ${OBJECTDIR}/Main.o: Main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Main.o Main.cpp
+	$(COMPILE.cc) -O2 -I/C/boost_1_52_0 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Main.o Main.cpp
 
 # Subprojects
 .build-subprojects:

@@ -1,25 +1,18 @@
-/* 
+/*
  * File:   Grammar.cpp
  * Author: agnes
- * 
+ *
  * Created on November 20, 2012, 6:15 PM
  */
 
 #include "Grammar.h"
 
-
 /**
  * Constructor
  */
-Grammar::Grammar(string treeBankFile) {
-
+Grammar::Grammar(string treeBankFile) { 
   treeBankFileName = treeBankFile;
-
-//  l2rTable.insert( tableKeyAndValue("NP",stringAndDouble("VP NNP",0.9)));
-//  l2rTable.insert( tableKeyAndValue("NP",stringAndDouble("NNP NP",0.1)));
-//  l2rTable.insert( tableKeyAndValue("VP",stringAndDouble("V PP",0.3)));
-
- 
+  archiveName = treeBankFileName + "_archive.xml";
 }
 
 /**
@@ -27,23 +20,61 @@ Grammar::Grammar(string treeBankFile) {
  * @param orig
  */
 Grammar::Grammar(const Grammar& orig) {
-  
 }
 
 /**
  * Destructor
  */
 Grammar::~Grammar() {
-  
 }
 
 /**
  * Start
  */
 void Grammar::init(bool print /* = true */) {
-  readGrammar(print);
-  l2rTableCountToProbability();
-  fillR2lTableFromL2rTable();
+
+  if (!archiveExists()) {
+    cout << "Will read and process treebank file..." << endl;
+    readGrammar(print);
+    l2rTableCountToProbability();
+    saveTreebankArchive();
+  }
+  else {
+    cout << "Will load existing treebank file..." << endl;
+    loadTreebankArchive();
+    cout << "Done loading." << endl;
+    fillR2lTableFromL2rTable();
+  }
+}
+
+bool Grammar::archiveExists() {
+  fstream file;
+  file.open(archiveName.c_str(), ios_base::out | ios_base::in);  // will not create file
+  if (file.is_open())  {
+    file.close();
+    return true;
+  }
+  else  {
+    file.clear();
+    return false;
+  }
+}
+
+void Grammar::saveTreebankArchive() {
+  cout << "Writing treebank file to XML archive..."<< endl;
+  ofstream file(archiveName.c_str());
+  boost::archive::xml_oarchive outputArchive (file);
+
+  // "&" has same effect as "<<" in outputArchive & BOOST_SERIALIZATION_NVP(l2rTable);
+  // The macro BOOST_SERIALIZATION_NVP expands to  boost::serialization::make_nvp
+  // see http://www.boost.org/doc/libs/1_44_0/libs/serialization/doc/wrappers.html#nvp
+  outputArchive & BOOST_SERIALIZATION_NVP(l2rTable);
+}
+
+void Grammar::loadTreebankArchive() {
+  ifstream file(archiveName.c_str());
+  boost::archive::xml_iarchive inputArchive(file);
+  inputArchive & BOOST_SERIALIZATION_NVP(l2rTable);
 }
 
 /**
@@ -54,7 +85,7 @@ void Grammar::init(bool print /* = true */) {
 vector<Grammar::stringAndDouble> Grammar::getRHSs(string LHS) {
   vector<stringAndDouble> result;
   ruleRangeIterator = l2rTable.equal_range(LHS);
-  
+
   for (ruleIterator = ruleRangeIterator.first; ruleIterator != ruleRangeIterator.second; ruleIterator++) {
     result.push_back((*ruleIterator).second);
   }
@@ -72,7 +103,7 @@ vector<Grammar::stringAndDouble> Grammar::getRHSs(string LHS) {
 vector<Grammar::stringAndDouble> Grammar::getLHSs(string RHS) {
   vector<stringAndDouble> result;
   ruleRangeIterator = r2lTable.equal_range(RHS);
-  
+
   for (ruleIterator = ruleRangeIterator.first; ruleIterator != ruleRangeIterator.second; ruleIterator++) {
     result.push_back((*ruleIterator).second);
   }
@@ -83,8 +114,8 @@ vector<Grammar::stringAndDouble> Grammar::getLHSs(string RHS) {
  * Print all rules in LHS->RHS format
  */
 void Grammar::printL2rTable() {
-  for(ruleIterator = l2rTable.begin(); ruleIterator != l2rTable.end(); ruleIterator++) {
-    printf("%s \t ==>  \t %s  \t (prob/count %f ) \n", (*ruleIterator).first.c_str() , (*ruleIterator).second.first.c_str() ,(*ruleIterator).second.second);
+  for (ruleIterator = l2rTable.begin(); ruleIterator != l2rTable.end(); ruleIterator++) {
+    printf("%s \t ==>  \t %s  \t (prob/count %f ) \n", (*ruleIterator).first.c_str(), (*ruleIterator).second.first.c_str(), (*ruleIterator).second.second);
   }
 }
 
@@ -92,8 +123,8 @@ void Grammar::printL2rTable() {
  * Print all rules in LHS->RHS format
  */
 void Grammar::printR2lTable() {
-  for(ruleIterator = r2lTable.begin(); ruleIterator != r2lTable.end(); ruleIterator++) {
-    printf("%s \t <== \t %s  \t (prob/count %f ) \n",  (*ruleIterator).first.c_str() , (*ruleIterator).second.first.c_str() ,(*ruleIterator).second.second);
+  for (ruleIterator = r2lTable.begin(); ruleIterator != r2lTable.end(); ruleIterator++) {
+    printf("%s \t <== \t %s  \t (prob/count %f ) \n", (*ruleIterator).first.c_str(), (*ruleIterator).second.first.c_str(), (*ruleIterator).second.second);
   }
 }
 
@@ -101,16 +132,17 @@ void Grammar::printR2lTable() {
  * Transforms counts per rule in l2rTable to probability per rule
  */
 void Grammar::l2rTableCountToProbability() {
-  for(ruleIterator = l2rTable.begin(); ruleIterator != l2rTable.end(); ruleIterator++) {   
-    ruleIterator->second.second /=  lhsCountTable.find(ruleIterator->first)->second;
+  for (ruleIterator = l2rTable.begin(); ruleIterator != l2rTable.end(); ruleIterator++) {
+    ruleIterator->second.second /= lhsCountTable.find(ruleIterator->first)->second;
   }
 }
+
 /**
  * Given the LHS->RHS lookup table (l2rTable), fill the table with the RHS->LHS lookup function (r2lTable)
  */
 void Grammar::fillR2lTableFromL2rTable() {
-  for ( ruleIterator=l2rTable.begin() ; ruleIterator != l2rTable.end(); ruleIterator++ ) {
-    r2lTable.insert( tableKeyAndValue((*ruleIterator).second.first, stringAndDouble((*ruleIterator).first,(*ruleIterator).second.second)));
+  for (ruleIterator = l2rTable.begin(); ruleIterator != l2rTable.end(); ruleIterator++) {
+    r2lTable.insert(tableKeyAndValue((*ruleIterator).second.first, stringAndDouble((*ruleIterator).first, (*ruleIterator).second.second)));
   }
 }
 
@@ -122,27 +154,27 @@ void Grammar::fillR2lTableFromL2rTable() {
  * @param valueString
  */
 void Grammar::insertL2rTable(string key, string valueString) {
- 
+
   ruleRangeIterator = l2rTable.equal_range(key);
 
   if (ruleRangeIterator.first == ruleRangeIterator.second) { // LHS didnt occur yet
     lhsCountTable.insert(stringAndInt(key, 1)); // keep track of number of rules per LHS
-    l2rTable.insert( tableKeyAndValue(key,stringAndDouble(valueString,1))); // insert rule in l2rTable
+    l2rTable.insert(tableKeyAndValue(key, stringAndDouble(valueString, 1))); // insert rule in l2rTable
   }
   else { // LHS did occur
-    map<string, int>::iterator it =  lhsCountTable.find(key);
+    map<string, int>::iterator it = lhsCountTable.find(key);
     it->second++;
 
     bool RHSfound = false;
     for (ruleIterator = ruleRangeIterator.first; ruleIterator != ruleRangeIterator.second; ruleIterator++) {
       if (ruleIterator->second.first == valueString) {
-       ruleIterator->second.second++;
-       RHSfound = true;
-       break;
+        ruleIterator->second.second++;
+        RHSfound = true;
+        break;
       }
     }
-     if (!RHSfound)
-    l2rTable.insert( tableKeyAndValue(key,stringAndDouble(valueString,1)));
+    if (!RHSfound)
+      l2rTable.insert(tableKeyAndValue(key, stringAndDouble(valueString, 1)));
   }
 }
 
@@ -154,7 +186,7 @@ void Grammar::insertL2rTable(string key, string valueString) {
  * @return
  */
 bool Grammar::validCharacter(char nextChar) {
-  return !(static_cast<int>(nextChar) < 33 ||  static_cast<int>(nextChar) > 126);
+  return !(static_cast<int> (nextChar) < 33 || static_cast<int> (nextChar) > 126);
 }
 
 /**
@@ -167,29 +199,31 @@ bool Grammar::validCharacter(char nextChar) {
  * @param level
  */
 void Grammar::parseLineRecursively(const char * line, int linePos, stack <stringAndInt> stringLevelStack, int level) {
-  char nextChar = line[linePos];// cout << "nextChar: " << nextChar << endl;
+  char nextChar = line[linePos]; // cout << "nextChar: " << nextChar << endl;
   while (nextChar == ' ' && linePos < strlen(line)) {
-      linePos++;
+    linePos++;
     nextChar = line[linePos];
   }
-  if ((linePos >= strlen(line)-1) || !validCharacter(nextChar)) // check for e.g. tab-characters in input file
+  if ((linePos >= strlen(line) - 1) || !validCharacter(nextChar)) // check for e.g. tab-characters in input file
     return;
-  else {   
-    if (nextChar == ')') {                   // ========> non-terminal rule (RHS end) found
+  else {
+    if (nextChar == ')') { // ========> non-terminal rule (RHS end) found
       stringAndInt RHS1, RHS2, LHS;
-      RHS2 = stringLevelStack.top(); stringLevelStack.pop();
-     
-      if (stringLevelStack.top().second == RHS2.second) { // same level    
-        RHS1 = stringLevelStack.top(); stringLevelStack.pop();
+      RHS2 = stringLevelStack.top();
+      stringLevelStack.pop();
+
+      if (stringLevelStack.top().second == RHS2.second) { // same level
+        RHS1 = stringLevelStack.top();
+        stringLevelStack.pop();
         RHS1.first += " ";
       }
       else {
         RHS1.first = "";
       }
       LHS = stringLevelStack.top(); //stringLevelStack.pop();
-      insertL2rTable(LHS.first, RHS1.first + RHS2.first );
+      insertL2rTable(LHS.first, RHS1.first + RHS2.first);
       //cout << "insert " << LHS.first << " ==> " << RHS1.first + RHS2.first << endl;
-      return parseLineRecursively(line, linePos+1, stringLevelStack, level-1);
+      return parseLineRecursively(line, linePos + 1, stringLevelStack, level - 1);
     }
     if (nextChar != ')' && nextChar != '(') { //  ========> non-terminal LHS found
       string nonTerm = "";
@@ -201,12 +235,12 @@ void Grammar::parseLineRecursively(const char * line, int linePos, stack <string
       stringLevelStack.push(stringAndInt(nonTerm, level));
       //cout << "enter " << nonTerm << " at stack at level " << level << endl;
       linePos++; // go beyond space
-      nextChar = line[linePos]; 
+      nextChar = line[linePos];
     }
-    if (nextChar == '(') {                    // ========> begin new rule found (new LHS)
-      return parseLineRecursively(line, linePos+1, stringLevelStack, level+1);
+    if (nextChar == '(') { // ========> begin new rule found (new LHS)
+      return parseLineRecursively(line, linePos + 1, stringLevelStack, level + 1);
     }
-    else {                                    //  ========> terminal symbol + ')' found
+    else { //  ========> terminal symbol + ')' found
       string term = "";
       while (line[linePos] != ')') {
         term += line[linePos];
@@ -216,7 +250,7 @@ void Grammar::parseLineRecursively(const char * line, int linePos, stack <string
       string nonTerm = stringLevelStack.top().first;
       insertL2rTable(nonTerm, term);
       //cout << "insert " << nonTerm << " ==> " << term << endl;
-      return parseLineRecursively(line, linePos+1, stringLevelStack, level-1);
+      return parseLineRecursively(line, linePos + 1, stringLevelStack, level - 1);
     }
   }
 }
@@ -231,7 +265,7 @@ void Grammar::parseLine(string line) {
 
   stack<stringAndInt> stringLevelStack;
   int level = 0;
-  int linePos= 0;
+  int linePos = 0;
   parseLineRecursively(line.c_str(), linePos, stringLevelStack, level);
 
   //cout << "line: " << line << endl;
@@ -242,14 +276,14 @@ void Grammar::parseLine(string line) {
  * parse it, fill l2rTable accordingly
  */
 void Grammar::readGrammar(bool print) {
-   try {
-    ifstream myfile (treeBankFileName.c_str());
+  try {
+    ifstream myfile(treeBankFileName.c_str());
     string line;
- 
-    if (myfile.is_open()){
+
+    if (myfile.is_open()) {
       int numberLines = 0;
-      while (!myfile.eof()){
-        getline (myfile,line);
+      while (!myfile.eof()) {
+        getline(myfile, line);
         if (!line.empty()) {
           parseLine(line);
           numberLines++;
@@ -260,12 +294,12 @@ void Grammar::readGrammar(bool print) {
       myfile.close();
     }
     else {
-      throw ("Unable to open treebank file") ;
+      throw ("Unable to open treebank file");
     }
   }
-  catch(const char * e) {   
-   cerr << "Exception caught: " << e << endl;
-   exit(1);
+  catch (const char * e) {
+    cerr << "Exception caught: " << e << endl;
+    exit(1);
   }
-  
+
 }

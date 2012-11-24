@@ -8,6 +8,7 @@
 #include <cstdio>
 
 #include "Grammar.h"
+#include "CYKParser.h"
 
 using namespace std;
 
@@ -20,7 +21,7 @@ class Main {
 
   private:
     Grammar * myGrammar;
-
+    CYKParser * parser;
 };
 
 /* implementation */
@@ -28,6 +29,8 @@ void Main::testStuff1() {
   myGrammar = new Grammar("example.dat");
   myGrammar->init();
 
+ // myGrammar->save();
+  //myGrammar->load();
 //  vector<Grammar::stringAndDouble> RHSs = myGrammar->getRHS("NP");
 //  for (int i = 0; i < RHSs.size(); i++) {
 //    cout << RHSs[i].first << " " << RHSs[i].second << endl;
@@ -40,12 +43,14 @@ void Main::testStuff1() {
 //    cout << LHSs[i].first << " " << LHSs[i].second << endl;
 //  }  cout << endl;
 
-  myGrammar->printR2lTable();
+  //myGrammar->printR2lTable();
 //  vector<Grammar::stringAndDouble> LHSs = myGrammar->getRHSs("NP");
 //  for (int i = 0; i < LHSs.size(); i++) {
 //    cout << LHSs[i].first << " " << LHSs[i].second << endl;
 //  }  cout << endl;
 
+  parser = new CYKParser(myGrammar);
+  parser->parseLine("On the exchange floor , `` as soon as UAL stopped trading , we braced for a panic , '' said one top floor trader .  ");
 }
 
 void Main::readTreeBank() {
@@ -57,7 +62,7 @@ void Main::readTreeBank() {
 
 void Main::parse() {
   // CYKParser * parser = new CYKParser(grammar);
-  // parser->produceDerivations("Dit is een zin");
+  // parser->produceDerivations("On the exchange floor , `` as soon as UAL stopped trading , we braced for a panic , '' said one top floor trader .  ");
   // parser->printDerivations();
 }
 
