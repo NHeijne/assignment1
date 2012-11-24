@@ -28,7 +28,7 @@ class CYKParser {
       // what seperates the terms/words in a sentence
       static const char termDelimiter = ' ';
 
-      vector<vector<vector<string>>> table; //3D vector
+      vector<vector<vector<string> > > table; //3D vector
 
        /* constructors */
       CYKParser(Grammar * aGrammar);
