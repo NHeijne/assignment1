@@ -13,6 +13,8 @@
 
 using namespace std;
 
+// TODO: Iterators gebruiken in CYKParser.cpp
+
 /* header */
 class Main {
   public:
@@ -46,7 +48,7 @@ void Main::testStuff1() {
 //    cout << LHSs[i].first << " " << LHSs[i].second << endl;
 //  }  cout << endl;
 
- myGrammar->printL2rTable();
+ //myGrammar->printL2rTable();
 // cout <<"r 2 l: " << endl;
 // myGrammar->printR2lTable();
 //  vector<Grammar::stringAndDouble> LHSs = myGrammar->getRHSs("NP");
@@ -55,7 +57,7 @@ void Main::testStuff1() {
 //  }  cout << endl;
 
   parser = new CYKParser(myGrammar);
- //parser->parseLine("Ms. Haag plays Elianti . ");
+ parser->parseLine("Ms. Haag plays Elianti . ");
   //parser->parseLine("He plays , and he plays superbly . ");
   // will consume too much memory (std::bad_alloc error):
   //parser->parseLine("On the exchange floor , `` as soon as UAL stopped trading , we braced for a panic , '' said one top floor trader . ");
