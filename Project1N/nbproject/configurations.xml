@@ -75,6 +75,7 @@
           <incDir>
             <pElem>C:/boost_1_52_0</pElem>
           </incDir>
+          <commandLine>-Wl,--stack,4194304</commandLine>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>

@@ -51,8 +51,12 @@ void CYKParser::CYKLineBaseCase() {
     myCFG->getLHSs(lineTerms[i], LHSs); // get all rules A_j --> terminal_i
     //cout << "Nr LHS's for " << lineTerms[i] << ": " << LHSs.size() << endl;
 
+    bool sAdded=  false;
+    int firstAddedIndex  = CYKTable[i][i].size() ; // from which index to check for recursion
     for (int j = 0; j < LHSs.size(); j++) { // for each A_j(LHS), add it to table
       //cout << "Processed LHS " << j << endl;
+      sAdded = true;
+      
       vector<location> noBacks; // a terminal has no "backs"
       terminalEntries.push_back(tableEntry{lineTerms[i], 1, noBacks, false});
       vector<location> backs; // but the terminal is the "back" of A_j
@@ -61,34 +65,37 @@ void CYKParser::CYKLineBaseCase() {
     }
 
     // handle unaries
-    bool added = true;
-    int k = 0;
-    while (k < CYKTable[i][i].size()) { // for each entry in table (note CYKTable may grow inside loop)
-      while (added) {
-        added = false;
-        vector<Grammar::stringAndDouble> LHSsRec;
-        tableEntry currentEntry = CYKTable[i][i][k];
-        myCFG->getLHSs(currentEntry.nonTerm, LHSsRec); // get all rules B --> A
+     if (sAdded) {
+      bool added = true;
 
-        for (int l = 0; l < LHSsRec.size(); l++) { // for all B's
-          // add the rule B--> A always, not just if their combined probability is higher
-          Grammar::stringAndDouble lhsCurrentEntry = LHSsRec[l];
-          double recProb = lhsCurrentEntry.second * currentEntry.prob;
-          vector<location> backsRec;
-          backsRec.push_back(location{i, i, k}); // k = index currentEntry
-          CYKTable[i][i].push_back(tableEntry{lhsCurrentEntry.first, recProb, backsRec});
-        }
-        if (LHSsRec.size() > 0) { // if some recursive nonterm was added
-          added = true;
-        }
-        else {
+      int k = firstAddedIndex;
+      while (k < CYKTable[i][i].size()) { // for each entry in table (note CYKTable may grow inside loop)
+        while (added) {
           added = false;
-          k = CYKTable[i][i].size(); // stop the loop above this one
+          vector<Grammar::stringAndDouble> LHSsRec;
+          tableEntry currentEntry = CYKTable[i][i][k];
+          myCFG->getLHSs(currentEntry.nonTerm, LHSsRec); // get all rules B --> A
+
+          for (int l = 0; l < LHSsRec.size(); l++) { // for all B's
+            // add the rule B--> A always, not just if their combined probability is higher
+            Grammar::stringAndDouble lhsCurrentEntry = LHSsRec[l];
+            double recProb = lhsCurrentEntry.second * currentEntry.prob;
+            vector<location> backsRec;
+            backsRec.push_back(location{i, i, k}); // k = index currentEntry
+            CYKTable[i][i].push_back(tableEntry{lhsCurrentEntry.first, recProb, backsRec});
+          }
+          if (LHSsRec.size() > 0) { // if some recursive nonterm was added
+            added = true;
+          }
+          else {
+            added = false;
+            k = CYKTable[i][i].size(); // stop the loop above this one
+          }
+          k++;
+          //cout << endl;
         }
-        k++;
-        //cout << endl;
       }
-    }
+     }
   }
 }
 
@@ -132,10 +139,10 @@ void CYKParser::CYKLineRecursiveCase() {
           }
         }
         // handle unaries
-        /* actually should only be necessary for cell (0, 4)!!
-           however just to be sure, do for every cell
+        /* actually should only be necessary for cell (0, nrTerms-1)!!
+           however we could, just to be sure, do for every cell ?
          */
-        if (sAdded) { // if some nonterm was added in that cell this iteration
+        if (sAdded && (begin - 1) ==0 && (end-1) == nrTerms-1) { // if some nonterm was added in that cell this iteration
           cout << "sAdded = true, index is " << firstAddedIndex << " table size is " <<  CYKTable[begin - 1][end - 1].size() << endl;
           bool added = true;
           int k = firstAddedIndex;

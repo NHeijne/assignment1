@@ -55,10 +55,11 @@ void Main::testStuff1() {
 //  }  cout << endl;
 
   parser = new CYKParser(myGrammar);
-  //parser->parseLine("Ms. Haag plays Elianti . ");
-  //parser->parseLine("He plays , and he plays superbly . ");
-  parser->parseLine("On the exchange floor , `` as soon as UAL stopped trading , we braced for a panic , '' said one top floor trader . ");
-  //parser->printCYKTable();
+ // parser->parseLine("Ms. Haag plays Elianti . ");
+  parser->parseLine("He plays , and he plays superbly . ");
+  // will consume too much memory (std::bad_alloc error):
+  //parser->parseLine("On the exchange floor , `` as soon as UAL stopped trading , we braced for a panic , '' said one top floor trader . ");
+ // parser->printCYKTable();
 
   
  
