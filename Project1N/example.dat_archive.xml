@@ -245,7 +245,7 @@
 	<item>
 		<first>nt_NP</first>
 		<second>
-			<first>nt_NNP NNP</first>
+			<first>nt_NNP nt_NNP</first>
 			<second>0.045454545454545456</second>
 		</second>
 	</item>
@@ -266,56 +266,56 @@
 	<item>
 		<first>nt_NP</first>
 		<second>
-			<first>nt_PRP$ NP@</first>
+			<first>nt_PRP$ nt_NP@</first>
 			<second>0.18181818181818182</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_NP</first>
 		<second>
-			<first>nt_DT NP@</first>
+			<first>nt_DT nt_NP@</first>
 			<second>0.090909090909090912</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_NP</first>
 		<second>
-			<first>nt_JJ NNS</first>
+			<first>nt_JJ nt_NNS</first>
 			<second>0.045454545454545456</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_NP</first>
 		<second>
-			<first>nt_NP NP@</first>
+			<first>nt_NP nt_NP@</first>
 			<second>0.045454545454545456</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_NP</first>
 		<second>
-			<first>nt_PRP$ NN</first>
+			<first>nt_PRP$ nt_NN</first>
 			<second>0.045454545454545456</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_NP</first>
 		<second>
-			<first>nt_NP NN</first>
+			<first>nt_NP nt_NN</first>
 			<second>0.045454545454545456</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_NP</first>
 		<second>
-			<first>nt_DT NN</first>
+			<first>nt_DT nt_NN</first>
 			<second>0.13636363636363635</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_NP</first>
 		<second>
-			<first>nt_NP PP</first>
+			<first>nt_NP nt_PP</first>
 			<second>0.045454545454545456</second>
 		</second>
 	</item>
@@ -329,63 +329,63 @@
 	<item>
 		<first>nt_NP@</first>
 		<second>
-			<first>nt_NN NN</first>
+			<first>nt_NN nt_NN</first>
 			<second>0.16666666666666666</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_NP@</first>
 		<second>
-			<first>nt_JJ NP@</first>
+			<first>nt_JJ nt_NP@</first>
 			<second>0.083333333333333329</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_NP@</first>
 		<second>
-			<first>nt_NN NP@</first>
+			<first>nt_NN nt_NP@</first>
 			<second>0.083333333333333329</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_NP@</first>
 		<second>
-			<first>nt_JJ NN</first>
+			<first>nt_JJ nt_NN</first>
 			<second>0.25</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_NP@</first>
 		<second>
-			<first>nt_, &apos;&apos;</first>
+			<first>nt_, nt_&apos;&apos;</first>
 			<second>0.083333333333333329</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_NP@</first>
 		<second>
-			<first>nt_NP NP@</first>
+			<first>nt_NP nt_NP@</first>
 			<second>0.083333333333333329</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_NP@</first>
 		<second>
-			<first>nt_`` NP@</first>
+			<first>nt_`` nt_NP@</first>
 			<second>0.083333333333333329</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_NP@</first>
 		<second>
-			<first>nt_, NP@</first>
+			<first>nt_, nt_NP@</first>
 			<second>0.083333333333333329</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_NP@</first>
 		<second>
-			<first>nt_NN POS</first>
+			<first>nt_NN nt_POS</first>
 			<second>0.083333333333333329</second>
 		</second>
 	</item>
@@ -399,14 +399,14 @@
 	<item>
 		<first>nt_PP</first>
 		<second>
-			<first>nt_IN SBAR</first>
+			<first>nt_IN nt_SBAR</first>
 			<second>0.16666666666666666</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_PP</first>
 		<second>
-			<first>nt_IN NP</first>
+			<first>nt_IN nt_NP</first>
 			<second>0.83333333333333337</second>
 		</second>
 	</item>
@@ -469,133 +469,133 @@
 	<item>
 		<first>nt_S</first>
 		<second>
-			<first>nt_NP S@</first>
+			<first>nt_NP nt_S@</first>
 			<second>0.083333333333333329</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_S</first>
 		<second>
-			<first>nt_NP VP</first>
+			<first>nt_NP nt_VP</first>
 			<second>0.58333333333333337</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_S</first>
 		<second>
-			<first>nt_S S@</first>
+			<first>nt_S nt_S@</first>
 			<second>0.16666666666666666</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_S</first>
 		<second>
-			<first>nt_S%%%%%VP S@</first>
+			<first>nt_S%%%%%VP nt_S@</first>
 			<second>0.083333333333333329</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_S</first>
 		<second>
-			<first>nt_PP S@</first>
+			<first>nt_PP nt_S@</first>
 			<second>0.083333333333333329</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_S%%%%%VP</first>
 		<second>
-			<first>nt_VBN PP</first>
+			<first>nt_VBN nt_PP</first>
 			<second>0.5</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_S%%%%%VP</first>
 		<second>
-			<first>nt_TO VP</first>
+			<first>nt_TO nt_VP</first>
 			<second>0.5</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_S@</first>
 		<second>
-			<first>nt_VP .</first>
+			<first>nt_VP nt_.</first>
 			<second>0.27272727272727271</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_S@</first>
 		<second>
-			<first>nt_S .</first>
+			<first>nt_S nt_.</first>
 			<second>0.090909090909090912</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_S@</first>
 		<second>
-			<first>nt_CC S@</first>
+			<first>nt_CC nt_S@</first>
 			<second>0.090909090909090912</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_S@</first>
 		<second>
-			<first>nt_, S@</first>
+			<first>nt_, nt_S@</first>
 			<second>0.27272727272727271</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_S@</first>
 		<second>
-			<first>nt_RB S</first>
+			<first>nt_RB nt_S</first>
 			<second>0.090909090909090912</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_S@</first>
 		<second>
-			<first>nt_NP S@</first>
+			<first>nt_NP nt_S@</first>
 			<second>0.18181818181818182</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_SBAR</first>
 		<second>
-			<first>nt_WHNP S</first>
+			<first>nt_WHNP nt_S</first>
 			<second>0.20000000000000001</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_SBAR</first>
 		<second>
-			<first>nt_IN S</first>
+			<first>nt_IN nt_S</first>
 			<second>0.59999999999999998</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_SBAR</first>
 		<second>
-			<first>nt_SBAR SBAR@</first>
+			<first>nt_SBAR nt_SBAR@</first>
 			<second>0.20000000000000001</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_SBAR@</first>
 		<second>
-			<first>nt_CC SBAR</first>
+			<first>nt_CC nt_SBAR</first>
 			<second>0.25</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_SBAR@</first>
 		<second>
-			<first>nt_, SBAR@</first>
+			<first>nt_, nt_SBAR@</first>
 			<second>0.5</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_SBAR@</first>
 		<second>
-			<first>nt_SBAR SBAR@</first>
+			<first>nt_SBAR nt_SBAR@</first>
 			<second>0.25</second>
 		</second>
 	</item>
@@ -693,7 +693,7 @@
 	<item>
 		<first>nt_VP</first>
 		<second>
-			<first>nt_VBZ NP</first>
+			<first>nt_VBZ nt_NP</first>
 			<second>0.071428571428571425</second>
 		</second>
 	</item>
@@ -707,14 +707,14 @@
 	<item>
 		<first>nt_VP</first>
 		<second>
-			<first>nt_VBZ PP</first>
+			<first>nt_VBZ nt_PP</first>
 			<second>0.071428571428571425</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_VP</first>
 		<second>
-			<first>nt_VBZ ADVP</first>
+			<first>nt_VBZ nt_ADVP</first>
 			<second>0.071428571428571425</second>
 		</second>
 	</item>
@@ -728,63 +728,63 @@
 	<item>
 		<first>nt_VP</first>
 		<second>
-			<first>nt_VBN VP</first>
+			<first>nt_VBN nt_VP</first>
 			<second>0.071428571428571425</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_VP</first>
 		<second>
-			<first>nt_VBD VP@</first>
+			<first>nt_VBD nt_VP@</first>
 			<second>0.071428571428571425</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_VP</first>
 		<second>
-			<first>nt_VBD PP</first>
+			<first>nt_VBD nt_PP</first>
 			<second>0.14285714285714285</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_VP</first>
 		<second>
-			<first>nt_VBD NP</first>
+			<first>nt_VBD nt_NP</first>
 			<second>0.071428571428571425</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_VP</first>
 		<second>
-			<first>nt_VB NP</first>
+			<first>nt_VB nt_NP</first>
 			<second>0.071428571428571425</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_VP</first>
 		<second>
-			<first>nt_VBG S%%%%%VP</first>
+			<first>nt_VBG nt_S%%%%%VP</first>
 			<second>0.071428571428571425</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_VP</first>
 		<second>
-			<first>nt_VBD VP</first>
+			<first>nt_VBD nt_VP</first>
 			<second>0.071428571428571425</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_VP</first>
 		<second>
-			<first>nt_VBD SBAR</first>
+			<first>nt_VBD nt_SBAR</first>
 			<second>0.071428571428571425</second>
 		</second>
 	</item>
 	<item>
 		<first>nt_VP@</first>
 		<second>
-			<first>nt_ADVP VP</first>
+			<first>nt_ADVP nt_VP</first>
 			<second>1</second>
 		</second>
 	</item>

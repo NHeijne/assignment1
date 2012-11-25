@@ -10,7 +10,7 @@
 
 using namespace std;
 
-#include "grammar.h"
+#include "Grammar.h"
 
 #include <vector>
 #include <string>
@@ -35,9 +35,8 @@ class CYKParser {
 
       /* methods */
       void parseLine(const string line);
-
       void printCYKTable();
-      
+      void reset();
 
     private:
       /* attributes and other stuff */
@@ -56,7 +55,7 @@ class CYKParser {
         bool backIsTerminal;
       };
       
-      // will be changed per line
+      // will be changed per to-be-parsed line
       vector<string> lineTerms;
       int nrTerms;      
       vector<vector<vector<tableEntry> > > CYKTable; //3D vector
@@ -68,9 +67,7 @@ class CYKParser {
       
       void CYKLine();
       void CYKLineBaseCase() ;
-
-
-      
+      void CYKLineRecursiveCase();
     
 };
 

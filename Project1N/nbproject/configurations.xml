@@ -7,6 +7,8 @@
                    kind="SOURCE_LOGICAL_FOLDER">
       <itemPath>CYKParser.h</itemPath>
       <itemPath>Grammar.h</itemPath>
+      <itemPath>TreeManager.cpp</itemPath>
+      <itemPath>TreeManager.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"

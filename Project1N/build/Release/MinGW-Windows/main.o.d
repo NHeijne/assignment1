@@ -349,7 +349,8 @@ build/Release/MinGW-Windows/Main.o: Main.cpp Grammar.h \
  c:/boost_1_52_0/boost/preprocessor/list/transform.hpp \
  c:/boost_1_52_0/boost/preprocessor/list/append.hpp \
  c:/boost_1_52_0/boost/type_traits/is_pod.hpp \
- c:/boost_1_52_0/boost/type_traits/is_scalar.hpp CYKParser.h grammar.h
+ c:/boost_1_52_0/boost/type_traits/is_scalar.hpp CYKParser.h \
+ TreeManager.h
 
 Grammar.h:
 
@@ -1079,4 +1080,4 @@ c:/boost_1_52_0/boost/type_traits/is_scalar.hpp:
 
 CYKParser.h:
 
-grammar.h:
+TreeManager.h:

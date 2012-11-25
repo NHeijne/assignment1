@@ -15,7 +15,6 @@ const string Grammar::nonTerminalSymbol = "nt_";
 Grammar::Grammar(string treeBankFile) {
   treeBankFileName = treeBankFile;
   archiveName = treeBankFileName + "_archive.xml";
-
 }
 
 /**
@@ -100,7 +99,7 @@ void Grammar::getRHSs(string LHS, vector<stringAndDouble>& RHSs) {
  * @return Vector with Pairs denoting <the left hand sides,  their accompanying probability (of LHS -> RHS)>
  *
  * Note: Intuitively each RHS should only have one LHS (?)
- * but this may not be true in practice
+ * but this is likely not  true in practice
  */
 void Grammar::getLHSs(string RHS, vector<stringAndDouble>& LHSs) {
   ruleRangeIterator = r2lTable.equal_range(RHS);
@@ -215,7 +214,7 @@ void Grammar::parseLineRecursively(const char * line, int linePos, stack <string
       if (stringLevelStack.top().second == RHS2.second) { // same level
         RHS1 = stringLevelStack.top();
         stringLevelStack.pop();
-        RHS1.first += " ";
+        RHS1.first += " " + nonTerminalSymbol;
       }
       else {
         RHS1.first = "";
