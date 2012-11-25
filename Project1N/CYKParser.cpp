@@ -123,9 +123,10 @@ void CYKParser::CYKLineRecursiveCase() {
             string RHS2 = Cs[c_i].nonTerm;
             myCFG->getLHSs(RHS1 + " " + RHS2, As);
             for (int a_i = 0; a_i < As.size(); a_i++) {
-              sAdded = true;             
               
               double prob = As[a_i].second * Bs[b_i].prob * Cs[c_i].prob;
+             
+              sAdded = true;
               vector <location> backsA_i;
               location locC_i = {split, end - 1, c_i};
               location locB_i = {begin - 1, split - 1, b_i};
@@ -133,8 +134,9 @@ void CYKParser::CYKLineRecursiveCase() {
               backsA_i.push_back(locC_i);
               tableEntry tEa = {As[a_i].first, prob, backsA_i, false};
               CYKTable[begin - 1][end - 1].push_back(tEa);
-              
+
               //cout << "added " << As[a_i].first << " --> " << RHS1 + " " + RHS2 << endl;
+                
             }
           }
         }
@@ -155,12 +157,14 @@ void CYKParser::CYKLineRecursiveCase() {
               myCFG->getLHSs(currentEntry.nonTerm, LHSsRec); // get all rules B --> A
 
               for (int l = 0; l < LHSsRec.size(); l++) { // for all B's
-                // add the rule B--> A always, not just if their combined probability is higher
+                // add the rule B--> A 
                 Grammar::stringAndDouble lhsCurrentEntry = LHSsRec[l];                
                 double recProb = lhsCurrentEntry.second * currentEntry.prob;
+                  
                 vector<location> backsRec;
                 backsRec.push_back(location{begin - 1, end - 1, k}); // k = index currentEntry
                 CYKTable[begin - 1][end - 1].push_back(tableEntry{lhsCurrentEntry.first, recProb, backsRec});
+                
               }
               if (LHSsRec.size() > 0) { // if some recursive nonterm was added
                 added = true;
