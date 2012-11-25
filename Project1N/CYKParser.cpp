@@ -121,12 +121,12 @@ void CYKParser::CYKLineRecursiveCase() {
             vector<Grammar::stringAndDouble> As;
             string RHS1 = Bs[b_i].nonTerm;
             string RHS2 = Cs[c_i].nonTerm;
-            myCFG->getLHSs(RHS1 + " " + RHS2, As);
+            myCFG->getLHSs(RHS1 + " " + RHS2, As); // get all rules A --> B C
+            
             for (int a_i = 0; a_i < As.size(); a_i++) {
-              
-              double prob = As[a_i].second * Bs[b_i].prob * Cs[c_i].prob;
-             
               sAdded = true;
+              double prob = As[a_i].second * Bs[b_i].prob * Cs[c_i].prob;
+              
               vector <location> backsA_i;
               location locC_i = {split, end - 1, c_i};
               location locB_i = {begin - 1, split - 1, b_i};
