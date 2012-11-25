@@ -1,0 +1,66 @@
+\documentclass[11pt,twocolumn]{article}
+
+\setlength\topmargin{-0.5in}
+\setlength\headsep{0in}
+\setlength\textheight{9.5in}
+
+\title{Elements of Language Processing and Learning\\Probabilistic Context-Free Parsing}
+
+\author{
+		\emph{Authors:}\\[0.2cm]
+		Agnes \textsc{van Belle} \small{ \emph{(10363130)}},\\ 
+		Norbert \textsc{Heijne} \small{ \emph{(10357769)}}
+		}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\newcommand{\tbf}{\textbf}
+\newcommand{\tit}{\textit}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+
+\begin{document}
+	\maketitle
+
+\section{Introduction}
+This report is for the course Elements of Language Processing and Learning. The goal of the assignment is to use a Probabilistic Context Free Grammar (PCFG) together with the CYK algorithm outfitted for probabilities to train a system on Context Free Grammar (CFG) trees that can then generate new trees from sentences. First, the training trees need to be parsed and transformed into a PCFG. Secondly, The generated PCFG is used to generate trees for the given test sentences and lastly the most likely tree is compared to the test tree for all sentences.
+
+The goal is to reconstruct the parses of training examples and to assign good parses to new unseen examples, building a robust grammar that captures our training examples and uses probability to deal with ambiguity in choosing from a set of possible parses \cite{slides2}.
+
+\section{PCFGs - Probabilistic Context Free Grammars}
+The amount of trees that can be generated from a sentence through bottom up parsing is very large and grows exponentially with the sentence length. Therefore it is required that the solution space is narrowed. The PCFG assigns probabilities to each side of the rules in the grammar which gives us a way to construct the trees under the PCFG and capture how likely each tree is \cite{slides2}.\\\\
+%citaat en extra info nodig
+
+The treebank that is used to train the system has been provided to us for this course. the treebank consists of binarized trees that are in Chomsky Normal Form. Though these trees still contain unary rules at the lowest branches of the trees, therefore they are handled as a special case in the CYK algorithm.
+
+%formele uitleg PCFG
+Formal definition of the PCFG \cite{slides2}:
+\begin{enumerate}
+\item A probabilistic Context Free Grammar (PCFG) is a five tuple $< W, N, N_1, R, P >$
+\item $W$ : Set of terminal symbols (i.e. words)
+\item $N$ : Set of non-terminal symbol $N_1, \ldots , N_n$ (i.e. labels)
+\item $N_1 \in N$ : Distinguished starting symbol
+\item $R$ : Set of rules, each has form $N_i \rightarrow C_j$, with $C_j$ a string of terminals and non-terminals. Each rule has probability $P (N_i \rightarrow C_j )$
+\item $P$ : a (probability) function assigning probabilities in range $[0, 1]$ to all rules such that $\forall X \in N \left[ \sum_{\beta \in V^*} P (X \rightarrow \beta) \right]$
+\end{enumerate}
+
+\section{CYK - Cocke–Younger–Kasami Algorithm}
+The CYK algorithm is a bottom up chart parsing algorithm, the simplest form PCFG is required to be in Chomsky Normal Form (CNF). Since our treebank still contains unary rules at the lowest branches and at one unary rule at the top ($TOP \rightarrow S$), these are handled by the algorithm as a special case.
+
+"The method works as follows. Let $G = (N, \Sigma , P, S)$ be a Chomsky normal form CFG with no $e$-production. A simple generalization works for non-CNF grammars as well. 
+
+Let $w = a_1 a_2 \cdots a_n$ be the input string which is to be parsed according to $G$. The essence of the algorithm is the construction of a triangular parse table. If we want one (or all) parses of $w$, we can use the parse table to construct these parses. \cite{cyk}"
+
+\section{Results and Analysis}
+
+\section{Conclusion}
+
+\bibliography{references}
+
+\bibliographystyle{Science}
+
+\end{document}
