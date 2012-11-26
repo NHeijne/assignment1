@@ -22,8 +22,8 @@ CYKParser::~CYKParser() {
 }
 
 void CYKParser::reset() {
-  nrTerms = 2;
-
+  allTOPs.clear();
+  
   if (CYKTable2 != NULL) {
     for (int i = 0; i < nrTerms; i++) {
       for (int j = 0; j < nrTerms; j++) {
@@ -33,43 +33,41 @@ void CYKParser::reset() {
     }
     delete[] CYKTable2;
   }
-
+  CYKTable2 = NULL;
+  
   nrTerms = 0;
   lineTerms.clear();
-  //CYKTable.clear();
-
-
-
-
 }
 
-void CYKParser::parseLine(const string givenLine) {
+bool CYKParser::parseLine(const string givenLine) {
   reset();
   line = givenLine;
   lineTerms = split(line);
-  //  for (int i = 0; i < lineTerms.size(); i++) {
-  //    cout << "***" << lineTerms[i] << "***" << endl;
-  //  }
-  // reserve space in CYKTable
   nrTerms = lineTerms.size();
+  cout << lineTerms.size() << endl;
+  cout << lineTerms[0] << endl;
+ // system("pause");
+  
+  if (nrTerms > maxTerms){
+    allTOPs.push_back(pair<string, RHSEntry>(Grammar::nonTerminalSymbol+"TOP", RHSEntry({emptyRHS, emptyRHS, 1, false})));
+    return false;
+  }
 
   CYKTable2 = new tableEntryMap*[nrTerms];
   for (int i = 0; i < nrTerms; i++) {
     CYKTable2[i] = new tableEntryMap[nrTerms];
   }
-
-  //  CYKTable.resize(nrTerms);
-  //  for (int i = 0; i < nrTerms; i++) {
-  //    CYKTable[i].resize(nrTerms);
-  //  }
   CYKLine();
+  return true;
 }
 
 void CYKParser::CYKLine() {
   location n = {-1, -1};
   emptyRHS = stringAndLocation({"", n});
+  
   CYKLineBaseCase();
-  CYKLineRecursiveCase();
+  if (nrTerms > 1)
+    CYKLineRecursiveCase();
 }
 
 void CYKParser::CYKLineBaseCase() {
@@ -125,7 +123,7 @@ void CYKParser::CYKLineRecursiveCase() {
       int end = (begin + span) - 1;
       for (int split = begin; split <= (end - 1); split++) {
 
-        cout << "begin: " << begin - 1 << " end: " << end - 1 << endl;
+        //cout << "begin: " << begin - 1 << " end: " << end - 1 << endl;
         // we do these indices minus 1 because or table starts at index 0
         tableEntryMap Bs = CYKTable2[begin - 1][split - 1];
         tableEntryMap Cs = CYKTable2[split][end - 1];
@@ -262,7 +260,7 @@ void CYKParser::writeTOPs(string fileName) {
   ofstream outputFile;
   outputFile.open(fileName.c_str(), ios_base::app);
 
-  outputFile << "TOPs:  for " << line << endl;
+  outputFile << "TOPs for \"" << line << "\"" << endl;
   int allTOPsSize = allTOPs.size();
   for (int i=0; i< allTOPsSize; i++) {
     outputFile << allTOPs[i].first << "(" << allTOPs[i].second.prob << ")";

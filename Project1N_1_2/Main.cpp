@@ -6,7 +6,9 @@
  */
 #include <iostream>
 #include <cstdio>
-
+#include <fstream>
+#include<string>
+#include<cstring>
 #include "Grammar.h"
 #include "CYKParser.h"
 #include "TreeManager.h"
@@ -18,13 +20,15 @@ using namespace std;
 /* header */
 class Main {
   public:
-    void readTreeBank();
-    void parse();
     void testStuff1();
     void askTreebankFilename();
+    void topsTestSentences();
+    void assignment2() ;
+    void askTestSentencesFilename();
 
-  private:
+ // private:
     string treebankFilename;
+    string testSentencesFilename;
     Grammar * myGrammar;
     CYKParser * parser;
 };
@@ -53,29 +57,51 @@ void Main::testStuff1() {
 //  }  cout << endl;
 
   parser = new CYKParser(myGrammar);
- parser->parseLine("Ms. Haag plays Elianti . ");
+  parser->parseLine("Ms. Haag plays Elianti . ");
 // parser->parseLine("He plays , and he plays superbly . ");
   // will consume too much memory (std::bad_alloc error):
   //parser->parseLine("On the exchange floor , `` as soon as UAL stopped trading , we braced for a panic , '' said one top floor trader . ");
-  parser->writeTOPs("toptest.txt");
-
-  
- 
+  parser->writeTOPs("toptest.dat"); 
 }
 
-void Main::readTreeBank() {
 
-  // myGrammar = new Grammar(treebankFilename);
-  // myGrammar->init();
+void Main::topsTestSentences() {
+  cout << endl << "will write to toptest.dat" << endl;
 
+   try {
+    ifstream myfile(testSentencesFilename.c_str());
+    string line;
+
+    if (myfile.is_open()) {
+      int numberLines = 0;
+      while (getline(myfile, line)) {
+        if (!line.empty()) {
+          parser->parseLine(line);
+          parser->writeTOPs("toptest.dat"); 
+          numberLines++;
+          //if (numberLines % 100 == 0)
+            cout << "processed " << numberLines << " lines from test file" << endl;
+        }
+        line = "";
+      }
+      myfile.close();
+    }
+    else {
+      throw ("Unable to open test sentences file");
+    }
+  }
+  catch (const char * e) {
+    cerr << "Exception caught: " << e << endl;
+    exit(1);
+  }
 }
 
-void Main::parse() {
-  // CYKParser * parser = new CYKParser(grammar);
-  // parser->produceDerivations("On the exchange floor , `` as soon as UAL stopped trading , we braced for a panic , '' said one top floor trader .  ");
-  // parser->printDerivations();
+void Main::assignment2 () {
+  myGrammar = new Grammar("treebank.dat");
+  myGrammar->init();
+  parser = new CYKParser(myGrammar);
+  topsTestSentences();
 }
-
 void Main::askTreebankFilename() {
   cout  <<  "A treebank filename was not specified."                   << endl;
   cout  <<  "Enter the treebank filename. If you already have an "
@@ -89,19 +115,34 @@ void Main::askTreebankFilename() {
   } while(cin.fail());
 }
 
+void Main::askTestSentencesFilename() {
+  cout  <<  "A filename for the file containing the test sentences was not specified."  << endl;
+  cout  <<  "Enter the filename. "                                                      << endl;
+  do {
+    cin >> testSentencesFilename;
+    cin.ignore(100, '\n');
+    cin.clear();
+  } while(cin.fail());
+}
+
 int main(int argc, const char * argv[]) {
-
   Main * main = new Main();
-
+    
+  if (argc < 2) {
+    main->askTreebankFilename();
+  }
+  else {
+    main->treebankFilename.assign(argv[1]);
+  }
+  if (argc < 3) {
+    main->askTestSentencesFilename();
+  }
+  else {
+    main->testSentencesFilename.assign (argv[2]);
+  }
   
-  main->testStuff1();
+  main->assignment2();
 
-//  if (!argv[1]) {
-//    main->askTreebankFilename();
-//  }
-  // main->readTreeBank();
-   // main->parse();
   return 0;
-
 }
 

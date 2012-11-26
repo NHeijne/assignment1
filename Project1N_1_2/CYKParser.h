@@ -30,14 +30,15 @@ class CYKParser {
       
       // what seperates the terms/words in a sentence
       static const char termDelimiter = ' ';
-
+      static const int  maxTerms = 15;
+      
        /* constructors */
       CYKParser(Grammar * aGrammar);
       CYKParser(const CYKParser &orig);
       virtual ~CYKParser();
 
       /* methods */
-      void parseLine(const string givenLine);
+      bool parseLine(const string givenLine);
       void printCYKTable();
       void printTOPs();
       void writeTOPs(string fileName);
