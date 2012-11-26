@@ -51,15 +51,18 @@ class CYKParser {
       struct tableEntry {
         string nonTerm;
         double prob;
-        vector <location> backs;
+        location back1;
+        location back2;
         bool backIsTerminal;
       };
       
       // will be changed per to-be-parsed line
       vector<string> lineTerms;
       int nrTerms;      
-      vector<vector<vector<tableEntry> > > CYKTable; //3D vector
+     // vector<vector<vector<tableEntry> > > CYKTable; //3D vector
       vector<tableEntry> terminalEntries;
+
+      vector<tableEntry> * * CYKTable2;
 
       /* methods */
       void splitHelper(const string line, vector<string> &terms);
