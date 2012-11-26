@@ -16,6 +16,8 @@ using namespace std;
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <cmath>
+#include <fstream>
 
 #include <boost/unordered_map.hpp> 
 
@@ -35,15 +37,18 @@ class CYKParser {
       virtual ~CYKParser();
 
       /* methods */
-      void parseLine(const string line);
+      void parseLine(const string givenLine);
       void printCYKTable();
+      void printTOPs();
+      void writeTOPs(string fileName);
+      
       void reset();
 
     private:
       /* attributes and other stuff */
       Grammar * myCFG;
 
-
+      string line;
 
       struct location {
         int i;
@@ -58,8 +63,8 @@ class CYKParser {
       };
 
       typedef pair<string, location> stringAndLocation;
-      stringAndLocation emptyRHS; 
-     
+      stringAndLocation emptyRHS;
+
       typedef boost::unordered_map<string, RHSEntry> tableEntryMap;
       typedef boost::unordered_map<string, RHSEntry>::iterator cellIterator;
 
@@ -67,7 +72,7 @@ class CYKParser {
       vector<string> lineTerms;
       int nrTerms;      
       tableEntryMap * * CYKTable2;
-      
+      vector <pair<string, RHSEntry> > allTOPs;
 
       /* methods */
       void splitHelper(const string line, vector<string> &terms);

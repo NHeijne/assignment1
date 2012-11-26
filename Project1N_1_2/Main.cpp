@@ -31,7 +31,7 @@ class Main {
 
 /* implementation */
 void Main::testStuff1() {
-  myGrammar = new Grammar("example.dat");
+  myGrammar = new Grammar("treebank.dat");
   myGrammar->init();
 
  // myGrammar->save();
@@ -43,14 +43,10 @@ void Main::testStuff1() {
 //
 //  myGrammar->fillR2lTable();
 //
-//  vector<Grammar::stringAndDouble> LHSs = myGrammar->getLHS("VP NNP");
-//  for (int i = 0; i < LHSs.size(); i++) {
-//    cout << LHSs[i].first << " " << LHSs[i].second << endl;
-//  }  cout << endl;
-
- //myGrammar->printL2rTable();
+ 
+// myGrammar->printL2rTable();
 // cout <<"r 2 l: " << endl;
-// myGrammar->printR2lTable();
+ //myGrammar->printR2lTable();
 //  vector<Grammar::stringAndDouble> LHSs = myGrammar->getRHSs("NP");
 //  for (int i = 0; i < LHSs.size(); i++) {
 //    cout << LHSs[i].first << " " << LHSs[i].second << endl;
@@ -58,10 +54,10 @@ void Main::testStuff1() {
 
   parser = new CYKParser(myGrammar);
  parser->parseLine("Ms. Haag plays Elianti . ");
- // parser->parseLine("He plays , and he plays superbly . ");
+// parser->parseLine("He plays , and he plays superbly . ");
   // will consume too much memory (std::bad_alloc error):
   //parser->parseLine("On the exchange floor , `` as soon as UAL stopped trading , we braced for a panic , '' said one top floor trader . ");
-  parser->printCYKTable();
+  parser->writeTOPs("toptest.txt");
 
   
  

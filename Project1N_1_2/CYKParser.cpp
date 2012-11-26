@@ -1,9 +1,7 @@
 
 #include "CYKParser.h"
 
-
-
-CYKParser::CYKParser(Grammar * aGrammar)  {
+CYKParser::CYKParser(Grammar * aGrammar) {
   myCFG = aGrammar;
   CYKTable2 = NULL;
 
@@ -16,7 +14,7 @@ CYKParser::CYKParser(const CYKParser &orig) {
 CYKParser::~CYKParser() {
   for (int i = 0; i < nrTerms; i++) {
     for (int j = 0; j < nrTerms; j++) {
-      tableEntryMap ().swap(CYKTable2[i][j]); // deletes content from memory
+      tableEntryMap().swap(CYKTable2[i][j]); // deletes content from memory
     }
     delete[] CYKTable2[i];
   }
@@ -29,7 +27,7 @@ void CYKParser::reset() {
   if (CYKTable2 != NULL) {
     for (int i = 0; i < nrTerms; i++) {
       for (int j = 0; j < nrTerms; j++) {
-        tableEntryMap ().swap(CYKTable2[i][j]);
+        tableEntryMap().swap(CYKTable2[i][j]);
       }
       delete[] CYKTable2[i];
     }
@@ -39,15 +37,15 @@ void CYKParser::reset() {
   nrTerms = 0;
   lineTerms.clear();
   //CYKTable.clear();
- 
+
 
 
 
 }
 
-void CYKParser::parseLine(const string line) {
+void CYKParser::parseLine(const string givenLine) {
   reset();
-
+  line = givenLine;
   lineTerms = split(line);
   //  for (int i = 0; i < lineTerms.size(); i++) {
   //    cout << "***" << lineTerms[i] << "***" << endl;
@@ -83,43 +81,38 @@ void CYKParser::CYKLineBaseCase() {
     //cout << "Nr LHS's for " << lineTerms[i] << ": " << LHSs.size() << endl;
 
     bool sAdded = false;
-    int firstAddedIndex = CYKTable2[i][i].size(); // from which index to check for recursion
+    
     int LHSsSize = LHSs.size();
     for (int j = 0; j < LHSsSize; j++) { // for each A_j(LHS), add it to table
       //cout << "Processed LHS " << j << endl;
       sAdded = true;
-
       location back1 = (location{i, -1}); // but the terminal is the "back" of A_j
-      CYKTable2[i][i][LHSs[j].first] = RHSEntry({stringAndLocation(lineTerms[i], back1), emptyRHS, LHSs[j].second , true}); // true = backIsTerminal
+      CYKTable2[i][i][LHSs[j].first] = RHSEntry({stringAndLocation(lineTerms[i], back1), emptyRHS, LHSs[j].second, true}); // true = backIsTerminal
     }
 
     // handle unaries
     if (sAdded) {
-      int cellSize = CYKTable2[i][i].size();
       int k = 0;
-
       while (k < LHSsSize) { // for each added entry to this cell
 
         vector<Grammar::stringAndDouble> LHSsRec;
-       
         myCFG->getLHSs(LHSs[k].first, LHSsRec); // get all rules B --> A
 
         int LHSsRecSize = LHSsRec.size();
         for (int l = 0; l < LHSsRecSize; l++) { // for all B's
           // add the rule B--> A always, not just if their combined probability is higher
           Grammar::stringAndDouble lhsCurrentEntry = LHSsRec[l];
-          double recProb = lhsCurrentEntry.second *  CYKTable2[i][i][LHSs[k].first].prob;
+          double recProb = lhsCurrentEntry.second * CYKTable2[i][i][LHSs[k].first].prob;
           double prob = LHSs[k].second;
-          if (recProb >  prob) {
+          if (recProb > prob) {
             prob = recProb;
           }
           location back1 = (location{i, i}); // k = index currentEntry
-          CYKTable2[i][i][lhsCurrentEntry.first] = RHSEntry({stringAndLocation({LHSs[k].first, back1}), emptyRHS, recProb, false});  //(tableEntry{lhsCurrentEntry.first, recProb, back1,      {-1, -1, -1}, false});
+          CYKTable2[i][i][lhsCurrentEntry.first] = RHSEntry({stringAndLocation({LHSs[k].first, back1}), emptyRHS, recProb, false});
           LHSs.push_back(Grammar::stringAndDouble(lhsCurrentEntry.first, prob));
           LHSsSize++;
         }
         k++;
-        //cout << endl;
       }
     }
   }
@@ -138,78 +131,85 @@ void CYKParser::CYKLineRecursiveCase() {
         tableEntryMap Cs = CYKTable2[split][end - 1];
 
         // this is needed for recursive case
-        bool sAdded = false;
-        int firstAddedIndex = CYKTable2[begin - 1][end - 1].size(); // from which index to check for recursion
-
+        bool sAdded = false;       
 
         cellIterator iteratorB;
         cellIterator iteratorC;
-
-
         for (iteratorB = Bs.begin(); iteratorB != Bs.end(); iteratorB++) {
           for (iteratorC = Cs.begin(); iteratorC != Cs.end(); iteratorC++) {
+            vector<Grammar::stringAndDouble> addedToCell;
 
             vector<Grammar::stringAndDouble> As;
             string RHS1 = iteratorB->first;
             string RHS2 = iteratorC->first; // Cs[c_i].nonTerm;
             myCFG->getLHSs(RHS1 + " " + RHS2, As); // get all rules A --> B C
-
             int AsSize = As.size();
+
             for (int a_i = 0; a_i < AsSize; a_i++) {
               sAdded = true;
+
               double prob = As[a_i].second * iteratorB->second.prob * iteratorC->second.prob;
-              
+
               location locC_i = {split, end - 1};
               location locB_i = {begin - 1, split - 1};
-              
-              RHSEntry rightEntry = {stringAndLocation({iteratorB->first, locB_i}), stringAndLocation({iteratorC->first, locC_i}), prob, false};
-              
+
+              RHSEntry rightEntry = {stringAndLocation({iteratorB->first, locB_i}), stringAndLocation( {iteratorC->first, locC_i}), prob, false};
+
               cellIterator findA_i = CYKTable2[begin - 1][end - 1].find(As[a_i].first);
               if (findA_i != CYKTable2[begin - 1][end - 1].end()) { // element exists already
-                if (findA_i->second.prob <  As[a_i].second) {
-                  CYKTable2[begin - 1][end - 1].erase(findA_i); // delete element
-                  CYKTable2[begin - 1][end - 1][As[a_i].first] = rightEntry;
+                if (findA_i->second.prob < As[a_i].second) { // if probability is higher                 
+                  findA_i->second = rightEntry; // swap right hand side entry
                 }
               }
               else {
                 CYKTable2[begin - 1][end - 1][As[a_i].first] = rightEntry;
+                addedToCell.push_back(Grammar::stringAndDouble({As[a_i].first, prob}));
               }
 
-              //cout << "added " << As[a_i].first << " --> " << RHS1 + " " + RHS2 << endl;
+            }
 
+            if ((begin - 1) == 0 && ((end - 1) == (nrTerms - 1)) && sAdded) {
+              int k = 0;
+              int addedToCellSize = addedToCell.size();
+              while (k < addedToCellSize) { // for each added entry to this cell
+                vector<Grammar::stringAndDouble> LHSsRec;
+
+                myCFG->getLHSs(addedToCell[k].first, LHSsRec); // get all rules B --> A
+
+                int LHSsRecSize = LHSsRec.size();
+                for (int l = 0; l < LHSsRecSize; l++) { // for all B's
+                  // add the rule B--> A always, not just if their combined probability is higher
+                  Grammar::stringAndDouble lhsCurrentEntry = LHSsRec[l];
+
+                  double recProb = lhsCurrentEntry.second * CYKTable2[begin - 1][end - 1][addedToCell[k].first].prob;
+                  double prob = addedToCell[k].second;
+                  if (recProb > prob) {
+                    prob = recProb;
+                  }
+                  location back1 = (location{begin - 1, end - 1});
+                  RHSEntry rightEntry = RHSEntry({stringAndLocation({addedToCell[k].first, back1}), emptyRHS, recProb, false});
+
+                  cellIterator findAdded_i = CYKTable2[begin - 1][end - 1].find(LHSsRec[l].first);
+
+                  if (findAdded_i != CYKTable2[begin - 1][end - 1].end()) { // element exists already
+                    if (findAdded_i->second.prob < LHSsRec[l].second) { // if probability is higher                     
+                      findAdded_i->second = rightEntry; // swap right hand side entry
+                    }
+                  }
+                  else {
+                    CYKTable2[begin - 1][end - 1][LHSsRec[l].first] = rightEntry;
+                    addedToCell.push_back(Grammar::stringAndDouble({LHSsRec[l].first, prob}));
+                    addedToCellSize++;
+                  }
+                  if (LHSsRec[l].first == Grammar::nonTerminalSymbol + "TOP") {
+                    allTOPs.push_back(pair<string, RHSEntry>(LHSsRec[l].first,rightEntry ));
+                  }
+                }
+                k++;               
+              }
             }
           }
         }
-//        // handle unaries
-//        /* actually should only be necessary for cell (0, nrTerms-1)!!
-//           however we could, just to be sure, do for every cell ?
-//         */
-//        if (sAdded && (begin - 1) == 0 && (end - 1) == nrTerms - 1) { // if some nonterm was added in that cell this iteration
-//          bool added = true;
-//          int k = firstAddedIndex;
-//          int cellSize = CYKTable2[begin - 1][end - 1].size();
-//          cout << "sAdded = true, index is " << firstAddedIndex << " table size is " << cellSize << endl;
-//
-//          while (k < cellSize) { // for each entry in table (note CYKTable may grow inside loop)
-//
-//            vector<Grammar::stringAndDouble> LHSsRec;
-//            tableEntry currentEntry = CYKTable2[begin - 1][end - 1][k];
-//            myCFG->getLHSs(currentEntry.nonTerm, LHSsRec); // get all rules B --> A
-//
-//            int LHSsRecSize = LHSsRec.size();
-//            for (int l = 0; l < LHSsRecSize; l++) { // for all B's
-//              // add the rule B--> A
-//              Grammar::stringAndDouble lhsCurrentEntry = LHSsRec[l];
-//              double recProb = lhsCurrentEntry.second * currentEntry.prob;
-//
-//              location back1 = (location{begin - 1, end - 1, k}); // k = index currentEntry
-//              CYKTable2[begin - 1][end - 1].push_back(tableEntry{lhsCurrentEntry.first, recProb, back1,
-//                {-1, -1, -1}, false});
-//              cellSize++;
-//            }
-//            k++;
- //         }
- //       }
       }
     }
   }
@@ -218,31 +218,64 @@ void CYKParser::CYKLineRecursiveCase() {
 void CYKParser::printCYKTable() {
   cellIterator iterator;
 
+  cout << "Table: " << endl;
   for (int i = 0; i < nrTerms; i++) {
     for (int j = 0; j < nrTerms; j++) {
       cout << "At cell " << i << ", " << j << ": ";
-
       for (iterator = CYKTable2[i][j].begin(); iterator != CYKTable2[i][j].end(); iterator++) {
-      
         if (iterator != CYKTable2[i][j].begin()) {
           cout << ", ";
         }
-        // print backs        
         cout << iterator->first << "(" << iterator->second.prob << ")";
+         // print backs
         cout << "(";
         cout << "(" << iterator->second.RHS1.first << " " << iterator->second.RHS1.second.i << " " << iterator->second.RHS1.second.j << ")";
         if (iterator->second.RHS2.first != "") {
           cout << "(" << iterator->second.RHS2.first << " " << iterator->second.RHS2.second.i << " " << iterator->second.RHS2.second.j << ")";
-        }       
+        }
         cout << ")";
       }
       cout << endl;
     }
     cout << endl;
-
-
   }
 
+}
+
+void CYKParser::printTOPs() {
+  cout << "TOPs: " << endl;
+  int allTOPsSize = allTOPs.size();
+  for (int i=0; i< allTOPsSize; i++) {
+    cout << allTOPs[i].first << "(" << allTOPs[i].second.prob << ")";
+    // print backs
+    cout << "(";
+    cout << "(" << allTOPs[i].second.RHS1.first << " " << allTOPs[i].second.RHS1.second.i << " " << allTOPs[i].second.RHS1.second.j << ")";
+    if ( allTOPs[i].second.RHS2.first != "") {
+      cout << "(" << allTOPs[i].second.RHS2.first << " " << allTOPs[i].second.RHS2.second.i << " " << allTOPs[i].second.RHS2.second.j << ")";
+    }
+    cout << ")" << endl;
+  }
+}
+
+void CYKParser::writeTOPs(string fileName) {
+
+  ofstream outputFile;
+  outputFile.open(fileName.c_str(), ios_base::app);
+
+  outputFile << "TOPs:  for " << line << endl;
+  int allTOPsSize = allTOPs.size();
+  for (int i=0; i< allTOPsSize; i++) {
+    outputFile << allTOPs[i].first << "(" << allTOPs[i].second.prob << ")";
+    // print backs
+    outputFile << "(";
+    outputFile << "(" << allTOPs[i].second.RHS1.first << " " << allTOPs[i].second.RHS1.second.i << " " << allTOPs[i].second.RHS1.second.j << ")";
+    if ( allTOPs[i].second.RHS2.first != "") {
+      outputFile << "(" << allTOPs[i].second.RHS2.first << " " << allTOPs[i].second.RHS2.second.i << " " << allTOPs[i].second.RHS2.second.j << ")";
+    }
+    outputFile << ")" << endl ;
+  }
+  outputFile << endl;
+  outputFile.close();
 }
 
 void CYKParser::splitHelper(const string line, vector<string> &terms) {

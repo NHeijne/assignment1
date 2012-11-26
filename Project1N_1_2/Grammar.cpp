@@ -156,6 +156,7 @@ void Grammar::fillR2lTableFromL2rTable() {
  */
 void Grammar::insertL2rTable(string key, string valueString) {
 
+
   ruleRangeIterator = l2rTable.equal_range(key);
 
   if (ruleRangeIterator.first == ruleRangeIterator.second) { // LHS didnt occur yet
@@ -205,7 +206,7 @@ void Grammar::parseLineRecursively(const char * line, int linePos, stack <string
     linePos++;
     nextChar = line[linePos];
   }
-  if ((linePos >= strlen(line) - 1) || !validCharacter(nextChar)) // check for e.g. tab-characters in input file
+  if ((linePos >= strlen(line) - 1) ) //|| !validCharacter(nextChar)) // check for e.g. tab-characters in input file
     return;
   else {
     if (nextChar == ')') { // ========> non-terminal rule (RHS end) found
@@ -283,14 +284,17 @@ void Grammar::readGrammar(bool print) {
 
     if (myfile.is_open()) {
       int numberLines = 0;
-      while (!myfile.eof()) {
-        getline(myfile, line);
+      while (getline(myfile, line)) {
         if (!line.empty()) {
+          //cout << line << endl;
+         // system("pause");
+          line.append(" ");
           parseLine(line);
           numberLines++;
           if (print && numberLines % 100 == 0)
             cout << "processed " << numberLines << " lines " << endl;
         }
+        line = "";
       }
       myfile.close();
     }
