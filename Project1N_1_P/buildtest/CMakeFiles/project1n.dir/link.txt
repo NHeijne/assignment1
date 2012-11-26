@@ -1,1 +1,0 @@
-/usr/lib64/ccache/c++   -O3 -DNDEBUG   CMakeFiles/project1n.dir/Main.cpp.o CMakeFiles/project1n.dir/Grammar.cpp.o CMakeFiles/project1n.dir/CYKParser.cpp.o  -o project1n -rdynamic -lboost_serialization-mt 
