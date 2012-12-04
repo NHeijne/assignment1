@@ -206,7 +206,7 @@ void Grammar::parseLineRecursively(const char * line, int linePos, stack <string
     linePos++;
     nextChar = line[linePos];
   }
-  if ((linePos >= strlen(line) - 1) ) //|| !validCharacter(nextChar)) // check for e.g. tab-characters in input file
+  if ((linePos >= strlen(line) - 1) || !validCharacter(nextChar)) // check for e.g. tab-characters in input file
     return;
   else {
     if (nextChar == ')') { // ========> non-terminal rule (RHS end) found

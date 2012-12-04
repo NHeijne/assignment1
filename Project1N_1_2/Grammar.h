@@ -52,7 +52,7 @@ class Grammar {
     // so we can distinguish between terminals and nonterminals
     // (is convenient for in CYKParser)
     static const string nonTerminalSymbol; /* nt_ */
-    
+   
     /* constructors */
     Grammar(string treeBankFile);
     Grammar(const Grammar& orig);

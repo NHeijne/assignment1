@@ -19,11 +19,14 @@ using namespace std;
 #include <cmath>
 #include <fstream>
 
+#include "tree.hh" 
 #include <boost/unordered_map.hpp> 
 
 
 
 class CYKParser {
+
+  struct location;
 
     public:
       /* attributes and other stuff */
@@ -45,11 +48,14 @@ class CYKParser {
       
       void reset();
 
+      void recTree(tree<string>& myTree, tree<string>::iterator node, location locLHS, string lhsString);
+      void makeTree();
+
+      void getTree(tree<string>&);
+      
     private:
       /* attributes and other stuff */
       Grammar * myCFG;
-
-      string line;
 
       struct location {
         int i;
@@ -70,10 +76,12 @@ class CYKParser {
       typedef boost::unordered_map<string, RHSEntry>::iterator cellIterator;
 
       // will be changed per to-be-parsed line
+      string line;
       vector<string> lineTerms;
       int nrTerms;      
       tableEntryMap * * CYKTable2;
       vector <pair<string, RHSEntry> > allTOPs;
+      tree<string> myTree;
 
       /* methods */
       void splitHelper(const string line, vector<string> &terms);

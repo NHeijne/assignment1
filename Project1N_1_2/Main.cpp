@@ -12,6 +12,7 @@
 #include "Grammar.h"
 #include "CYKParser.h"
 #include "TreeManager.h"
+#include "tree.hh"
 
 using namespace std;
 
@@ -35,7 +36,7 @@ class Main {
 
 /* implementation */
 void Main::testStuff1() {
-  myGrammar = new Grammar("treebank.dat");
+  myGrammar = new Grammar("example.dat");
   myGrammar->init();
 
  // myGrammar->save();
@@ -57,11 +58,17 @@ void Main::testStuff1() {
 //  }  cout << endl;
 
   parser = new CYKParser(myGrammar);
-  parser->parseLine("Ms. Haag plays Elianti . ");
-// parser->parseLine("He plays , and he plays superbly . ");
+ // parser->parseLine("Ms. Haag plays Elianti . ");
+ parser->parseLine("He believes in what he plays , and he plays superbly . ");
   // will consume too much memory (std::bad_alloc error):
   //parser->parseLine("On the exchange floor , `` as soon as UAL stopped trading , we braced for a panic , '' said one top floor trader . ");
-  parser->writeTOPs("toptest.dat"); 
+  //parser->writeTOPs("toptest.dat");
+  parser->printCYKTable();
+  tree<string> thisTree;
+  parser->getTree(thisTree);
+  TreeManager::printTree(thisTree);
+  TreeManager::debinarize(thisTree);
+  TreeManager::printTree(thisTree);
 }
 
 
@@ -128,20 +135,22 @@ void Main::askTestSentencesFilename() {
 int main(int argc, const char * argv[]) {
   Main * main = new Main();
     
-  if (argc < 2) {
-    main->askTreebankFilename();
-  }
-  else {
-    main->treebankFilename.assign(argv[1]);
-  }
-  if (argc < 3) {
-    main->askTestSentencesFilename();
-  }
-  else {
-    main->testSentencesFilename.assign (argv[2]);
-  }
-  
-  main->assignment2();
+//  if (argc < 2) {
+//    main->askTreebankFilename();
+//  }
+//  else {
+//    main->treebankFilename.assign(argv[1]);
+//  }
+//  if (argc < 3) {
+//    main->askTestSentencesFilename();
+//  }
+//  else {
+//    main->testSentencesFilename.assign (argv[2]);
+//  }
+//
+//  main->assignment2();
+
+  main->testStuff1();
 
   return 0;
 }

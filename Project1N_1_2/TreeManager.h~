@@ -1,0 +1,31 @@
+/* 
+ * File:   TreeManager.h
+ * Author: agnes
+ *
+ * Created on November 25, 2012, 8:35 PM
+ */
+
+#ifndef TREEMANAGER_H
+#define	TREEMANAGER_H
+
+#include 
+#include "tree.hh" 
+
+class TreeManager {
+
+
+public:
+  
+  TreeManager();
+  TreeManager(const TreeManager& orig);
+  virtual ~TreeManager();
+
+  void makeTree(string parsedLine);
+  void debinarize(tree<string> myTree);
+
+private:
+
+};
+
+#endif	/* TREEMANAGER_H */
+
