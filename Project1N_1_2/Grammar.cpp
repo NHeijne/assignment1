@@ -8,6 +8,7 @@
 #include "Grammar.h"
 
 const string Grammar::nonTerminalSymbol = "nt_";
+const string Grammar::specialUnarySymbol = "%%%%%";
 
 /**
  * Constructor

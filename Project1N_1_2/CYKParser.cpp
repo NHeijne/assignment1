@@ -301,7 +301,7 @@ void CYKParser::makeTree() {
   string lhsString = Grammar::nonTerminalSymbol + "TOP" ;
   node = myTree.insert(node, lhsString);
   recTree(myTree, node, locLHS, lhsString);
-  //TreeManager::printTree(myTree);
+  
 }
 
 void CYKParser::recTree(tree<string>& myTree, tree<string>::iterator node, location locLHS, string lhsString){

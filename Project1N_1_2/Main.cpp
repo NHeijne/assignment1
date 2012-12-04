@@ -49,7 +49,7 @@ void Main::testStuff1() {
 //  myGrammar->fillR2lTable();
 //
  
-// myGrammar->printL2rTable();
+ myGrammar->printL2rTable();
 // cout <<"r 2 l: " << endl;
  //myGrammar->printR2lTable();
 //  vector<Grammar::stringAndDouble> LHSs = myGrammar->getRHSs("NP");
@@ -59,15 +59,18 @@ void Main::testStuff1() {
 
   parser = new CYKParser(myGrammar);
  // parser->parseLine("Ms. Haag plays Elianti . ");
- parser->parseLine("He believes in what he plays , and he plays superbly . ");
-  // will consume too much memory (std::bad_alloc error):
-  //parser->parseLine("On the exchange floor , `` as soon as UAL stopped trading , we braced for a panic , '' said one top floor trader . ");
+// parser->parseLine("He believes in what he plays , and he plays superbly . ");
+// parser->parseLine("He said that one of the computers took a three-foot trip sliding across the floor . ");
+  parser->parseLine("Exchange officials emphasized that the Big Board is considering a variety of actions to deal with program trading . ");
+
   //parser->writeTOPs("toptest.dat");
-  parser->printCYKTable();
+
+ parser->printCYKTable();
   tree<string> thisTree;
   parser->getTree(thisTree);
   TreeManager::printTree(thisTree);
   TreeManager::debinarize(thisTree);
+  TreeManager::removeSpecialUnaryRules(thisTree);
   TreeManager::printTree(thisTree);
 }
 

@@ -33,7 +33,7 @@ class CYKParser {
       
       // what seperates the terms/words in a sentence
       static const char termDelimiter = ' ';
-      static const int  maxTerms = 15;
+      static const int  maxTerms = 20;
       
        /* constructors */
       CYKParser(Grammar * aGrammar);

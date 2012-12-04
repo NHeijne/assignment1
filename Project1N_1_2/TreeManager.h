@@ -21,7 +21,8 @@ class TreeManager {
 
 
 public:
-  
+
+
   TreeManager(CYKParser * p);
   TreeManager(const TreeManager& orig);
   virtual ~TreeManager();
@@ -30,7 +31,8 @@ public:
 
   void addTree(const string line);
   static void debinarize(tree<string>& theTree);
-
+  static void removeSpecialUnaryRules(tree<string>& theTree);
+  
 private:
 
   CYKParser * parser;
