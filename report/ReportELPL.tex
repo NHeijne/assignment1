@@ -15,10 +15,9 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{float}
-\usepackage[numbers]{natbib}
-\usepackage{algpseudocode}
 \usepackage{algorithm}
-\usepackage{url}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
 
 \newcommand{\tbf}{\textbf}
 \newcommand{\tit}{\textit}
@@ -57,46 +56,49 @@ The CYK algorithm is a bottom up chart parsing algorithm, the simplest form PCFG
 
 Let $w = a_1 a_2 \cdots a_n$ be the input string which is to be parsed according to $G$. The essence of the algorithm is the construction of a triangular parse table. If we want one (or all) parses of $w$, we can use the parse table to construct these parses. \cite{cyk}"
 
-\section{Implementation}
-We first had the impression that we had to produce all possible derivations for a sentence. That is, we kept track of all left hand sides of a rule $A \rightarrow B, C$ in a cell in the CYK derivation table, even if a left hand side with a lower probability (but with a different right hand side) $A \rightarrow D, E$ was already added in that cell. However, using this implementation the heap needed more than $3$ GB of space for a sentence containing just $7$ terms. 
+% pseudocode CYK
 
-Regardless if this was the aim of the second part of the assignment or not, it was infeasible. Therefore, in our current implementation, we only keep track of the left hand side of a rule $A \rightarrow B, C$ in a cell if its probability is higher than a rule  $A \rightarrow D, E$ already there. This means we can not get equal trees (but with different probability) per level of the tree. However, because we still had to output all productions  $TOP \rightarrow \mathit{XP}$, we made an exception for the $TOP$ node. We do keep adding $TOP$ nodes even though the might already exist more than one.
 
-To distinguish terminals from non-terminals, we prefixed each non-terminal with ``nt\_''. The sets of terminals and non-terminals overlap, and this can cause problems when applying the recursive parts in the CYK algorithm.
 
-We did not parse sentences that did have more than $15$ terms. This was recommended, and the parsing procedure indeed consumed quite some time for sentences having more than $15$ terms. In our file containing the productions $TOP \rightarrow \mathit{X}$, these sentences are given the productions $TOP \rightarrow $ (and empty right hand side), because we did not implement these sentences having $POS$ tags yet.
+\section{Viterbi Algorithm}
+The Viterbi algorithm in the case of the CYK chart is storing back pointers to the right hand sides that are produced by the corresponding left hand side with the highest probability. In our case that means attaching a reference to the position(s) of the corresponding right hand side(s) in the CYK chart for every left hand side in each cell. Starting with the non-terminal \texttt{TOP}, the right hand side(s) are appended to \texttt{TOP} as children. The next left hand side(s) are looked up in the referred position(s), the corresponding right hand side(s) are then appended as children. The right hand side(s) are then looked up again in their referred position(s) and used as the next left hand side(s). This repeats itself until all right hand sides that are found through the back pointers are terminals.
 
-Our algorithm is almost exactly implemented as in \cite{ss}, except that we do not go through all possible rules  $A \rightarrow B$ (base case) or  $A \rightarrow B, C$ (recursive case), but look up the left hand side $A$ given $B$ or $B, C$, respectively.
+A more detailed description of how the tree is built with the back pointers in the form of pseudocode can be found in the appendix under algorithm \ref{viterbi}.
+\begin{algorithm}
+\caption{buildTree}
+\label{viterbi}
+\begin{algorithmic}[1]
+\Require tree $t$, table containing objects
+\Ensure each object contains: \\
+left hand side: $lhs1$\\right hand sides: $r1$, r2\\
+locations of right hand sides: $l1, l2$
+\\
+\State current object $c \gets$ \texttt{TOP} 
+\State next location $nl \gets l1$
+\State insert $lhs1$ of $c$ into $t$ as \texttt{root}
+\State position in the tree $p \gets$ \texttt{root}
+\State \Call{recursion}{$t, p, nl, r1$}
+\\
+\Procedure{recursion}{$t, p, l, lhs$}
+\State $c \gets$ object where $lhs=lhs1$ in $l$
+\State add child node with $r1$ to $p$ in tree $t$
+\State next position $np \gets$ child node
+\State \Call{recursion}{$t, np, l1, r1$} 
+\If{$r2$ is not empty}
+\State add child node with $r2$ to $p$ in tree $t$
+\State next position $np \gets$ child node
+\State \Call{recursion}{$t, np, l2, r2$} 
+\EndIf
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 
-%\begin{algorithm}
-%	\begin{algorithmic}
-%	\For {$i\geq maxval$}
-%	    \State $i\gets 0$
-%	\Else
-%	    \If {$i+k\leq maxval$}
-%	        \State $i\gets i+k$
-%	    \EndIf
-%	\EndIf
-%	\end{algorithmic}
-%\end{algorithm}
-
-\section{Results and Analysis} \label{randa}
-So far what we can see from the output for the test sentences are two things.
-
-First, it is noticeable that we didn't implement any smoothing method yet. Test sentences with terms that never occurred before, such as ``over-the-counter'' or a abbreviation as ``CNN'',  have no rules  $TOP \rightarrow \mathit{XP}$. These kind of terms simply have no left hand sides, and thus the derivation stops with them.
-We could also insert feature-based rules in the CFG.
-
-Second, we intend to use log-probabilities from now on, since the final probabilities  become very small easily. For example, a probability of $1.23372e-143$ is not uncommon. While so far, this seems to be handled fine, we can't be too sure about that. Furthermore, we simply waste space using these normal probabilities.
-
+\section{Results and Analysis}
 
 \section{Conclusion}
 
-We still need to implement the Viterbi algorithm and evaluate the results given that implementation using \emph{evalC} or \emph{evalB}, so we can not draw definite conclusions yet. Or plans thus far are in Section \ref{randa}.              
-
-\nocite{*}
-\bibliographystyle{plainnat}
 \bibliography{references}
 
-
+\bibliographystyle{Science}
 
 \end{document}
