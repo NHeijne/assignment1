@@ -1,5 +1,5 @@
 build/Release/MinGW-Windows/CYKParser.o: CYKParser.cpp CYKParser.h \
- grammar.h c:/boost_1_52_0/boost/archive/xml_oarchive.hpp \
+ Grammar.h c:/boost_1_52_0/boost/archive/xml_oarchive.hpp \
  c:/boost_1_52_0/boost/config.hpp c:/boost_1_52_0/boost/config/user.hpp \
  c:/boost_1_52_0/boost/config/select_compiler_config.hpp \
  c:/boost_1_52_0/boost/config/compiler/gcc.hpp \
@@ -353,7 +353,7 @@ build/Release/MinGW-Windows/CYKParser.o: CYKParser.cpp CYKParser.h \
 
 CYKParser.h:
 
-grammar.h:
+Grammar.h:
 
 c:/boost_1_52_0/boost/archive/xml_oarchive.hpp:
 

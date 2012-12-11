@@ -16,7 +16,8 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{algorithm}
-\usepackage{algorithmic}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
 
 \newcommand{\tbf}{\textbf}
 \newcommand{\tit}{\textit}
@@ -62,7 +63,35 @@ Let $w = a_1 a_2 \cdots a_n$ be the input string which is to be parsed according
 \section{Viterbi Algorithm}
 The Viterbi algorithm in the case of the CYK chart is storing back pointers to the right hand sides that are produced by the corresponding left hand side with the highest probability. In our case that means attaching a reference to the position(s) of the corresponding right hand side(s) in the CYK chart for every left hand side in each cell. Starting with the non-terminal \texttt{TOP}, the right hand side(s) are appended to \texttt{TOP} as children. The next left hand side(s) are looked up in the referred position(s), the corresponding right hand side(s) are then appended as children. The right hand side(s) are then looked up again in their referred position(s) and used as the next left hand side(s). This repeats itself until all right hand sides that are found through the back pointers are terminals.
 
-%A more detailed description in the form of pseudocode can be found in the appendix.
+A more detailed description of how the tree is built with the back pointers in the form of pseudocode can be found in the appendix under algorithm \ref{viterbi}.
+\begin{algorithm}
+\caption{buildTree}
+\label{viterbi}
+\begin{algorithmic}[1]
+\Require tree $t$, table containing objects
+\Ensure each object contains: \\
+left hand side: $lhs1$\\right hand sides: $r1$, r2\\
+locations of right hand sides: $l1, l2$
+\\
+\State current object $c \gets$ \texttt{TOP} 
+\State next location $nl \gets l1$
+\State insert $lhs1$ of $c$ into $t$ as \texttt{root}
+\State position in the tree $p \gets$ \texttt{root}
+\State \Call{recursion}{$t, p, nl, r1$}
+\\
+\Procedure{recursion}{$t, p, l, lhs$}
+\State $c \gets$ object where $lhs=lhs1$ in $l$
+\State add child node with $r1$ to $p$ in tree $t$
+\State next position $np \gets$ child node
+\State \Call{recursion}{$t, np, l1, r1$} 
+\If{$r2$ is not empty}
+\State add child node with $r2$ to $p$ in tree $t$
+\State next position $np \gets$ child node
+\State \Call{recursion}{$t, np, l2, r2$} 
+\EndIf
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 
 \section{Results and Analysis}
 

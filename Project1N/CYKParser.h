@@ -10,7 +10,7 @@
 
 using namespace std;
 
-#include "grammar.h"
+#include "Grammar.h"
 
 #include <vector>
 #include <string>
@@ -28,8 +28,6 @@ class CYKParser {
       // what seperates the terms/words in a sentence
       static const char termDelimiter = ' ';
 
-      vector<vector<vector<string>>> table; //3D vector
-
        /* constructors */
       CYKParser(Grammar * aGrammar);
       CYKParser(const CYKParser &orig);
@@ -37,23 +35,42 @@ class CYKParser {
 
       /* methods */
       void parseLine(const string line);
-
-      
+      void printCYKTable();
+      void reset();
 
     private:
       /* attributes and other stuff */
       Grammar * myCFG;
 
+      struct location {
+        int i;
+        int j;
+        int k;
+      };
+
       struct tableEntry {
         string nonTerm;
         double prob;
-        vector <tableEntry*> backs;
+        location back1;
+        location back2;
+        bool backIsTerminal;
       };
+      
+      // will be changed per to-be-parsed line
+      vector<string> lineTerms;
+      int nrTerms;      
+     // vector<vector<vector<tableEntry> > > CYKTable; //3D vector
+      vector<tableEntry> terminalEntries;
+
+      vector<tableEntry> * * CYKTable2;
 
       /* methods */
       void splitHelper(const string line, vector<string> &terms);
       vector<string> split(const string line);
-
+      
+      void CYKLine();
+      void CYKLineBaseCase() ;
+      void CYKLineRecursiveCase();
     
 };
 

@@ -7,10 +7,12 @@
 
 #include "Grammar.h"
 
+const string Grammar::nonTerminalSymbol = "nt_";
+
 /**
  * Constructor
  */
-Grammar::Grammar(string treeBankFile) { 
+Grammar::Grammar(string treeBankFile) {
   treeBankFileName = treeBankFile;
   archiveName = treeBankFileName + "_archive.xml";
 }
@@ -36,34 +38,37 @@ void Grammar::init(bool print /* = true */) {
   if (!archiveExists()) {
     cout << "Will read and process treebank file..." << endl;
     readGrammar(print);
+    cout << "Nr. rules: " << l2rTable.size() << endl;
     l2rTableCountToProbability();
     saveTreebankArchive();
+    fillR2lTableFromL2rTable();
   }
   else {
     cout << "Will load existing treebank file..." << endl;
-    loadTreebankArchive();
+    loadTreebankArchive();   
     cout << "Done loading." << endl;
+     cout << "Nr. rules: " << l2rTable.size() << endl;
     fillR2lTableFromL2rTable();
   }
 }
 
 bool Grammar::archiveExists() {
   fstream file;
-  file.open(archiveName.c_str(), ios_base::out | ios_base::in);  // will not create file
-  if (file.is_open())  {
+  file.open(archiveName.c_str(), ios_base::out | ios_base::in); // will not create file
+  if (file.is_open()) {
     file.close();
     return true;
   }
-  else  {
+  else {
     file.clear();
     return false;
   }
 }
 
 void Grammar::saveTreebankArchive() {
-  cout << "Writing treebank file to XML archive..."<< endl;
+  cout << "Writing treebank file to XML archive..." << endl;
   ofstream file(archiveName.c_str());
-  boost::archive::xml_oarchive outputArchive (file);
+  boost::archive::xml_oarchive outputArchive(file);
 
   // "&" has same effect as "<<" in outputArchive & BOOST_SERIALIZATION_NVP(l2rTable);
   // The macro BOOST_SERIALIZATION_NVP expands to  boost::serialization::make_nvp
@@ -82,14 +87,12 @@ void Grammar::loadTreebankArchive() {
  * @param string LHS
  * @return Vector with Pairs denoting <the right hand sides,  their accompanying probability (of LHS -> RHS)>
  */
-vector<Grammar::stringAndDouble> Grammar::getRHSs(string LHS) {
-  vector<stringAndDouble> result;
+void Grammar::getRHSs(string LHS, vector<stringAndDouble>& RHSs) {
   ruleRangeIterator = l2rTable.equal_range(LHS);
 
   for (ruleIterator = ruleRangeIterator.first; ruleIterator != ruleRangeIterator.second; ruleIterator++) {
-    result.push_back((*ruleIterator).second);
+    RHSs.push_back((*ruleIterator).second);
   }
-  return result;
 }
 
 /**
@@ -98,16 +101,14 @@ vector<Grammar::stringAndDouble> Grammar::getRHSs(string LHS) {
  * @return Vector with Pairs denoting <the left hand sides,  their accompanying probability (of LHS -> RHS)>
  *
  * Note: Intuitively each RHS should only have one LHS (?)
- * but this may not be true in practice
+ * but this is likely not  true in practice
  */
-vector<Grammar::stringAndDouble> Grammar::getLHSs(string RHS) {
-  vector<stringAndDouble> result;
+void Grammar::getLHSs(string RHS, vector<stringAndDouble>& LHSs) {
   ruleRangeIterator = r2lTable.equal_range(RHS);
 
   for (ruleIterator = ruleRangeIterator.first; ruleIterator != ruleRangeIterator.second; ruleIterator++) {
-    result.push_back((*ruleIterator).second);
+    LHSs.push_back((*ruleIterator).second);
   }
-  return result;
 }
 
 /**
@@ -215,13 +216,13 @@ void Grammar::parseLineRecursively(const char * line, int linePos, stack <string
       if (stringLevelStack.top().second == RHS2.second) { // same level
         RHS1 = stringLevelStack.top();
         stringLevelStack.pop();
-        RHS1.first += " ";
+        RHS1.first += " " + nonTerminalSymbol;
       }
       else {
         RHS1.first = "";
       }
       LHS = stringLevelStack.top(); //stringLevelStack.pop();
-      insertL2rTable(LHS.first, RHS1.first + RHS2.first);
+      insertL2rTable(nonTerminalSymbol + LHS.first, nonTerminalSymbol + RHS1.first + RHS2.first);
       //cout << "insert " << LHS.first << " ==> " << RHS1.first + RHS2.first << endl;
       return parseLineRecursively(line, linePos + 1, stringLevelStack, level - 1);
     }
@@ -248,7 +249,7 @@ void Grammar::parseLineRecursively(const char * line, int linePos, stack <string
       }
       //cout << "term: " << term << endl;
       string nonTerm = stringLevelStack.top().first;
-      insertL2rTable(nonTerm, term);
+      insertL2rTable(nonTerminalSymbol + nonTerm, term);
       //cout << "insert " << nonTerm << " ==> " << term << endl;
       return parseLineRecursively(line, linePos + 1, stringLevelStack, level - 1);
     }

@@ -5,9 +5,10 @@
                    displayName="Header Files"
                    projectFiles="true"
                    kind="SOURCE_LOGICAL_FOLDER">
-      <itemPath>CYKParser.cpp</itemPath>
       <itemPath>CYKParser.h</itemPath>
       <itemPath>Grammar.h</itemPath>
+      <itemPath>TreeManager.cpp</itemPath>
+      <itemPath>TreeManager.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -18,6 +19,7 @@
                    displayName="Source Files"
                    projectFiles="true"
                    kind="SOURCE_LOGICAL_FOLDER">
+      <itemPath>CYKParser.cpp</itemPath>
       <itemPath>Grammar.cpp</itemPath>
       <itemPath>Main.cpp</itemPath>
     </logicalFolder>
@@ -46,6 +48,7 @@
           <incDir>
             <pElem>C:/boost_1_52_0</pElem>
           </incDir>
+          <commandLine>-Wl,--stack,20011111 -Wl,--heap=300011111</commandLine>
         </ccTool>
         <linkerTool>
           <linkerAddLib>
@@ -73,6 +76,7 @@
           <incDir>
             <pElem>C:/boost_1_52_0</pElem>
           </incDir>
+          <commandLine>-Wl,--stack,400194304</commandLine>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>

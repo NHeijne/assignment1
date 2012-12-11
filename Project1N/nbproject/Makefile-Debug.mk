@@ -35,15 +35,16 @@ OBJECTDIR=build/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/CYKParser.o \
 	${OBJECTDIR}/Grammar.o \
-	${OBJECTDIR}/Main.o
+	${OBJECTDIR}/Main.o \
+	${OBJECTDIR}/TreeManager.o
 
 
 # C Compiler Flags
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=
-CXXFLAGS=
+CCFLAGS=-Wl,--stack,20011111 -Wl,--heap=300011111
+CXXFLAGS=-Wl,--stack,20011111 -Wl,--heap=300011111
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -76,6 +77,11 @@ ${OBJECTDIR}/Main.o: Main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -g -I/C/boost_1_52_0 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Main.o Main.cpp
+
+${OBJECTDIR}/TreeManager.o: TreeManager.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -I/C/boost_1_52_0 -MMD -MP -MF $@.d -o ${OBJECTDIR}/TreeManager.o TreeManager.cpp
 
 # Subprojects
 .build-subprojects:
