@@ -55,6 +55,15 @@ The CYK algorithm is a bottom up chart parsing algorithm, the simplest form PCFG
 
 Let $w = a_1 a_2 \cdots a_n$ be the input string which is to be parsed according to $G$. The essence of the algorithm is the construction of a triangular parse table. If we want one (or all) parses of $w$, we can use the parse table to construct these parses. \cite{cyk}"
 
+% pseudocode CYK
+
+
+
+\section{Viterbi Algorithm}
+The Viterbi algorithm in the case of the CYK chart is storing back pointers to the right hand sides that are produced by the corresponding left hand side with the highest probability. In our case that means attaching a reference to the position(s) of the corresponding right hand side(s) in the CYK chart for every left hand side in each cell. Starting with the non-terminal \texttt{TOP}, the right hand side(s) are appended to \texttt{TOP} as children. The next left hand side(s) are looked up in the referred position(s), the corresponding right hand side(s) are then appended as children. The right hand side(s) are then looked up again in their referred position(s) and used as the next left hand side(s). This repeats itself until all right hand sides that are found through the back pointers are terminals.
+
+%A more detailed description in the form of pseudocode can be found in the appendix.
+
 \section{Results and Analysis}
 
 \section{Conclusion}
