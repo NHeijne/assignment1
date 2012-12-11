@@ -1,6 +1,5 @@
 
 #include "CYKParser.h"
-#include "TreeManager.h"
 
 CYKParser::CYKParser(Grammar * aGrammar) {
   myCFG = aGrammar;

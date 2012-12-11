@@ -9,6 +9,7 @@
 #include <fstream>
 #include<string>
 #include<cstring>
+
 #include "Grammar.h"
 #include "CYKParser.h"
 #include "TreeManager.h"
@@ -65,13 +66,13 @@ void Main::testStuff1() {
 
   //parser->writeTOPs("toptest.dat");
 
- parser->printCYKTable();
-  tree<string> thisTree;
-  parser->getTree(thisTree);
-  TreeManager::printTree(thisTree);
-  TreeManager::debinarize(thisTree);
-  TreeManager::removeSpecialUnaryRules(thisTree);
-  TreeManager::printTree(thisTree);
+// parser->printCYKTable();
+//  tree<string> thisTree;
+//  parser->getTree(thisTree);
+//  TreeManager::printTree(thisTree);
+//  TreeManager::debinarize(thisTree);
+//  TreeManager::removeSpecialUnaryRules(thisTree);
+//  TreeManager::printTree(thisTree);
 }
 
 

@@ -6,10 +6,8 @@
  */
 
 #include "TreeManager.h"
-#include "CYKParser.h"
 
-
-
+using namespace std;
 
 TreeManager::TreeManager(CYKParser * p) {
   parser = p;

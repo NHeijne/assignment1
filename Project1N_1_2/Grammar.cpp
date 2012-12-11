@@ -9,6 +9,7 @@
 
 const string Grammar::nonTerminalSymbol = "nt_";
 const string Grammar::specialUnarySymbol = "%%%%%";
+const string Grammar::numberSymbol = "<[(number)]>";
 
 /**
  * Constructor
@@ -192,6 +193,19 @@ bool Grammar::validCharacter(char nextChar) {
   return !(static_cast<int> (nextChar) < 33 || static_cast<int> (nextChar) > 126);
 }
 
+
+bool Grammar::isNumber(string term) {
+  if (!isdigit(term[0])){
+    return false;
+  }
+  for (int i=1; i<term.size(); i++) {
+    if (!(isdigit(term[i])) && !(term[i]=='.') && !(term[i] == ',') ) {
+      return false;
+    }
+  }
+  return true;
+}
+
 /**
  * Parse a line, fill l2rTable accordingly
  * Recursive function
@@ -251,6 +265,9 @@ void Grammar::parseLineRecursively(const char * line, int linePos, stack <string
       }
       //cout << "term: " << term << endl;
       string nonTerm = stringLevelStack.top().first;
+      if (isNumber(term)) { // if its number, number-entry
+        term = Grammar::numberSymbol;
+      }
       insertL2rTable(nonTerminalSymbol + nonTerm, term);
       //cout << "insert " << nonTerm << " ==> " << term << endl;
       return parseLineRecursively(line, linePos + 1, stringLevelStack, level - 1);

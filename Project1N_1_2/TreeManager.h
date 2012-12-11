@@ -21,12 +21,14 @@ class TreeManager {
 
 
 public:
+  /* attributes and other stuff */
 
-
+  /* constructors */
   TreeManager(CYKParser * p);
   TreeManager(const TreeManager& orig);
   virtual ~TreeManager();
 
+  /* methods */
   static void printTree(tree<string> myTree);
 
   void addTree(const string line);
@@ -35,8 +37,11 @@ public:
   
 private:
 
+  /* attributes and other stuff */
   CYKParser * parser;
   vector <tree<string> > allTrees;
+
+  /* methods */
 
 };
 

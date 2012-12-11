@@ -401,7 +401,7 @@ build/Debug/MinGW-Windows/CYKParser.o: CYKParser.cpp CYKParser.h \
  c:/boost_1_52_0/boost/integer/static_log2.hpp \
  c:/boost_1_52_0/boost/functional/hash/extensions.hpp \
  c:/boost_1_52_0/boost/functional/hash/detail/container_fwd_0x.hpp \
- c:/boost_1_52_0/boost/detail/container_fwd.hpp TreeManager.h
+ c:/boost_1_52_0/boost/detail/container_fwd.hpp
 
 CYKParser.h:
 
@@ -1238,5 +1238,3 @@ c:/boost_1_52_0/boost/functional/hash/extensions.hpp:
 c:/boost_1_52_0/boost/functional/hash/detail/container_fwd_0x.hpp:
 
 c:/boost_1_52_0/boost/detail/container_fwd.hpp:
-
-TreeManager.h:

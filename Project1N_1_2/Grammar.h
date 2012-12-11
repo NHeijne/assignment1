@@ -20,6 +20,7 @@
 #include <cstdlib>
 #include <stack>
 #include <cstring>
+#include <cmath>
 
 #include <boost/archive/xml_oarchive.hpp>
 #include <boost/archive/xml_iarchive.hpp> 
@@ -53,7 +54,7 @@ class Grammar {
     // (is convenient for in CYKParser)
     static const string nonTerminalSymbol; /* nt_ */
     static const string specialUnarySymbol; /* %%%%% */
-    
+    static const string numberSymbol ;
     /* constructors */
     Grammar(string treeBankFile);
     Grammar(const Grammar& orig);
@@ -89,6 +90,7 @@ class Grammar {
     void parseLineRecursively(const char * line, int linePos, stack <stringAndInt>, int level);
     void insertL2rTable(string key, string valueString);
     bool validCharacter(char nextChar);
+    bool isNumber(string term);
     void l2rTableCountToProbability();
     void fillR2lTableFromL2rTable();
 
