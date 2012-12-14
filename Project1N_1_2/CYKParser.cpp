@@ -75,8 +75,10 @@ void CYKParser::CYKLineBaseCase() {
 
   for (int i = 0; i < nrTerms; i++) { // for each terminal
 
+    bool firstTerminal = (i==0);
     vector<Grammar::stringAndDouble> LHSs;
-    myCFG->getLHSs(lineTerms[i], LHSs, true); // true means it's a terminal. get all rules A_j --> terminal_i
+
+    myCFG->getLHSs(lineTerms[i], LHSs, true, firstTerminal); // true means it's a terminal. get all rules A_j --> terminal_i
     //cout << "Nr LHS's for " << lineTerms[i] << ": " << LHSs.size() << endl;
 
     bool sAdded = false;

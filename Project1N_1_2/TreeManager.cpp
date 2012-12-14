@@ -34,12 +34,50 @@ void TreeManager::printTree(tree<string> myTree) {
   }
 }
 
+string TreeManager::formatTree(tree<string> myTree) {
+
+  string treeString = "";
+  tree<string>::iterator it = myTree.begin();
+  tree<string>::iterator end = myTree.end();
+  int currentDepth = 0;
+  int previousDepth = 0;
+  while (it != end) {
+    string thing;
+    if (myTree.number_of_children(it) != 0) {
+      treeString += "(";
+    }
+    if (myTree.number_of_children(it) != 0) {
+      thing = (*it).substr(Grammar::nonTerminalSymbol.length(), (*it).length());
+    }
+    else {
+      thing = (*it);
+    }
+    treeString += thing;
+    if (myTree.number_of_children(it) != 0) {
+      treeString += " ";
+    }
+    previousDepth = myTree.depth(it);
+    it++;
+    currentDepth = myTree.depth(it);
+
+    for (int i = 0; i < previousDepth - currentDepth ; i++) {
+      if (currentDepth == 0 && i == (previousDepth - currentDepth - 1)) {
+        treeString += " ";
+      }
+      treeString += ")";
+    }
+    if (previousDepth - currentDepth > 0)
+      treeString += " ";
+  }
+  return treeString;
+}
+
 void TreeManager::debinarize(tree<string>& theTree) {
 
   //cout << "debinarize: " << endl;
 
   tree<string>::iterator it = theTree.begin();
-  while (it != theTree.end()) {  
+  while (it != theTree.end()) {
 
     if ((*it)[(*it).size() - 1] == '@') {//if '@' is at last in the name
       //cout << "has @: " << (*it) << endl;
@@ -81,14 +119,14 @@ void TreeManager::removeSpecialUnaryRules(tree<string>& theTree) {
       cout << (*it) << " has " << Grammar::specialUnarySymbol << endl;
 
       // retrieve A and B from nt_A%%%%%B
-      string str1 =  (*it).substr(0, pos);
-      string str2 = Grammar::nonTerminalSymbol + (*it).substr(pos+sizeSpecialUnarySymbol, string::npos);
+      string str1 = (*it).substr(0, pos);
+      string str2 = Grammar::nonTerminalSymbol + (*it).substr(pos + sizeSpecialUnarySymbol, string::npos);
       //cout << "str1: " << str1 << ", " << "str2: " << str2 << endl;
 
       // Make tree with root nt_B. nt_B's children will be nt_A%%%%%B's children.
       tree<string> tree2(it);
       tree<string>::iterator top2 = tree2.begin();
-      (*top2) = str2;      
+      (*top2) = str2;
       //cout << (*top2) << " has " << (*it) << " 's childs " << endl;
 
       // Make tree with root nt_A. nt_A's sole child will be nt_B.
@@ -106,7 +144,6 @@ void TreeManager::removeSpecialUnaryRules(tree<string>& theTree) {
     else {
       it++;
     }
-
   }
 
 }

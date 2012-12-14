@@ -66,7 +66,7 @@ public:
 
   /* methods */
   //void getRHSs(string LHS, vector<stringAndDouble>&);
-  void getLHSs(string RHS, vector<stringAndDouble>&, bool RHSisTerminal = false);
+  void getLHSs(string RHS, vector<stringAndDouble>&, bool RHSisTerminal = false, bool RHSisFirstTerminal = false);
 
   void printL2rTable();
   void printR2lTable();
@@ -125,6 +125,7 @@ private:
   void loadUnknownProbTable();
 
   void unknownProbTableCountToProbability();
+  void getLHSsUnknownTerm(string RHS, vector<stringAndDouble>& LHSs,  bool RHSisFirstTerminal );
 
 };
 

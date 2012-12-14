@@ -185,8 +185,8 @@ void Grammar::saveUnknownProbTable() {
  * @return Vector with Pairs denoting <the left hand sides,  their accompanying probability (of LHS -> RHS)>
  *
  */
-void Grammar::getLHSs(string RHS, vector<stringAndDouble>& LHSs, bool RHSisTerminal /* = false */) {
-  if (isNumber(RHS)) {
+void Grammar::getLHSs(string RHS, vector<stringAndDouble>& LHSs, bool RHSisTerminal /* = false */, bool RHSisFirstTerminal /* = false */) {
+  if (RHSisTerminal && isNumber(RHS)) {// it is a terminal and a number
     RHS = numberRHS;
   }
   ruleRangeIterator = r2lTable.equal_range(RHS);
@@ -194,15 +194,19 @@ void Grammar::getLHSs(string RHS, vector<stringAndDouble>& LHSs, bool RHSisTermi
   for (ruleIterator = ruleRangeIterator.first; ruleIterator != ruleRangeIterator.second; ruleIterator++) {
     LHSs.push_back((*ruleIterator).second);
   }
-  if (RHSisTerminal && LHSs.empty()) { // nothing found in r2lTable    
-    int capitalChoice = getCapitalChoicesNumber(RHS, false);
-    int suffixChoice = getSuffixChoicesNumber(RHS) ;
-    int hyphenChoice = getHyphenChoicesNumber(RHS);
+  if (RHSisTerminal && LHSs.empty()) { // it is a terminal but nothing found in r2lTable
+    getLHSsUnknownTerm(RHS, LHSs,  RHSisFirstTerminal) ;
+  }
+}
 
-    for(unknownProbLHSiterator = unknownProbTable[capitalChoice][suffixChoice][hyphenChoice].begin();
-        unknownProbLHSiterator !=  unknownProbTable[capitalChoice][suffixChoice][hyphenChoice].end(); unknownProbLHSiterator++) {
-       LHSs.push_back(stringAndDouble(unknownProbLHSiterator->first, unknownProbLHSiterator->second));
-    }
+void Grammar::getLHSsUnknownTerm(string RHS, vector<stringAndDouble>& LHSs,  bool RHSisFirstTerminal) {
+  int capitalChoice = getCapitalChoicesNumber(RHS, RHSisFirstTerminal);
+  int suffixChoice = getSuffixChoicesNumber(RHS) ;
+  int hyphenChoice = getHyphenChoicesNumber(RHS);
+
+  for(unknownProbLHSiterator = unknownProbTable[capitalChoice][suffixChoice][hyphenChoice].begin();
+      unknownProbLHSiterator !=  unknownProbTable[capitalChoice][suffixChoice][hyphenChoice].end(); unknownProbLHSiterator++) {
+     LHSs.push_back(stringAndDouble(unknownProbLHSiterator->first, unknownProbLHSiterator->second));
   }
 }
 

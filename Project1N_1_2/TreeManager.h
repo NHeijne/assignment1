@@ -30,6 +30,7 @@ public:
 
   /* methods */
   static void printTree(tree<string> myTree);
+  static string formatTree(tree<string> myTree);
 
   void addTree(const string line);
   static void debinarize(tree<string>& theTree);

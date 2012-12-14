@@ -62,11 +62,11 @@ void Main::testStuff1() {
 //  }  cout << endl;
 
   parser = new CYKParser(myGrammar);
-  //parser->parseLine("Ms. Haag plays Elianti . ");
-  parser->parseLine("Hurr durr herp derp . ");
+ // parser->parseLine("Ms. Haag plays Elianti . ");
+//  parser->parseLine("Hurr durr herp derp . ");
 // parser->parseLine("He believes in what he plays , and he plays superbly . ");
-// parser->parseLine("He said that one of the computers took a three-foot trip sliding across the floor . ");
-  //parser->parseLine("Exchange officials emphasized that the Big Board is considering a variety of actions to deal with program trading . ");
+ parser->parseLine("He said that one of the computers took a three-foot trip sliding across the floor . ");
+ // parser->parseLine("Exchange officials emphasized that the Big Board is considering a variety of actions to deal with program trading . ");
 
   //parser->writeTOPs("toptest.dat");
 
@@ -77,6 +77,7 @@ void Main::testStuff1() {
   TreeManager::debinarize(thisTree);
   TreeManager::removeSpecialUnaryRules(thisTree);
   TreeManager::printTree(thisTree);
+  cout << TreeManager::formatTree(thisTree);
 }
 
 
