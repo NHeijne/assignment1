@@ -5,5 +5,9 @@
             <url>CYKParser.h</url>
             <line>58</line>
         </file>
+        <file>
+            <url>SentenceParser.h</url>
+            <line>58</line>
+        </file>
     </editor-bookmarks>
 </project-private>

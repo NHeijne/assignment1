@@ -33,10 +33,11 @@ OBJECTDIR=build/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/CYKParser.o \
 	${OBJECTDIR}/Grammar.o \
+	${OBJECTDIR}/Parser.o \
 	${OBJECTDIR}/Main.o \
-	${OBJECTDIR}/TreeManager.o
+	${OBJECTDIR}/TreeManager.o \
+	${OBJECTDIR}/SentenceParser.o
 
 
 # C Compiler Flags
@@ -63,15 +64,15 @@ dist/Debug/MinGW-Windows/project1n_1_2.exe: ${OBJECTFILES}
 	${MKDIR} -p dist/Debug/MinGW-Windows
 	${LINK.cc} -static-libgcc -static -std=gnu++0x -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/project1n_1_2 ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
-${OBJECTDIR}/CYKParser.o: CYKParser.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -I/C/boost_1_52_0 -MMD -MP -MF $@.d -o ${OBJECTDIR}/CYKParser.o CYKParser.cpp
-
 ${OBJECTDIR}/Grammar.o: Grammar.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -g -I/C/boost_1_52_0 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Grammar.o Grammar.cpp
+
+${OBJECTDIR}/Parser.o: Parser.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -I/C/boost_1_52_0 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Parser.o Parser.cpp
 
 ${OBJECTDIR}/Main.o: Main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -82,6 +83,11 @@ ${OBJECTDIR}/TreeManager.o: TreeManager.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -g -I/C/boost_1_52_0 -MMD -MP -MF $@.d -o ${OBJECTDIR}/TreeManager.o TreeManager.cpp
+
+${OBJECTDIR}/SentenceParser.o: SentenceParser.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -I/C/boost_1_52_0 -MMD -MP -MF $@.d -o ${OBJECTDIR}/SentenceParser.o SentenceParser.cpp
 
 # Subprojects
 .build-subprojects:

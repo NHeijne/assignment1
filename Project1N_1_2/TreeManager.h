@@ -13,34 +13,39 @@
 #include <iostream>
 
 #include "tree.hh" 
-#include "CYKParser.h"
+#include "Grammar.h"
 
 using namespace std;
 
+/**
+ * This class is for static use only.
+ *
+ */
 class TreeManager {
 
 
 public:
-  /* attributes and other stuff */
-
-  /* constructors */
-  TreeManager(CYKParser * p);
-  TreeManager(const TreeManager& orig);
-  virtual ~TreeManager();
+  /* attributes and other stuff */  
 
   /* methods */
   static void printTree(tree<string> myTree);
-  static string formatTree(tree<string> myTree);
+  static string getTreeString(tree<string> myTree);
 
-  void addTree(const string line);
   static void debinarize(tree<string>& theTree);
   static void removeSpecialUnaryRules(tree<string>& theTree);
+
+  static string getPennWSJstring(tree<string> theTree) ;
   
 private:
 
+  /* constructors */
+  // they are private, we don't one anyone making instances of this class (it's supposed to be a "static" class)
+  TreeManager();
+  TreeManager(const TreeManager& orig);
+  virtual ~TreeManager();
+  
   /* attributes and other stuff */
-  CYKParser * parser;
-  vector <tree<string> > allTrees;
+  
 
   /* methods */
 

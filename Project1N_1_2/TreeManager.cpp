@@ -9,8 +9,8 @@
 
 using namespace std;
 
-TreeManager::TreeManager(CYKParser * p) {
-  parser = p;
+TreeManager::TreeManager() {
+  
 }
 
 TreeManager::TreeManager(const TreeManager& orig) {
@@ -34,7 +34,7 @@ void TreeManager::printTree(tree<string> myTree) {
   }
 }
 
-string TreeManager::formatTree(tree<string> myTree) {
+string TreeManager::getTreeString(tree<string> myTree) {
 
   string treeString = "";
   tree<string>::iterator it = myTree.begin();
@@ -116,7 +116,7 @@ void TreeManager::removeSpecialUnaryRules(tree<string>& theTree) {
 
     int pos = (*it).find(Grammar::specialUnarySymbol); //   position of the first occurrence in the string of the searched content
     if (!(pos == string::npos)) { // found
-      cout << (*it) << " has " << Grammar::specialUnarySymbol << endl;
+     // cout << (*it) << " has " << Grammar::specialUnarySymbol << endl;
 
       // retrieve A and B from nt_A%%%%%B
       string str1 = (*it).substr(0, pos);
@@ -145,13 +145,14 @@ void TreeManager::removeSpecialUnaryRules(tree<string>& theTree) {
       it++;
     }
   }
-
 }
 
-void TreeManager::addTree(const string line) {
-  parser->parseLine(line);
-  tree<string> currentTree;
-  parser->getTree(currentTree);
-  allTrees.push_back(currentTree);
+string TreeManager::getPennWSJstring(tree<string> theTree) {
+  debinarize(theTree);
+  removeSpecialUnaryRules(theTree);
+  return getTreeString(theTree);
 }
+
+
+
 

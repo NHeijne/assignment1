@@ -66,12 +66,14 @@ void Grammar::init(bool print /* = true */) {
     cout << "Nr. rules: " << l2rTable.size() << endl;
     l2rTableCountToProbability();
     unknownProbTableCountToProbability();
+    cout << "Writing grammar data to the two archive files \"" << archiveNameTreebank << "\" and \"" << archiveNameProbTable << "\"..." << endl;
     saveTreebankArchive();
     saveUnknownProbTable();
+    cout << "Done. " << endl;
     fillR2lTableFromL2rTable();
   }
   else {
-    cout << "Will load existing grammar for treebank file..." << endl;
+    cout << "Will load existing grammar for treebank file from files \"" << archiveNameTreebank << "\" and \"" << archiveNameProbTable << "\"..." << endl;
     loadTreebankArchive();
     loadUnknownProbTable();
     cout << "Done loading." << endl;
@@ -95,8 +97,7 @@ bool Grammar::archivesExists() {
   }
 }
 
-void Grammar::saveTreebankArchive() {
-  cout << "Writing treebank file to XML archive..." << endl;
+void Grammar::saveTreebankArchive() {  
   ofstream file(archiveNameTreebank.c_str());
   boost::archive::xml_oarchive outputArchive(file);
 
@@ -154,7 +155,7 @@ void Grammar::saveUnknownProbTable() {
         file.close();
       }
       else {
-        throw ("Unable to open archive prob file");
+        throw ("Unable to open probtable archive file " + archiveNameProbTable);
       }
   }
   catch (const char * e) {
@@ -194,12 +195,15 @@ void Grammar::getLHSs(string RHS, vector<stringAndDouble>& LHSs, bool RHSisTermi
   for (ruleIterator = ruleRangeIterator.first; ruleIterator != ruleRangeIterator.second; ruleIterator++) {
     LHSs.push_back((*ruleIterator).second);
   }
-  if (RHSisTerminal && LHSs.empty()) { // it is a terminal but nothing found in r2lTable
-    getLHSsUnknownTerm(RHS, LHSs,  RHSisFirstTerminal) ;
-  }
+//  if (RHSisTerminal && LHSs.empty()) { // it is a terminal but nothing found in r2lTable
+//    cout << "unknown term: " << RHS << endl;
+//    getLHSsUnknownTerm(RHS, LHSs,  RHSisFirstTerminal) ;
+//  }
 }
 
 void Grammar::getLHSsUnknownTerm(string RHS, vector<stringAndDouble>& LHSs,  bool RHSisFirstTerminal) {
+  cout << RHS << " is first term " << endl;
+  
   int capitalChoice = getCapitalChoicesNumber(RHS, RHSisFirstTerminal);
   int suffixChoice = getSuffixChoicesNumber(RHS) ;
   int hyphenChoice = getHyphenChoicesNumber(RHS);
@@ -234,6 +238,7 @@ void Grammar::printR2lTable() {
 void Grammar::l2rTableCountToProbability() {
   for (ruleIterator = l2rTable.begin(); ruleIterator != l2rTable.end(); ruleIterator++) {
     ruleIterator->second.second /= lhsCountTable.find(ruleIterator->first)->second;
+     ruleIterator->second.second = log( ruleIterator->second.second);
   }
 }
 
@@ -259,6 +264,7 @@ void Grammar::unknownProbTableCountToProbability() {
         }
         for (unknownProbLHSiterator = unknownProbTable[i][j][k].begin(); unknownProbLHSiterator != unknownProbTable[i][j][k].end(); unknownProbLHSiterator++) {
           unknownProbLHSiterator->second /= totalCount;
+           unknownProbLHSiterator->second = log( unknownProbLHSiterator->second);
         }
       }
     }
@@ -431,7 +437,8 @@ bool Grammar::isNumber(string term) {
 }
 
 bool Grammar::isWord(string term) {
-  if ((term[0] >= 65 && term[0] <= 90)  || (term[0] >= 97 && term[0] <= 122)) {
+  int firstLetterInt = static_cast<int>(term[0]);
+  if ((firstLetterInt >= 65 && firstLetterInt <= 90)  || (firstLetterInt >= 97 && firstLetterInt <= 122)) {
     return true;
   }
   return false;
@@ -446,7 +453,7 @@ bool Grammar::isWord(string term) {
  * @param stringLevelStack
  * @param level
  */
-void Grammar::parseLineRecursively(const char * line, int linePos, stack <stringAndInt> stringLevelStack, int level, bool firstTerm) {
+void Grammar::processLineRecursively(const char * line, int linePos, stack <stringAndInt> stringLevelStack, int level, bool firstTerm) {
   char nextChar = line[linePos]; // cout << "nextChar: " << nextChar << endl;
   while (nextChar == ' ' && linePos < strlen(line)) {
     linePos++;
@@ -471,7 +478,7 @@ void Grammar::parseLineRecursively(const char * line, int linePos, stack <string
       LHS = stringLevelStack.top(); //stringLevelStack.pop();
       insertL2rTable(nonTerminalSymbol + LHS.first, nonTerminalSymbol + RHS1.first + RHS2.first);
       //cout << "insert " << LHS.first << " ==> " << RHS1.first + RHS2.first << endl;
-      return parseLineRecursively(line, linePos + 1, stringLevelStack, level - 1, firstTerm);
+      return processLineRecursively(line, linePos + 1, stringLevelStack, level - 1, firstTerm);
     }
     if (nextChar != ')' && nextChar != '(') { //  ========> non-terminal LHS found
       string nonTerm = "";
@@ -486,7 +493,7 @@ void Grammar::parseLineRecursively(const char * line, int linePos, stack <string
       nextChar = line[linePos];
     }
     if (nextChar == '(') { // ========> begin new rule found (new LHS)
-      return parseLineRecursively(line, linePos + 1, stringLevelStack, level + 1, firstTerm);
+      return processLineRecursively(line, linePos + 1, stringLevelStack, level + 1, firstTerm);
     }
     else { //  ========> terminal symbol + ')' found
       string term = "";
@@ -504,7 +511,7 @@ void Grammar::parseLineRecursively(const char * line, int linePos, stack <string
       insertUnknownProbTable(nonTerminalSymbol + nonTerm, term, firstTerm);
       //cout << "insert " << nonTerm << " ==> " << term << endl;
       firstTerm = false;
-      return parseLineRecursively(line, linePos + 1, stringLevelStack, level - 1, firstTerm);
+      return processLineRecursively(line, linePos + 1, stringLevelStack, level - 1, firstTerm);
     }
   }
 }
@@ -515,13 +522,13 @@ void Grammar::parseLineRecursively(const char * line, int linePos, stack <string
  *
  * @param line
  */
-void Grammar::parseLine(string line) {
+void Grammar::processLine(string line) {
 
   stack<stringAndInt> stringLevelStack;
   int level = 0;
   int linePos = 0;
   bool firstTerm = true;
-  parseLineRecursively(line.c_str(), linePos, stringLevelStack, level, firstTerm);
+  processLineRecursively(line.c_str(), linePos, stringLevelStack, level, firstTerm);
 
   //cout << "line: " << line << endl;
 }
@@ -542,7 +549,7 @@ void Grammar::readGrammar(bool print) {
           //cout << line << endl;
           // system("pause");
           line.append(" ");
-          parseLine(line);
+          processLine(line);
           numberLines++;
           if (print && numberLines % 100 == 0)
             cout << "processed " << numberLines << " lines " << endl;
@@ -552,7 +559,7 @@ void Grammar::readGrammar(bool print) {
       myfile.close();
     }
     else {
-      throw ("Unable to open treebank file");
+      throw ("Unable to open treebank file " + treeBankFileName);
     }
   }
   catch (const char * e) {

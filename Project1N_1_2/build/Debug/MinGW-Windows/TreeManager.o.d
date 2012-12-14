@@ -1,6 +1,5 @@
 build/Debug/MinGW-Windows/TreeManager.o: TreeManager.cpp TreeManager.h \
- tree.hh CYKParser.h Grammar.h \
- c:/boost_1_52_0/boost/archive/xml_oarchive.hpp \
+ tree.hh Grammar.h c:/boost_1_52_0/boost/archive/xml_oarchive.hpp \
  c:/boost_1_52_0/boost/config.hpp c:/boost_1_52_0/boost/config/user.hpp \
  c:/boost_1_52_0/boost/config/select_compiler_config.hpp \
  c:/boost_1_52_0/boost/config/compiler/gcc.hpp \
@@ -496,46 +495,11 @@ build/Debug/MinGW-Windows/TreeManager.o: TreeManager.cpp TreeManager.h \
  c:/boost_1_52_0/boost/algorithm/string/detail/find_format_all.hpp \
  c:/boost_1_52_0/boost/algorithm/string/formatter.hpp \
  c:/boost_1_52_0/boost/algorithm/string/detail/formatter.hpp \
- c:/boost_1_52_0/boost/algorithm/string/erase.hpp \
- c:/boost_1_52_0/boost/unordered_map.hpp \
- c:/boost_1_52_0/boost/unordered/unordered_map.hpp \
- c:/boost_1_52_0/boost/unordered/unordered_map_fwd.hpp \
- c:/boost_1_52_0/boost/unordered/detail/fwd.hpp \
- c:/boost_1_52_0/boost/unordered/detail/equivalent.hpp \
- c:/boost_1_52_0/boost/unordered/detail/table.hpp \
- c:/boost_1_52_0/boost/unordered/detail/buckets.hpp \
- c:/boost_1_52_0/boost/unordered/detail/util.hpp \
- c:/boost_1_52_0/boost/type_traits/is_empty.hpp \
- c:/boost_1_52_0/boost/detail/select_type.hpp \
- c:/boost_1_52_0/boost/move/move.hpp \
- c:/boost_1_52_0/boost/unordered/detail/allocate.hpp \
- c:/boost_1_52_0/boost/preprocessor/dec.hpp \
- c:/boost_1_52_0/boost/preprocessor/repetition/repeat_from_to.hpp \
- c:/boost_1_52_0/boost/type_traits/add_lvalue_reference.hpp \
- c:/boost_1_52_0/boost/tuple/tuple.hpp \
- c:/boost_1_52_0/boost/tuple/detail/tuple_basic.hpp \
- c:/boost_1_52_0/boost/type_traits/cv_traits.hpp \
- c:/boost_1_52_0/boost/type_traits/add_cv.hpp \
- c:/boost_1_52_0/boost/type_traits/remove_volatile.hpp \
- c:/boost_1_52_0/boost/pointer_to_other.hpp \
- c:/boost_1_52_0/boost/type_traits/aligned_storage.hpp \
- c:/boost_1_52_0/boost/unordered/detail/extract_key.hpp \
- c:/boost_1_52_0/boost/unordered/detail/unique.hpp \
- c:/boost_1_52_0/boost/functional/hash.hpp \
- c:/boost_1_52_0/boost/functional/hash/hash.hpp \
- c:/boost_1_52_0/boost/functional/hash/detail/hash_float.hpp \
- c:/boost_1_52_0/boost/functional/hash/detail/float_functions.hpp \
- c:/boost_1_52_0/boost/functional/hash/detail/limits.hpp \
- c:/boost_1_52_0/boost/integer/static_log2.hpp \
- c:/boost_1_52_0/boost/functional/hash/extensions.hpp \
- c:/boost_1_52_0/boost/functional/hash/detail/container_fwd_0x.hpp \
- c:/boost_1_52_0/boost/detail/container_fwd.hpp
+ c:/boost_1_52_0/boost/algorithm/string/erase.hpp
 
 TreeManager.h:
 
 tree.hh:
-
-CYKParser.h:
 
 Grammar.h:
 
@@ -1558,69 +1522,3 @@ c:/boost_1_52_0/boost/algorithm/string/formatter.hpp:
 c:/boost_1_52_0/boost/algorithm/string/detail/formatter.hpp:
 
 c:/boost_1_52_0/boost/algorithm/string/erase.hpp:
-
-c:/boost_1_52_0/boost/unordered_map.hpp:
-
-c:/boost_1_52_0/boost/unordered/unordered_map.hpp:
-
-c:/boost_1_52_0/boost/unordered/unordered_map_fwd.hpp:
-
-c:/boost_1_52_0/boost/unordered/detail/fwd.hpp:
-
-c:/boost_1_52_0/boost/unordered/detail/equivalent.hpp:
-
-c:/boost_1_52_0/boost/unordered/detail/table.hpp:
-
-c:/boost_1_52_0/boost/unordered/detail/buckets.hpp:
-
-c:/boost_1_52_0/boost/unordered/detail/util.hpp:
-
-c:/boost_1_52_0/boost/type_traits/is_empty.hpp:
-
-c:/boost_1_52_0/boost/detail/select_type.hpp:
-
-c:/boost_1_52_0/boost/move/move.hpp:
-
-c:/boost_1_52_0/boost/unordered/detail/allocate.hpp:
-
-c:/boost_1_52_0/boost/preprocessor/dec.hpp:
-
-c:/boost_1_52_0/boost/preprocessor/repetition/repeat_from_to.hpp:
-
-c:/boost_1_52_0/boost/type_traits/add_lvalue_reference.hpp:
-
-c:/boost_1_52_0/boost/tuple/tuple.hpp:
-
-c:/boost_1_52_0/boost/tuple/detail/tuple_basic.hpp:
-
-c:/boost_1_52_0/boost/type_traits/cv_traits.hpp:
-
-c:/boost_1_52_0/boost/type_traits/add_cv.hpp:
-
-c:/boost_1_52_0/boost/type_traits/remove_volatile.hpp:
-
-c:/boost_1_52_0/boost/pointer_to_other.hpp:
-
-c:/boost_1_52_0/boost/type_traits/aligned_storage.hpp:
-
-c:/boost_1_52_0/boost/unordered/detail/extract_key.hpp:
-
-c:/boost_1_52_0/boost/unordered/detail/unique.hpp:
-
-c:/boost_1_52_0/boost/functional/hash.hpp:
-
-c:/boost_1_52_0/boost/functional/hash/hash.hpp:
-
-c:/boost_1_52_0/boost/functional/hash/detail/hash_float.hpp:
-
-c:/boost_1_52_0/boost/functional/hash/detail/float_functions.hpp:
-
-c:/boost_1_52_0/boost/functional/hash/detail/limits.hpp:
-
-c:/boost_1_52_0/boost/integer/static_log2.hpp:
-
-c:/boost_1_52_0/boost/functional/hash/extensions.hpp:
-
-c:/boost_1_52_0/boost/functional/hash/detail/container_fwd_0x.hpp:
-
-c:/boost_1_52_0/boost/detail/container_fwd.hpp:

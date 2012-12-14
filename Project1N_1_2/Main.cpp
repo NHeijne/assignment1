@@ -11,13 +11,13 @@
 #include<cstring>
 
 #include "Grammar.h"
-#include "CYKParser.h"
+#include "SentenceParser.h"
 #include "TreeManager.h"
+#include "Parser.h"
 #include "tree.hh"
 
 using namespace std;
 
-// TODO: Iterators gebruiken in CYKParser.cpp
 
 /* header */
 class Main {
@@ -32,12 +32,13 @@ class Main {
     string treebankFilename;
     string testSentencesFilename;
     Grammar * myGrammar;
-    CYKParser * parser;
+    SentenceParser * sentenceParser;
+    Parser * parser;
 };
 
 /* implementation */
 void Main::testStuff1() {
-  myGrammar = new Grammar("example.dat");
+  myGrammar = new Grammar("treebank.dat");
   myGrammar->init();
 
  // myGrammar->save();
@@ -50,7 +51,7 @@ void Main::testStuff1() {
 //  myGrammar->fillR2lTable();
 //
  
-// myGrammar->printL2rTable();
+//myGrammar->printL2rTable();
 // myGrammar->printUnknownProbTable();
 
 // cout <<"r 2 l: " << endl;
@@ -61,23 +62,25 @@ void Main::testStuff1() {
 //    cout << LHSs[i].first << " " << LHSs[i].second << endl;
 //  }  cout << endl;
 
-  parser = new CYKParser(myGrammar);
- // parser->parseLine("Ms. Haag plays Elianti . ");
-//  parser->parseLine("Hurr durr herp derp . ");
-// parser->parseLine("He believes in what he plays , and he plays superbly . ");
- parser->parseLine("He said that one of the computers took a three-foot trip sliding across the floor . ");
- // parser->parseLine("Exchange officials emphasized that the Big Board is considering a variety of actions to deal with program trading . ");
+  sentenceParser = new SentenceParser(myGrammar);
 
-  //parser->writeTOPs("toptest.dat");
+// sentenceParser->parseLine("Ms. Haag plays Elianti . ");
+//  sentenceParser->parseLine("Hurr durr herp derp . ");
+// sentenceParser->parseLine("He believes in what he plays , and he plays superbly . ");
+ sentenceParser->parseLine("No , it was n't Black Monday . ");
+ // sentenceParser->parseLine("Exchange officials emphasized that the Big Board is considering a variety of actions to deal with program trading . ");
 
- parser->printCYKTable();
+  sentenceParser->writeTOPs("toptest.dat");
+
+ //sentenceParser->printCYKTable();
   tree<string> thisTree;
-  parser->getTree(thisTree);
-//  TreeManager::printTree(thisTree);
+  sentenceParser->getTree(thisTree);
+  TreeManager::printTree(thisTree);
   TreeManager::debinarize(thisTree);
   TreeManager::removeSpecialUnaryRules(thisTree);
   TreeManager::printTree(thisTree);
-  cout << TreeManager::formatTree(thisTree);
+  cout << TreeManager::getTreeString(thisTree);
+
 }
 
 
@@ -92,8 +95,8 @@ void Main::topsTestSentences() {
       int numberLines = 0;
       while (getline(myfile, line)) {
         if (!line.empty()) {
-          parser->parseLine(line);
-          parser->writeTOPs("toptest.dat"); 
+          sentenceParser->parseLine(line);
+          sentenceParser->writeTOPs("toptest.dat");
           numberLines++;
           //if (numberLines % 100 == 0)
             cout << "processed " << numberLines << " lines from test file" << endl;
@@ -115,7 +118,7 @@ void Main::topsTestSentences() {
 void Main::assignment2 () {
   myGrammar = new Grammar("treebank.dat");
   myGrammar->init();
-  parser = new CYKParser(myGrammar);
+  sentenceParser = new SentenceParser(myGrammar);
   topsTestSentences();
 }
 void Main::askTreebankFilename() {
@@ -161,6 +164,9 @@ int main(int argc, const char * argv[]) {
 
   main->testStuff1();
 
+ // main->parser = new Parser("treebank.dat", "testsentencespart.dat", "testsentencesparttrees.dat", "test_result.dat");
+ // main->parser->start();
+  
   return 0;
 }
 

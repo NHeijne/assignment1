@@ -1,3 +1,3 @@
 locate libboost_serialization
 
-c++ -o project1 Main.cpp Grammar.cpp CYKParser.cpp /usr/lib64/libboost_serialization-mt.so
+c++ -o project1 Main.cpp Grammar.cpp SentenceParser.cpp TreeManager.cpp Parser.cpp /usr/lib64/libboost_serialization-mt.so.1.48.0

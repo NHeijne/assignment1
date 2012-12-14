@@ -495,8 +495,8 @@ build/Debug/MinGW-Windows/Main.o: Main.cpp Grammar.h \
  c:/boost_1_52_0/boost/algorithm/string/detail/find_format_all.hpp \
  c:/boost_1_52_0/boost/algorithm/string/formatter.hpp \
  c:/boost_1_52_0/boost/algorithm/string/detail/formatter.hpp \
- c:/boost_1_52_0/boost/algorithm/string/erase.hpp CYKParser.h tree.hh \
- c:/boost_1_52_0/boost/unordered_map.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/erase.hpp SentenceParser.h \
+ tree.hh c:/boost_1_52_0/boost/unordered_map.hpp \
  c:/boost_1_52_0/boost/unordered/unordered_map.hpp \
  c:/boost_1_52_0/boost/unordered/unordered_map_fwd.hpp \
  c:/boost_1_52_0/boost/unordered/detail/fwd.hpp \
@@ -528,7 +528,7 @@ build/Debug/MinGW-Windows/Main.o: Main.cpp Grammar.h \
  c:/boost_1_52_0/boost/integer/static_log2.hpp \
  c:/boost_1_52_0/boost/functional/hash/extensions.hpp \
  c:/boost_1_52_0/boost/functional/hash/detail/container_fwd_0x.hpp \
- c:/boost_1_52_0/boost/detail/container_fwd.hpp TreeManager.h
+ c:/boost_1_52_0/boost/detail/container_fwd.hpp TreeManager.h Parser.h
 
 Grammar.h:
 
@@ -1552,7 +1552,7 @@ c:/boost_1_52_0/boost/algorithm/string/detail/formatter.hpp:
 
 c:/boost_1_52_0/boost/algorithm/string/erase.hpp:
 
-CYKParser.h:
+SentenceParser.h:
 
 tree.hh:
 
@@ -1623,3 +1623,5 @@ c:/boost_1_52_0/boost/functional/hash/detail/container_fwd_0x.hpp:
 c:/boost_1_52_0/boost/detail/container_fwd.hpp:
 
 TreeManager.h:
+
+Parser.h:

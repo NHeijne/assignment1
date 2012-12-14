@@ -57,7 +57,7 @@ public:
   // (is convenient for in CYKParser)
   static const string nonTerminalSymbol; /* nt_ */
   static const string specialUnarySymbol; /* %%%%% */
-  static const string numberRHS;
+  static const string numberRHS; /* "<[(number)]>" */
 
   /* constructors */
   Grammar(string treeBankFile);
@@ -103,8 +103,8 @@ private:
 
   /* methods */
   void readGrammar(bool print);
-  void parseLine(string line);
-  void parseLineRecursively(const char * line, int linePos, stack <stringAndInt>, int level, bool firstTerm);
+  void processLine(string line);
+  void processLineRecursively(const char * line, int linePos, stack <stringAndInt>, int level, bool firstTerm);
   void insertL2rTable(string key, string valueString);
   bool validCharacter(char nextChar);
   bool isNumber(string term);

@@ -5,8 +5,9 @@
                    displayName="Header Files"
                    projectFiles="true"
                    kind="SOURCE_LOGICAL_FOLDER">
-      <itemPath>CYKParser.h</itemPath>
       <itemPath>Grammar.h</itemPath>
+      <itemPath>Parser.h</itemPath>
+      <itemPath>SentenceParser.h</itemPath>
       <itemPath>TreeManager.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -18,9 +19,10 @@
                    displayName="Source Files"
                    projectFiles="true"
                    kind="SOURCE_LOGICAL_FOLDER">
-      <itemPath>CYKParser.cpp</itemPath>
       <itemPath>Grammar.cpp</itemPath>
       <itemPath>Main.cpp</itemPath>
+      <itemPath>Parser.cpp</itemPath>
+      <itemPath>SentenceParser.cpp</itemPath>
       <itemPath>TreeManager.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
