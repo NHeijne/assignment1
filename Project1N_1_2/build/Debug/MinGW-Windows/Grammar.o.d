@@ -349,7 +349,153 @@ build/Debug/MinGW-Windows/Grammar.o: Grammar.cpp Grammar.h \
  c:/boost_1_52_0/boost/preprocessor/list/transform.hpp \
  c:/boost_1_52_0/boost/preprocessor/list/append.hpp \
  c:/boost_1_52_0/boost/type_traits/is_pod.hpp \
- c:/boost_1_52_0/boost/type_traits/is_scalar.hpp
+ c:/boost_1_52_0/boost/type_traits/is_scalar.hpp \
+ c:/boost_1_52_0/boost/algorithm/string.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/std_containers_traits.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/std/string_traits.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/yes_no_type.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/sequence_traits.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/std/list_traits.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/std/slist_traits.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/config.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/trim.hpp \
+ c:/boost_1_52_0/boost/range/begin.hpp \
+ c:/boost_1_52_0/boost/range/config.hpp \
+ c:/boost_1_52_0/boost/range/iterator.hpp \
+ c:/boost_1_52_0/boost/range/mutable_iterator.hpp \
+ c:/boost_1_52_0/boost/range/detail/extract_optional_type.hpp \
+ c:/boost_1_52_0/boost/iterator/iterator_traits.hpp \
+ c:/boost_1_52_0/boost/range/const_iterator.hpp \
+ c:/boost_1_52_0/boost/range/end.hpp \
+ c:/boost_1_52_0/boost/range/detail/implementation_help.hpp \
+ c:/boost_1_52_0/boost/range/detail/common.hpp \
+ c:/boost_1_52_0/boost/range/detail/sfinae.hpp \
+ c:/boost_1_52_0/boost/range/as_literal.hpp \
+ c:/boost_1_52_0/boost/range/iterator_range.hpp \
+ c:/boost_1_52_0/boost/range/iterator_range_core.hpp \
+ c:/boost_1_52_0/boost/iterator/iterator_facade.hpp \
+ c:/boost_1_52_0/boost/iterator/interoperable.hpp \
+ c:/boost_1_52_0/boost/type_traits/is_convertible.hpp \
+ c:/boost_1_52_0/boost/type_traits/add_reference.hpp \
+ c:/boost_1_52_0/boost/type_traits/add_rvalue_reference.hpp \
+ c:/boost_1_52_0/boost/iterator/detail/config_def.hpp \
+ c:/boost_1_52_0/boost/iterator/detail/config_undef.hpp \
+ c:/boost_1_52_0/boost/iterator/detail/facade_iterator_category.hpp \
+ c:/boost_1_52_0/boost/iterator/iterator_categories.hpp \
+ c:/boost_1_52_0/boost/detail/indirect_traits.hpp \
+ c:/boost_1_52_0/boost/type_traits/is_function.hpp \
+ c:/boost_1_52_0/boost/type_traits/detail/false_result.hpp \
+ c:/boost_1_52_0/boost/type_traits/detail/is_function_ptr_helper.hpp \
+ c:/boost_1_52_0/boost/iterator/detail/enable_if.hpp \
+ c:/boost_1_52_0/boost/utility/addressof.hpp \
+ c:/boost_1_52_0/boost/type_traits/add_const.hpp \
+ c:/boost_1_52_0/boost/type_traits/add_pointer.hpp \
+ c:/boost_1_52_0/boost/range/functions.hpp \
+ c:/boost_1_52_0/boost/range/size.hpp \
+ c:/boost_1_52_0/boost/range/size_type.hpp \
+ c:/boost_1_52_0/boost/range/difference_type.hpp \
+ c:/boost_1_52_0/boost/utility/enable_if.hpp \
+ c:/boost_1_52_0/boost/type_traits/make_unsigned.hpp \
+ c:/boost_1_52_0/boost/type_traits/is_signed.hpp \
+ c:/boost_1_52_0/boost/type_traits/is_unsigned.hpp \
+ c:/boost_1_52_0/boost/type_traits/add_volatile.hpp \
+ c:/boost_1_52_0/boost/range/distance.hpp \
+ c:/boost_1_52_0/boost/range/empty.hpp \
+ c:/boost_1_52_0/boost/range/rbegin.hpp \
+ c:/boost_1_52_0/boost/range/reverse_iterator.hpp \
+ c:/boost_1_52_0/boost/iterator/reverse_iterator.hpp \
+ c:/boost_1_52_0/boost/next_prior.hpp \
+ c:/boost_1_52_0/boost/iterator/iterator_adaptor.hpp \
+ c:/boost_1_52_0/boost/range/rend.hpp \
+ c:/boost_1_52_0/boost/range/algorithm/equal.hpp \
+ c:/boost_1_52_0/boost/range/concepts.hpp \
+ c:/boost_1_52_0/boost/concept_check.hpp \
+ c:/boost_1_52_0/boost/concept/assert.hpp \
+ c:/boost_1_52_0/boost/concept/detail/general.hpp \
+ c:/boost_1_52_0/boost/concept/detail/backward_compatibility.hpp \
+ c:/boost_1_52_0/boost/concept/detail/has_constraints.hpp \
+ c:/boost_1_52_0/boost/type_traits/conversion_traits.hpp \
+ c:/boost_1_52_0/boost/concept/usage.hpp \
+ c:/boost_1_52_0/boost/concept/detail/concept_def.hpp \
+ c:/boost_1_52_0/boost/preprocessor/seq/for_each_i.hpp \
+ c:/boost_1_52_0/boost/preprocessor/seq/seq.hpp \
+ c:/boost_1_52_0/boost/preprocessor/seq/elem.hpp \
+ c:/boost_1_52_0/boost/preprocessor/seq/size.hpp \
+ c:/boost_1_52_0/boost/preprocessor/seq/enum.hpp \
+ c:/boost_1_52_0/boost/concept/detail/concept_undef.hpp \
+ c:/boost_1_52_0/boost/iterator/iterator_concepts.hpp \
+ c:/boost_1_52_0/boost/range/value_type.hpp \
+ c:/boost_1_52_0/boost/range/detail/misc_concept.hpp \
+ c:/boost_1_52_0/boost/range/detail/safe_bool.hpp \
+ c:/boost_1_52_0/boost/range/iterator_range_io.hpp \
+ c:/boost_1_52_0/boost/range/detail/str_types.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/detail/trim.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/classification.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/detail/classification.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/predicate_facade.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/case_conv.hpp \
+ c:/boost_1_52_0/boost/iterator/transform_iterator.hpp \
+ c:/boost_1_52_0/boost/type_traits/function_traits.hpp \
+ c:/boost_1_52_0/boost/utility/result_of.hpp \
+ c:/boost_1_52_0/boost/preprocessor/iteration/iterate.hpp \
+ c:/boost_1_52_0/boost/preprocessor/slot/slot.hpp \
+ c:/boost_1_52_0/boost/preprocessor/slot/detail/def.hpp \
+ c:/boost_1_52_0/boost/preprocessor/repetition/enum_binary_params.hpp \
+ c:/boost_1_52_0/boost/preprocessor/repetition/enum_shifted_params.hpp \
+ c:/boost_1_52_0/boost/preprocessor/facilities/intercept.hpp \
+ c:/boost_1_52_0/boost/utility/declval.hpp \
+ c:/boost_1_52_0/boost/preprocessor/iteration/detail/iter/forward1.hpp \
+ c:/boost_1_52_0/boost/preprocessor/iteration/detail/bounds/lower1.hpp \
+ c:/boost_1_52_0/boost/preprocessor/slot/detail/shared.hpp \
+ c:/boost_1_52_0/boost/preprocessor/iteration/detail/bounds/upper1.hpp \
+ c:/boost_1_52_0/boost/utility/detail/result_of_iterate.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/detail/case_conv.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/predicate.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/compare.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/find.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/finder.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/constants.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/detail/finder.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/detail/predicate.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/split.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/iter_find.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/concept.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/find_iterator.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/detail/find_iterator.hpp \
+ c:/boost_1_52_0/boost/function.hpp \
+ c:/boost_1_52_0/boost/preprocessor/iterate.hpp \
+ c:/boost_1_52_0/boost/function/detail/prologue.hpp \
+ c:/boost_1_52_0/boost/config/no_tr1/functional.hpp \
+ c:/boost_1_52_0/boost/function/function_base.hpp \
+ c:/boost_1_52_0/boost/type_traits/has_trivial_copy.hpp \
+ c:/boost_1_52_0/boost/type_traits/has_trivial_destructor.hpp \
+ c:/boost_1_52_0/boost/type_traits/composite_traits.hpp \
+ c:/boost_1_52_0/boost/type_traits/is_union.hpp \
+ c:/boost_1_52_0/boost/ref.hpp c:/boost_1_52_0/boost/function_equal.hpp \
+ c:/boost_1_52_0/boost/function/function_fwd.hpp \
+ c:/boost_1_52_0/boost/mem_fn.hpp c:/boost_1_52_0/boost/bind/mem_fn.hpp \
+ c:/boost_1_52_0/boost/get_pointer.hpp \
+ c:/boost_1_52_0/boost/bind/mem_fn_template.hpp \
+ c:/boost_1_52_0/boost/bind/mem_fn_cc.hpp \
+ c:/boost_1_52_0/boost/preprocessor/enum.hpp \
+ c:/boost_1_52_0/boost/preprocessor/repetition/enum.hpp \
+ c:/boost_1_52_0/boost/preprocessor/enum_params.hpp \
+ c:/boost_1_52_0/boost/function/detail/function_iterate.hpp \
+ c:/boost_1_52_0/boost/function/detail/maybe_include.hpp \
+ c:/boost_1_52_0/boost/function/function_template.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/detail/util.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/join.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/detail/sequence.hpp \
+ c:/boost_1_52_0/boost/mpl/logical.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/replace.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/find_format.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/detail/find_format.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/detail/find_format_store.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/detail/replace_storage.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/detail/find_format_all.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/formatter.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/detail/formatter.hpp \
+ c:/boost_1_52_0/boost/algorithm/string/erase.hpp
 
 Grammar.h:
 
@@ -1076,3 +1222,299 @@ c:/boost_1_52_0/boost/preprocessor/list/append.hpp:
 c:/boost_1_52_0/boost/type_traits/is_pod.hpp:
 
 c:/boost_1_52_0/boost/type_traits/is_scalar.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/std_containers_traits.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/std/string_traits.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/yes_no_type.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/sequence_traits.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/std/list_traits.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/std/slist_traits.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/config.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/trim.hpp:
+
+c:/boost_1_52_0/boost/range/begin.hpp:
+
+c:/boost_1_52_0/boost/range/config.hpp:
+
+c:/boost_1_52_0/boost/range/iterator.hpp:
+
+c:/boost_1_52_0/boost/range/mutable_iterator.hpp:
+
+c:/boost_1_52_0/boost/range/detail/extract_optional_type.hpp:
+
+c:/boost_1_52_0/boost/iterator/iterator_traits.hpp:
+
+c:/boost_1_52_0/boost/range/const_iterator.hpp:
+
+c:/boost_1_52_0/boost/range/end.hpp:
+
+c:/boost_1_52_0/boost/range/detail/implementation_help.hpp:
+
+c:/boost_1_52_0/boost/range/detail/common.hpp:
+
+c:/boost_1_52_0/boost/range/detail/sfinae.hpp:
+
+c:/boost_1_52_0/boost/range/as_literal.hpp:
+
+c:/boost_1_52_0/boost/range/iterator_range.hpp:
+
+c:/boost_1_52_0/boost/range/iterator_range_core.hpp:
+
+c:/boost_1_52_0/boost/iterator/iterator_facade.hpp:
+
+c:/boost_1_52_0/boost/iterator/interoperable.hpp:
+
+c:/boost_1_52_0/boost/type_traits/is_convertible.hpp:
+
+c:/boost_1_52_0/boost/type_traits/add_reference.hpp:
+
+c:/boost_1_52_0/boost/type_traits/add_rvalue_reference.hpp:
+
+c:/boost_1_52_0/boost/iterator/detail/config_def.hpp:
+
+c:/boost_1_52_0/boost/iterator/detail/config_undef.hpp:
+
+c:/boost_1_52_0/boost/iterator/detail/facade_iterator_category.hpp:
+
+c:/boost_1_52_0/boost/iterator/iterator_categories.hpp:
+
+c:/boost_1_52_0/boost/detail/indirect_traits.hpp:
+
+c:/boost_1_52_0/boost/type_traits/is_function.hpp:
+
+c:/boost_1_52_0/boost/type_traits/detail/false_result.hpp:
+
+c:/boost_1_52_0/boost/type_traits/detail/is_function_ptr_helper.hpp:
+
+c:/boost_1_52_0/boost/iterator/detail/enable_if.hpp:
+
+c:/boost_1_52_0/boost/utility/addressof.hpp:
+
+c:/boost_1_52_0/boost/type_traits/add_const.hpp:
+
+c:/boost_1_52_0/boost/type_traits/add_pointer.hpp:
+
+c:/boost_1_52_0/boost/range/functions.hpp:
+
+c:/boost_1_52_0/boost/range/size.hpp:
+
+c:/boost_1_52_0/boost/range/size_type.hpp:
+
+c:/boost_1_52_0/boost/range/difference_type.hpp:
+
+c:/boost_1_52_0/boost/utility/enable_if.hpp:
+
+c:/boost_1_52_0/boost/type_traits/make_unsigned.hpp:
+
+c:/boost_1_52_0/boost/type_traits/is_signed.hpp:
+
+c:/boost_1_52_0/boost/type_traits/is_unsigned.hpp:
+
+c:/boost_1_52_0/boost/type_traits/add_volatile.hpp:
+
+c:/boost_1_52_0/boost/range/distance.hpp:
+
+c:/boost_1_52_0/boost/range/empty.hpp:
+
+c:/boost_1_52_0/boost/range/rbegin.hpp:
+
+c:/boost_1_52_0/boost/range/reverse_iterator.hpp:
+
+c:/boost_1_52_0/boost/iterator/reverse_iterator.hpp:
+
+c:/boost_1_52_0/boost/next_prior.hpp:
+
+c:/boost_1_52_0/boost/iterator/iterator_adaptor.hpp:
+
+c:/boost_1_52_0/boost/range/rend.hpp:
+
+c:/boost_1_52_0/boost/range/algorithm/equal.hpp:
+
+c:/boost_1_52_0/boost/range/concepts.hpp:
+
+c:/boost_1_52_0/boost/concept_check.hpp:
+
+c:/boost_1_52_0/boost/concept/assert.hpp:
+
+c:/boost_1_52_0/boost/concept/detail/general.hpp:
+
+c:/boost_1_52_0/boost/concept/detail/backward_compatibility.hpp:
+
+c:/boost_1_52_0/boost/concept/detail/has_constraints.hpp:
+
+c:/boost_1_52_0/boost/type_traits/conversion_traits.hpp:
+
+c:/boost_1_52_0/boost/concept/usage.hpp:
+
+c:/boost_1_52_0/boost/concept/detail/concept_def.hpp:
+
+c:/boost_1_52_0/boost/preprocessor/seq/for_each_i.hpp:
+
+c:/boost_1_52_0/boost/preprocessor/seq/seq.hpp:
+
+c:/boost_1_52_0/boost/preprocessor/seq/elem.hpp:
+
+c:/boost_1_52_0/boost/preprocessor/seq/size.hpp:
+
+c:/boost_1_52_0/boost/preprocessor/seq/enum.hpp:
+
+c:/boost_1_52_0/boost/concept/detail/concept_undef.hpp:
+
+c:/boost_1_52_0/boost/iterator/iterator_concepts.hpp:
+
+c:/boost_1_52_0/boost/range/value_type.hpp:
+
+c:/boost_1_52_0/boost/range/detail/misc_concept.hpp:
+
+c:/boost_1_52_0/boost/range/detail/safe_bool.hpp:
+
+c:/boost_1_52_0/boost/range/iterator_range_io.hpp:
+
+c:/boost_1_52_0/boost/range/detail/str_types.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/detail/trim.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/classification.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/detail/classification.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/predicate_facade.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/case_conv.hpp:
+
+c:/boost_1_52_0/boost/iterator/transform_iterator.hpp:
+
+c:/boost_1_52_0/boost/type_traits/function_traits.hpp:
+
+c:/boost_1_52_0/boost/utility/result_of.hpp:
+
+c:/boost_1_52_0/boost/preprocessor/iteration/iterate.hpp:
+
+c:/boost_1_52_0/boost/preprocessor/slot/slot.hpp:
+
+c:/boost_1_52_0/boost/preprocessor/slot/detail/def.hpp:
+
+c:/boost_1_52_0/boost/preprocessor/repetition/enum_binary_params.hpp:
+
+c:/boost_1_52_0/boost/preprocessor/repetition/enum_shifted_params.hpp:
+
+c:/boost_1_52_0/boost/preprocessor/facilities/intercept.hpp:
+
+c:/boost_1_52_0/boost/utility/declval.hpp:
+
+c:/boost_1_52_0/boost/preprocessor/iteration/detail/iter/forward1.hpp:
+
+c:/boost_1_52_0/boost/preprocessor/iteration/detail/bounds/lower1.hpp:
+
+c:/boost_1_52_0/boost/preprocessor/slot/detail/shared.hpp:
+
+c:/boost_1_52_0/boost/preprocessor/iteration/detail/bounds/upper1.hpp:
+
+c:/boost_1_52_0/boost/utility/detail/result_of_iterate.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/detail/case_conv.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/predicate.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/compare.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/find.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/finder.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/constants.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/detail/finder.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/detail/predicate.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/split.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/iter_find.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/concept.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/find_iterator.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/detail/find_iterator.hpp:
+
+c:/boost_1_52_0/boost/function.hpp:
+
+c:/boost_1_52_0/boost/preprocessor/iterate.hpp:
+
+c:/boost_1_52_0/boost/function/detail/prologue.hpp:
+
+c:/boost_1_52_0/boost/config/no_tr1/functional.hpp:
+
+c:/boost_1_52_0/boost/function/function_base.hpp:
+
+c:/boost_1_52_0/boost/type_traits/has_trivial_copy.hpp:
+
+c:/boost_1_52_0/boost/type_traits/has_trivial_destructor.hpp:
+
+c:/boost_1_52_0/boost/type_traits/composite_traits.hpp:
+
+c:/boost_1_52_0/boost/type_traits/is_union.hpp:
+
+c:/boost_1_52_0/boost/ref.hpp:
+
+c:/boost_1_52_0/boost/function_equal.hpp:
+
+c:/boost_1_52_0/boost/function/function_fwd.hpp:
+
+c:/boost_1_52_0/boost/mem_fn.hpp:
+
+c:/boost_1_52_0/boost/bind/mem_fn.hpp:
+
+c:/boost_1_52_0/boost/get_pointer.hpp:
+
+c:/boost_1_52_0/boost/bind/mem_fn_template.hpp:
+
+c:/boost_1_52_0/boost/bind/mem_fn_cc.hpp:
+
+c:/boost_1_52_0/boost/preprocessor/enum.hpp:
+
+c:/boost_1_52_0/boost/preprocessor/repetition/enum.hpp:
+
+c:/boost_1_52_0/boost/preprocessor/enum_params.hpp:
+
+c:/boost_1_52_0/boost/function/detail/function_iterate.hpp:
+
+c:/boost_1_52_0/boost/function/detail/maybe_include.hpp:
+
+c:/boost_1_52_0/boost/function/function_template.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/detail/util.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/join.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/detail/sequence.hpp:
+
+c:/boost_1_52_0/boost/mpl/logical.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/replace.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/find_format.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/detail/find_format.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/detail/find_format_store.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/detail/replace_storage.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/detail/find_format_all.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/formatter.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/detail/formatter.hpp:
+
+c:/boost_1_52_0/boost/algorithm/string/erase.hpp:

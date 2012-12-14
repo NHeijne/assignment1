@@ -65,7 +65,6 @@ bool CYKParser::parseLine(const string givenLine) {
 
 void CYKParser::CYKLine() {
 
-
   CYKLineBaseCase();
   if (nrTerms > 1) {
     CYKLineRecursiveCase();
@@ -77,7 +76,7 @@ void CYKParser::CYKLineBaseCase() {
   for (int i = 0; i < nrTerms; i++) { // for each terminal
 
     vector<Grammar::stringAndDouble> LHSs;
-    myCFG->getLHSs(lineTerms[i], LHSs); // get all rules A_j --> terminal_i
+    myCFG->getLHSs(lineTerms[i], LHSs, true); // true means it's a terminal. get all rules A_j --> terminal_i
     //cout << "Nr LHS's for " << lineTerms[i] << ": " << LHSs.size() << endl;
 
     bool sAdded = false;

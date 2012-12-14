@@ -21,10 +21,14 @@
 #include <stack>
 #include <cstring>
 #include <cmath>
+#include <algorithm>
+#include <sstream>
+
 
 #include <boost/archive/xml_oarchive.hpp>
 #include <boost/archive/xml_iarchive.hpp> 
 #include <boost/serialization/map.hpp>
+#include <boost/algorithm/string.hpp>
 
 using namespace std;
 
@@ -40,67 +44,92 @@ using namespace std;
  */
 
 class Grammar {
+public:
+  /* attributes and other stuff */
+  typedef pair <string, int> stringAndInt;
+  typedef pair <string, double> stringAndDouble;
+  typedef pair <string, stringAndDouble> tableKeyAndValue;
 
- 
 
-  public:
-    /* attributes and other stuff */  
-    typedef pair <string, int> stringAndInt;
-    typedef pair <string, double> stringAndDouble;
-    typedef pair <string, stringAndDouble> tableKeyAndValue;
 
-    // a nonterminal specifier is added to all nonterminal symbols,
-    // so we can distinguish between terminals and nonterminals
-    // (is convenient for in CYKParser)
-    static const string nonTerminalSymbol; /* nt_ */
-    static const string specialUnarySymbol; /* %%%%% */
-    static const string numberSymbol ;
-    /* constructors */
-    Grammar(string treeBankFile);
-    Grammar(const Grammar& orig);
-    virtual ~Grammar();
+  // a nonterminal specifier is added to all nonterminal symbols,
+  // so we can distinguish between terminals and nonterminals
+  // (is convenient for in CYKParser)
+  static const string nonTerminalSymbol; /* nt_ */
+  static const string specialUnarySymbol; /* %%%%% */
+  static const string numberRHS;
 
-    /* methods */
-    void getRHSs(string LHS, vector<stringAndDouble>&);
-    void getLHSs(string RHS, vector<stringAndDouble>&);
+  /* constructors */
+  Grammar(string treeBankFile);
+  Grammar(const Grammar& orig);
+  virtual ~Grammar();
 
-    void printL2rTable();
-    void printR2lTable();
-    void init(bool print = true);
+  /* methods */
+  //void getRHSs(string LHS, vector<stringAndDouble>&);
+  void getLHSs(string RHS, vector<stringAndDouble>&, bool RHSisTerminal = false);
 
-    void saveTreebankArchive();
-    void loadTreebankArchive();
+  void printL2rTable();
+  void printR2lTable();
+  void printUnknownProbTable();
 
-  private:
-    /* attributes and other stuff */
-    string archiveName;
-    string treeBankFileName;
+  void init(bool print = true);
 
-    multimap<string, stringAndDouble> l2rTable;
-    multimap<string, stringAndDouble> r2lTable; // inverse ordering from what is "natural"
+  void saveTreebankArchive();
+  void loadTreebankArchive();
 
-    pair<multimap<string, stringAndDouble>::iterator, multimap<string, stringAndDouble>::iterator> ruleRangeIterator;
-    multimap<string, stringAndDouble>::iterator ruleIterator;
+private:
+  /* attributes and other stuff */
+  string archiveNameTreebank;
+  string archiveNameProbTable;
+  string treeBankFileName;
 
-    map<string, int> lhsCountTable;
+  multimap<string, stringAndDouble> l2rTable;
+  multimap<string, stringAndDouble> r2lTable; // inverse ordering from what is "natural"
 
-    /* methods */
-    void readGrammar(bool print);
-    void parseLine(string line);
-    void parseLineRecursively(const char * line, int linePos, stack <stringAndInt>, int level);
-    void insertL2rTable(string key, string valueString);
-    bool validCharacter(char nextChar);
-    bool isNumber(string term);
-    void l2rTableCountToProbability();
-    void fillR2lTableFromL2rTable();
+  pair<multimap<string, stringAndDouble>::iterator, multimap<string, stringAndDouble>::iterator> ruleRangeIterator;
+  multimap<string, stringAndDouble>::iterator ruleIterator;
 
-    bool archiveExists();
+  map<string, int> lhsCountTable;
+  map<string,int>::iterator lhsCountTableIterator;
+  
 
-    
+  const int capitalChoices; // = 3
+  const int suffixChoices; //= 5;
+  const int hyphenChoices; //= 2;
+
+  typedef map<string, double> unknownProbLHS;
+  unknownProbLHS::iterator unknownProbLHSiterator;
+  unknownProbLHS * * * unknownProbTable;
+
+  /* methods */
+  void readGrammar(bool print);
+  void parseLine(string line);
+  void parseLineRecursively(const char * line, int linePos, stack <stringAndInt>, int level, bool firstTerm);
+  void insertL2rTable(string key, string valueString);
+  bool validCharacter(char nextChar);
+  bool isNumber(string term);
+  bool isWord(string term);
+  void l2rTableCountToProbability();
+  void fillR2lTableFromL2rTable();
+
+  bool archivesExists();
+
+  int getCapitalChoicesNumber(string term, bool firstTerm);
+  int getSuffixChoicesNumber(string term);
+  int getHyphenChoicesNumber(string term);
+  void fillUnknownProbTableCount(string term);
+  void insertUnknownProbTable(string nonTerm, string term, bool firstTerm);
+  void insertNonTermUnknownProbTable(string nonTerm);
+
+  void saveUnknownProbTable();
+  void loadUnknownProbTable();
+
+  void unknownProbTableCountToProbability();
+
 };
 
 
 
-  
+
 #endif	/* GRAMMAR_H */
 

@@ -50,29 +50,33 @@ void Main::testStuff1() {
 //  myGrammar->fillR2lTable();
 //
  
- myGrammar->printL2rTable();
+// myGrammar->printL2rTable();
+// myGrammar->printUnknownProbTable();
+
 // cout <<"r 2 l: " << endl;
  //myGrammar->printR2lTable();
-//  vector<Grammar::stringAndDouble> LHSs = myGrammar->getRHSs("NP");
+//  vector<Grammar::stringAndDouble> LHSs;
+//  myGrammar->getLHSs("meal",LHSs);
 //  for (int i = 0; i < LHSs.size(); i++) {
 //    cout << LHSs[i].first << " " << LHSs[i].second << endl;
 //  }  cout << endl;
 
   parser = new CYKParser(myGrammar);
- // parser->parseLine("Ms. Haag plays Elianti . ");
+  //parser->parseLine("Ms. Haag plays Elianti . ");
+  parser->parseLine("Hurr durr herp derp . ");
 // parser->parseLine("He believes in what he plays , and he plays superbly . ");
 // parser->parseLine("He said that one of the computers took a three-foot trip sliding across the floor . ");
-  parser->parseLine("Exchange officials emphasized that the Big Board is considering a variety of actions to deal with program trading . ");
+  //parser->parseLine("Exchange officials emphasized that the Big Board is considering a variety of actions to deal with program trading . ");
 
   //parser->writeTOPs("toptest.dat");
 
-// parser->printCYKTable();
-//  tree<string> thisTree;
-//  parser->getTree(thisTree);
+ parser->printCYKTable();
+  tree<string> thisTree;
+  parser->getTree(thisTree);
 //  TreeManager::printTree(thisTree);
-//  TreeManager::debinarize(thisTree);
-//  TreeManager::removeSpecialUnaryRules(thisTree);
-//  TreeManager::printTree(thisTree);
+  TreeManager::debinarize(thisTree);
+  TreeManager::removeSpecialUnaryRules(thisTree);
+  TreeManager::printTree(thisTree);
 }
 
 
