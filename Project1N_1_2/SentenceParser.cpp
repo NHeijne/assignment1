@@ -97,21 +97,26 @@ void SentenceParser::CYKLineBaseCase() {
       while (k < LHSsSize) { // for each added entry to this cell
 
         vector<Grammar::stringAndDouble> LHSsRec;
-        myCFG->getLHSs(LHSs[k].first, LHSsRec); // get all rules B --> A
+        myCFG->getLHSs(LHSs[k].first, LHSsRec); // get all rules A --> B
 
         int LHSsRecSize = LHSsRec.size();
-        for (int l = 0; l < LHSsRecSize; l++) { // for all B's
-          // add the rule B--> A always, not just if their combined probability is higher
-          Grammar::stringAndDouble lhsCurrentEntry = LHSsRec[l];
-          double recProb = lhsCurrentEntry.second + CYKTable[i][i][LHSs[k].first].prob;
-          double prob = LHSs[k].second;
-        //  if (recProb > prob) {
-            prob = recProb;
-         // }
-          location back1 = (location{i, i}); // k = index currentEntry
-          CYKTable[i][i][lhsCurrentEntry.first] = RHSEntry({stringAndLocation({LHSs[k].first, back1}), emptyRHS, prob, false});
-          LHSs.push_back(Grammar::stringAndDouble(lhsCurrentEntry.first, prob));
-          LHSsSize++;
+        for (int l = 0; l < LHSsRecSize; l++) { // for all A's
+
+          double prob = LHSsRec[l].second + CYKTable[i][i][LHSs[k].first].prob;
+     
+          location back1 = (location{i, i}); 
+          RHSEntry rightEntry =  RHSEntry({stringAndLocation({LHSs[k].first, back1}), emptyRHS, prob, false});
+          cellIterator findA_i = CYKTable[i][i].find(LHSsRec[l].first);
+          if (findA_i != CYKTable[i][i].end()) {
+            if (prob >  findA_i->second.prob) {
+              findA_i->second = rightEntry;
+              LHSs.push_back(Grammar::stringAndDouble(LHSsRec[l].first, prob));
+              LHSsSize++;
+            }
+          }
+          else {
+            CYKTable[i][i][LHSsRec[l].first] = rightEntry;
+          }
         }
         k++;
       }

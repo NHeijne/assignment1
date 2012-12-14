@@ -64,10 +64,10 @@ void Main::testStuff1() {
 
   sentenceParser = new SentenceParser(myGrammar);
 
-// sentenceParser->parseLine("Ms. Haag plays Elianti . ");
+ sentenceParser->parseLine("Ms. Haag plays Elianti . ");
 //  sentenceParser->parseLine("Hurr durr herp derp . ");
 // sentenceParser->parseLine("He believes in what he plays , and he plays superbly . ");
- sentenceParser->parseLine("No , it was n't Black Monday . ");
+ //sentenceParser->parseLine("No , it was n't Black Monday . ");
  // sentenceParser->parseLine("Exchange officials emphasized that the Big Board is considering a variety of actions to deal with program trading . ");
 
   sentenceParser->writeTOPs("toptest.dat");
