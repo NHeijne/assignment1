@@ -195,10 +195,10 @@ void Grammar::getLHSs(string RHS, vector<stringAndDouble>& LHSs, bool RHSisTermi
   for (ruleIterator = ruleRangeIterator.first; ruleIterator != ruleRangeIterator.second; ruleIterator++) {
     LHSs.push_back((*ruleIterator).second);
   }
-//  if (RHSisTerminal && LHSs.empty()) { // it is a terminal but nothing found in r2lTable
-//    cout << "unknown term: " << RHS << endl;
-//    getLHSsUnknownTerm(RHS, LHSs,  RHSisFirstTerminal) ;
-//  }
+  if (RHSisTerminal && LHSs.empty()) { // it is a terminal but nothing found in r2lTable
+    cout << "unknown term: " << RHS << endl;
+    getLHSsUnknownTerm(RHS, LHSs,  RHSisFirstTerminal) ;
+  }
 }
 
 void Grammar::getLHSsUnknownTerm(string RHS, vector<stringAndDouble>& LHSs,  bool RHSisFirstTerminal) {
