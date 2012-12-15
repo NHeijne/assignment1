@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.3.1)  11 DEC 2012 20:10
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.3.1)  16 DEC 2012 00:49
 entering extended mode
 **ReportELPL.tex
 
@@ -161,71 +161,47 @@ Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
 Package: algpseudocode 
 
 Document Style - pseudocode environments for use with the `algorithmicx' style
+) ("C:\Program Files (x86)\MiKTeX\tex\latex\natbib\natbib.sty"
+Package: natbib 2007/10/30 8.1 (PWD)
+\bibhang=\skip49
+\bibsep=\skip50
+LaTeX Info: Redefining \cite on input line 602.
+\c@NAT@ctr=\count109
 )
 (L:\3.Documents\huiswerk_20122013\ELPL\ass1\code\assignment1\report\ReportELPL.
 aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
  (C:\Users\agnes\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count109
+\scratchcounter=\count110
 \scratchdimen=\dimen114
 \scratchbox=\box30
-\nofMPsegments=\count110
-\nofMParguments=\count111
+\nofMPsegments=\count111
+\nofMParguments=\count112
 \everyMPshowfont=\toks23
-\MPscratchCnt=\count112
+\MPscratchCnt=\count113
 \MPscratchDim=\dimen115
-\MPnumerator=\count113
-\makeMPintoPDFobject=\count114
+\MPnumerator=\count114
+\makeMPintoPDFobject=\count115
 \everyMPtoPDFconversion=\toks24
 )
-Underfull \hbox (badness 1365) in paragraph at lines 33--34
-[]\OT1/cmr/m/n/10.95 The goal is to re-con-struct the parses of
- []
-
-
-Underfull \hbox (badness 1072) in paragraph at lines 33--34
-\OT1/cmr/m/n/10.95 to new un-seen ex-am-ples, build-ing a ro-bust
- []
-
-
-Underfull \hbox (badness 1831) in paragraph at lines 33--34
-\OT1/cmr/m/n/10.95 and uses prob-a-bil-ity to deal with am-bi-gu-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 36--38
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 36--38
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 42--43
-[]\OT1/cmr/m/n/10.95 Formal def-i-ni-tion of the PCFG
- []
-
-
-Underfull \hbox (badness 2285) in paragraph at lines 44--45
+Underfull \hbox (badness 2285) in paragraph at lines 45--46
 []\OT1/cmr/m/n/10.95 A prob-a-bilis-tic Con-text Free Gram-mar
  []
 
 
-Underfull \hbox (badness 1092) in paragraph at lines 48--49
+Underfull \hbox (badness 1092) in paragraph at lines 49--50
 $\OML/cmm/m/it/10.95 C[]$\OT1/cmr/m/n/10.95 , with $\OML/cmm/m/it/10.95 C[]$ \O
 T1/cmr/m/n/10.95 a string of ter-mi-nals and
  []
@@ -240,23 +216,11 @@ Missing character: There is no “ in font cmbx12!
 
 
 ]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [2]
 (L:\3.Documents\huiswerk_20122013\ELPL\ass1\code\assignment1\report\ReportELPL.
 bbl
-Underfull \hbox (badness 4441) in paragraph at lines 9--12
-[]\OT1/cmr/m/n/10.95 Aho and Ull-mann.
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 14--16
-[]\OT1/cmr/m/n/10.95 Gideon Mail-lette
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 18--20
-[]\OT1/cmr/m/n/10.95 Gideon Mail-lette
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 22--25
 []\OT1/cmr/m/n/10.95 Christopher Man-ning.
  []
@@ -267,17 +231,17 @@ Overfull \hbox (106.75285pt too wide) in paragraph at lines 22--25
 /cmr/m/n/10.95 ,
  []
 
-) [2]
+) [3] [4] [5]
 (L:\3.Documents\huiswerk_20122013\ELPL\ass1\code\assignment1\report\ReportELPL.
 aux) ) 
 Here is how much of TeX's memory you used:
- 2366 strings out of 494045
- 31064 string characters out of 3147582
- 91079 words of memory out of 3000000
- 5657 multiletter control sequences out of 15000+200000
- 11510 words of font info for 41 fonts, out of 3000000 for 9000
+ 2669 strings out of 494045
+ 34788 string characters out of 3147582
+ 104028 words of memory out of 3000000
+ 5955 multiletter control sequences out of 15000+200000
+ 11846 words of font info for 43 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 27i,8n,20p,848b,306s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,8n,28p,848b,319s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files (x86)/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb>
 <C:/Program Files (x86)/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Pr
 ogram Files (x86)/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Program
@@ -294,9 +258,9 @@ C:/Program Files (x86)/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Prog
 ram Files (x86)/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Fi
 les (x86)/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Program Files (x
 86)/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on ReportELPL.pdf (2 pages, 202498 bytes).
+Output written on ReportELPL.pdf (5 pages, 214878 bytes).
 PDF statistics:
- 77 PDF objects out of 1000 (max. 8388607)
+ 86 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
