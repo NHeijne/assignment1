@@ -67,7 +67,8 @@ void Main::testStuff1() {
  //sentenceParser->parseLine("Ms. Haag plays Elianti . ");
  // sentenceParser->parseLine("Nobody likes me . ");
  //sentenceParser->parseLine("He believes in what he plays , and he plays superbly . ");
- sentenceParser->parseLine("No , it was n't Black Monday . ");
+ //sentenceParser->parseLine("No , it was n't Black Monday . ");
+  sentenceParser->parseLine("I saw the man with the telescope . ");
   //sentenceParser->parseLine("Exchange officials emphasized that the Big Board is trading . ");
 
   sentenceParser->writeTOPs("toptest.dat");
@@ -162,11 +163,11 @@ int main(int argc, const char * argv[]) {
 //
 //  main->assignment2();
 
- // main->testStuff1();
+  main->testStuff1();
 
-  main->parser = new Parser("treebank.dat", "testsentencespart.dat", "testtreespart.dat", "test_result.dat");
- main->parser->start();
-  
+//  main->parser = new Parser("treebank.dat", "testsentencespart.dat", "testtreespart.dat", "test_result.dat");
+// main->parser->start();
+//
   return 0;
 }
 
