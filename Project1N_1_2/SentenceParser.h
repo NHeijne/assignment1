@@ -48,10 +48,11 @@ class SentenceParser {
       
       void reset();
 
-      void recTree(tree<string>& myTree, tree<string>::iterator node, location locLHS, string lhsString);
-      void makeTree();
+      void makeDerivationTreeFromCYKTable(tree<string>& myTree, tree<string>::iterator node, location locLHS, string lhsString);
+      void makeDerivationTree();
+      void makeFailureTree(tree<string>& myTree, tree<string>::iterator node, location locLHS, string lhsString);
 
-      void getTree(tree<string>&);
+      void getDerivationTree(tree<string>&);
       
     private:
       /* attributes and other stuff */

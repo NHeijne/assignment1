@@ -23,7 +23,6 @@ Remark #2 : we make use of the Boost library collection.
 		of e.g. libboost_serialization-mt.so that you copied in the previous step:
 		> c++ -o project1 Main.cpp Grammar.cpp CYKParser.cpp TreeManager.cpp /usr/lib64/libboost_serialization-mt.so
 
-	(Note: we will try to make a makefile for final submission.)
 
 == Compiling on Windows
 
@@ -39,7 +38,8 @@ Remark #2 : we make use of the Boost library collection.
 
 = Running
 
-The program can be run with two optional arguments, namely, the treebank file filename and the testsentences file filename, respectively.
+The program can be run with three optional arguments, namely, the treebank file filename, the test sentences file filename,
+and the test sentences trees file filename, respectively.
 If these are not provided, however, the program will ask for them.
 
 = Code structure
@@ -47,27 +47,37 @@ If these are not provided, however, the program will ask for them.
 == Class structure
 
 === Main.cpp:
-		This provides the main control flow, which so far reads the test sentences and makes their parses being written away to a file.
+		This provides the initialisation, of Parser.cpp mainly. Can read command line arguments.
 === Grammar.cpp:
 		This represents the CFG. 
 		It reads the CFG from the treebank and writes it to a XML file, or it reads the CFG from a XML file.
 		It holds 2 tables (multimaps) that map the RHS's to the LHS's and vice versa.
-=== CYKParser.cpp
-		This implements the CYK algorithm.
+		It holds a table (multidimensional) for the smoothing.
+		It can write the left-to-right-rule table and the smoothing table to files, and load them from these files.
+		Note that as such, two files are used for this serialization process.		
+=== SentenceParser.cpp
+		This implements the Viterbi-on-CYK algorithm.
 		It can produce the derivations for a given sentence.
-		Then it can print the CYK table. It also can write all the rules TOP-->XP for a sentence to a file.
+		Then it can print the CYK table. 
+		It can write all the rules TOP-->XP for a sentence to a file (sub-assignment 2), and also
+		produce a tree for the Viterbi parse in the CYK Table (sub-assignment 3).
 === TreeManager.cpp
-		This is a class to be worked in in part 3 of the assignment.
-		It is destined to e.g. debinarize the trees.
+		This is a static class.
+		It is used to debinarize the trees, and reparse the %%%%%-unary-rules from the trees.
+		It can return the Penn WSJ string for a tree.
+=== Parser.cpp
+		This class is the main controller.
+		It initializes the Grammar, and then reads the test sentences file and parses it by invoking SentenceParser.
+		It produces a new test-trees file, that only contains the test-trees of the corresponding test-sentences actually
+		parsed (sentences with more than 16 terms are not parsed). 
 
 == General code remarks
 
 	First of all, the multimap "l2rTable" (a LHS-to-RHS table) in Grammar.cpp is largely useless because we only look up the LHS's of rules.
-	It says both directions (LHS to RHS, and RHS to LHS) are necessary in part 1 of the assignment.
-	We now fill the "r2lTable" according to "l2rTable" but if it remains unnecessary we will directly fill the "r2lTable",
-	and remove "l2rTable", since it consumes space.
+	It said both directions (LHS to RHS, and RHS to LHS) are necessary in part 1 of the assignment.
+	We should delete it and rearrange the code.
 	
-	A C++ (STL) multimap is used in Grammar.cpp.
+	A C++ (STL) multimap is used in Grammar.cpp for containing the rule table.
 	It maps keys to values, in which keys having multiple values is possible. Therefore we used it for the CFG representation.
 	Lookup is by key. It is efficient for lookup by range, which is what we do when getting all keys being equal to e.g. "S".
 	
@@ -76,6 +86,7 @@ If these are not provided, however, the program will ask for them.
 	It is efficient for lookup by one key.
 	We use it for the table in the CYK algorithm so that we can efficiently get and edit, and easily insert, the LHS of a rule in the cell. 
 	
+	For generating trees from the CYK table we use the class tree.hh. Credits go to Kasper Peeters. Information is at http://tree.phi-sci.com/documentation.html.
 	
 		
 

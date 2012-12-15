@@ -38,7 +38,7 @@ class Main {
 
 /* implementation */
 void Main::testStuff1() {
-  myGrammar = new Grammar("treebank.dat");
+  myGrammar = new Grammar("treebank.dat", true);
   myGrammar->init();
 
  // myGrammar->save();
@@ -64,18 +64,20 @@ void Main::testStuff1() {
 
   sentenceParser = new SentenceParser(myGrammar);
 
- //sentenceParser->parseLine("Ms. Haag plays Elianti . ");
- // sentenceParser->parseLine("Nobody likes me . ");
+// sentenceParser->parseLine("Ms. Haag plays Elianti . ");
+  sentenceParser->parseLine("Hurr durr derp . ");
  //sentenceParser->parseLine("He believes in what he plays , and he plays superbly . ");
  //sentenceParser->parseLine("No , it was n't Black Monday . ");
-  sentenceParser->parseLine("I saw the man with the telescope . ");
+  //sentenceParser->parseLine("I saw the man with the telescope . ");
   //sentenceParser->parseLine("Exchange officials emphasized that the Big Board is trading . ");
 
-  sentenceParser->writeTOPs("toptest.dat");
+  //sentenceParser->writeTOPs("toptest.dat");
 
  //sentenceParser->printCYKTable();
   tree<string> thisTree;
-  sentenceParser->getTree(thisTree);
+ // cout << "Tree size: " << thisTree.size() << endl;
+  sentenceParser->getDerivationTree(thisTree);
+  cout << "Tree size: " << thisTree.size() << endl;
   TreeManager::printTree(thisTree);
   TreeManager::debinarize(thisTree);
   TreeManager::removeSpecialUnaryRules(thisTree);

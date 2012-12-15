@@ -60,7 +60,7 @@ public:
   static const string numberRHS; /* "<[(number)]>" */
 
   /* constructors */
-  Grammar(string treeBankFile);
+  Grammar(string treeBankFile, bool smooth = true);
   Grammar(const Grammar& orig);
   virtual ~Grammar();
 
@@ -79,6 +79,7 @@ public:
 
 private:
   /* attributes and other stuff */
+  bool smoothing;
   string archiveNameTreebank;
   string archiveNameProbTable;
   string treeBankFileName;

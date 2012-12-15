@@ -311,39 +311,57 @@ vector<string> SentenceParser::split(const string line) {
   return terms;
 }
 
-void SentenceParser::makeTree() {
-
-  tree<string>::iterator node = myTree.begin();
-  location locLHS = {0, nrTerms-1};
-  string lhsString = Grammar::nonTerminalSymbol + "TOP" ;
-  node = myTree.insert(node, lhsString);
-  recTree(myTree, node, locLHS, lhsString);
-  
+void SentenceParser::makeFailureTree(tree<string>& myTree, tree<string>::iterator node, location locLHS, string lhsString) {
+  for (int i=0; i < nrTerms; i++) {
+    tree<string>::iterator node2 = myTree.append_child(node, Grammar::nonTerminalSymbol + "POS");
+    myTree.append_child(node2, lineTerms[i]);
+  }
 }
 
-void SentenceParser::recTree(tree<string>& myTree, tree<string>::iterator node, location locLHS, string lhsString){
+void SentenceParser::makeDerivationTreeFromCYKTable(tree<string>& myTree, tree<string>::iterator node, location locLHS, string lhsString){
   //cout << lhsString << endl;
+
+ 
+  
   RHSEntry thisRHSentry = CYKTable[locLHS.i][locLHS.j][lhsString];
-  //cout << ", " << thisRHSentry.RHS1.first << " & " << thisRHSentry.RHS2.first << endl;
-  //system("pause");
+ // cout << ", " << thisRHSentry.RHS1.first << " & " << thisRHSentry.RHS2.first << endl;
+
 
   // first rhs
   tree<string>::iterator node2 = myTree.append_child(node, thisRHSentry.RHS1.first);
 
   if (! thisRHSentry.backIsTerminal){ // stop condition
-      recTree(myTree, node2, thisRHSentry.RHS1.second, thisRHSentry.RHS1.first);
+      makeDerivationTreeFromCYKTable(myTree, node2, thisRHSentry.RHS1.second, thisRHSentry.RHS1.first);
   }
 
   if (!(thisRHSentry.RHS2.first == "")) { // second rhs
     node2 = myTree.append_child(node, thisRHSentry.RHS2.first);
-    recTree(myTree, node2, thisRHSentry.RHS2.second, thisRHSentry.RHS2.first);
+    makeDerivationTreeFromCYKTable(myTree, node2, thisRHSentry.RHS2.second, thisRHSentry.RHS2.first);
   }
 }
 
-void SentenceParser::getTree(tree<string>& theTree) {
+
+void SentenceParser::makeDerivationTree() {
+
+  tree<string>::iterator node = myTree.begin();
+  location locLHS = {0, nrTerms-1}; // upper right corner
+  string lhsString = Grammar::nonTerminalSymbol + "TOP" ;
+  node = myTree.insert(node, lhsString);
+
+  if (CYKTable[locLHS.i][locLHS.j].size() == 0) { // no derivation found!
+    makeFailureTree( myTree, node, locLHS, lhsString);
+  }
+  else {
+    makeDerivationTreeFromCYKTable(myTree, node, locLHS, lhsString);
+  }
+
+}
+
+
+void SentenceParser::getDerivationTree(tree<string>& theTree) {
 
   if (myTree.empty()) {
-    makeTree();
+    makeDerivationTree();
   }
   theTree = myTree;
 

@@ -13,7 +13,7 @@
 #include <string>
 #include <cstring>
 
-Parser::Parser(string treebankFileName, string testSentencesFileName, string testSentencesTreesFileName, string outputFileName) {
+Parser::Parser(string treebankFileName, string testSentencesFileName, string testSentencesTreesFileName, string outputFileName, bool smoothing  /* = true */) {
   this->treebankFileName = treebankFileName;
   this->testSentencesFileName = testSentencesFileName;
   this->outputFileName = outputFileName;
@@ -21,7 +21,7 @@ Parser::Parser(string treebankFileName, string testSentencesFileName, string tes
 
   newTestSentencesTreesFileName = testSentencesTreesFileName + "new";
 
-  grammar = new Grammar(treebankFileName);
+  grammar = new Grammar(treebankFileName, smoothing);
   sentenceParser = new SentenceParser(grammar);
 }
 
@@ -61,7 +61,7 @@ void Parser::parseTestSentences() {
           // system("pause");
          
           if (sentenceParser->parseLine(sentence)) {
-            sentenceParser->getTree(sentenceDerivationTree);
+            sentenceParser->getDerivationTree(sentenceDerivationTree);
            // TreeManager::printTree(sentenceDerivationTree);
             derivationString = TreeManager::getPennWSJstring(sentenceDerivationTree);
             outputFile << derivationString << endl;

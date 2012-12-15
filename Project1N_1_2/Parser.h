@@ -19,7 +19,7 @@ public:
   typedef tree<string> DerivationTree;
   
   /* constructors */ 
-  Parser(string treebankFileName, string testSentencesFileName, string testSentencesTreesFileName, string outputFileName);
+  Parser(string treebankFileName, string testSentencesFileName, string testSentencesTreesFileName, string outputFileName, bool smoothing = true);
   Parser(const Parser& orig);
   virtual ~Parser();
 

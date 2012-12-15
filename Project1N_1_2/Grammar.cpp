@@ -14,10 +14,11 @@ const string Grammar::numberRHS = "<[(number)]>";
 /**
  * Constructor
  */
-Grammar::Grammar(string treeBankFile) : capitalChoices(3), suffixChoices(5), hyphenChoices(2) {
+Grammar::Grammar(string treeBankFile, bool smooth /*= true */) : capitalChoices(3), suffixChoices(5), hyphenChoices(2) {
   treeBankFileName = treeBankFile;
   archiveNameTreebank = treeBankFileName + "_archive_treebank.xml";
   archiveNameProbTable = treeBankFileName + "_archive_probtable.dat";
+  smoothing = smooth;
 
   unknownProbTable = new unknownProbLHS**[capitalChoices];
   for (int i = 0; i < capitalChoices; i++) {
@@ -46,7 +47,7 @@ Grammar::~Grammar() {
         for (int k = 0; k < hyphenChoices; k++) {
           unknownProbLHS().swap(unknownProbTable[i][j][k]);
         }
-        delete[] unknownProbTable[j];
+        delete[] unknownProbTable[i][j];
       }
       delete[] unknownProbTable[i];
     }
@@ -195,9 +196,11 @@ void Grammar::getLHSs(string RHS, vector<stringAndDouble>& LHSs, bool RHSisTermi
   for (ruleIterator = ruleRangeIterator.first; ruleIterator != ruleRangeIterator.second; ruleIterator++) {
     LHSs.push_back((*ruleIterator).second);
   }
-  if (RHSisTerminal && LHSs.empty()) { // it is a terminal but nothing found in r2lTable
-    cout << "unknown term: " << RHS << endl;
-    getLHSsUnknownTerm(RHS, LHSs,  RHSisFirstTerminal) ;
+  if (smoothing) {
+    if (RHSisTerminal && LHSs.empty()) { // it is a terminal but nothing found in r2lTable
+      cout << "unknown term: " << RHS << endl;
+      getLHSsUnknownTerm(RHS, LHSs,  RHSisFirstTerminal) ;
+    }
   }
 }
 
@@ -366,6 +369,7 @@ int Grammar::getHyphenChoicesNumber(string term) {
   }
  }
  void Grammar::insertUnknownProbTable(string nonTerm, string term, bool firstTerm) {
+   // add nonTerm producing a term always to any category (for smoothing)
    insertNonTermUnknownProbTable(nonTerm);
    
    int capitalChoice = getCapitalChoicesNumber(term, firstTerm);
@@ -373,12 +377,9 @@ int Grammar::getHyphenChoicesNumber(string term) {
    int hyphenChoice = getHyphenChoicesNumber(term);
 
    unknownProbLHSiterator = unknownProbTable[capitalChoice][suffixChoice][hyphenChoice].find(nonTerm);
-  // if (unknownProbLHSiterator == unknownProbTable[capitalChoice][suffixChoice][hyphenChoice].end()) { // LHS did not occur yet
-  //   unknownProbTable[capitalChoice][suffixChoice][hyphenChoice].insert(stringAndDouble(nonTerm, 1));
-  // }
-   //else {
-      unknownProbLHSiterator->second++; // increase count
-  // }
+
+   unknownProbLHSiterator->second++; // increase count
+
  }
 
 /**
