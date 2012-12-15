@@ -1,0 +1,17 @@
+\begin{thebibliography}{2}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Aho and Ullmann(1972)]{cyk}
+Aho and Ullmann.
+\newblock \emph{The theory of parsing, translation, and compiling}.
+\newblock Prentice-Hall, Inc., 1972.
+
+\bibitem[de~Buy~Wenniger(2012)]{slides2}
+Gideon~Maillette de~Buy~Wenniger, 2012.
+\newblock Slides explanation of PCFGs and CYK used in Lab.
+
+\end{thebibliography}

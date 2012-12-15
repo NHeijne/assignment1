@@ -69,7 +69,7 @@ void Parser::parseTestSentences() {
       cout << "The corresponding test sentences file for \"" << outputFileName << "\" is \"" << newTestSentencesTreesFileName << "\". " << endl;
     }
     else {
-      throw ("Unable to open test sentences file " + testSentencesFileName);
+      throw ("Unable to open file " + testSentencesFileName + " or " + testSentencesTreesFileName);
     }
   }
   catch (const char * e) {

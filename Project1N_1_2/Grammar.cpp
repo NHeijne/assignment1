@@ -449,7 +449,7 @@ void Grammar::processLineRecursively(const char * line, int linePos, stack <stri
       RHS2 = stringLevelStack.top();
       stringLevelStack.pop();
 
-      if (stringLevelStack.top().second == RHS2.second) { // same level
+      if (stringLevelStack.top().second == RHS2.second) { // if same level
         RHS1 = stringLevelStack.top();
         stringLevelStack.pop();
         RHS1.first += " " + nonTerminalSymbol;
@@ -457,7 +457,7 @@ void Grammar::processLineRecursively(const char * line, int linePos, stack <stri
       else {
         RHS1.first = "";
       }
-      LHS = stringLevelStack.top(); //stringLevelStack.pop();
+      LHS = stringLevelStack.top(); 
       insertL2rTable(nonTerminalSymbol + LHS.first, nonTerminalSymbol + RHS1.first + RHS2.first);
       return processLineRecursively(line, linePos + 1, stringLevelStack, level - 1, firstTerm);
     }
