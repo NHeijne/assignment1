@@ -31,16 +31,6 @@
 
 using namespace std;
 
-/***
- * We use std::multimap and not std::unordered_multimap because:
- * "unordered_map containers are faster than map containers to access individual
- * elements by their key, although they are generally less efficient for range
- * iteration through a subset of their elements. "
- * (source: http://www.cplusplus.com/reference/stl/unordered_map/ )
- * And we need to range-iterate a lot because we have multiple RHS's per LHS.
- *
- * NOTE: multimap allows duplicate <key,value> pairs!
- */
 
 class Grammar {
   
