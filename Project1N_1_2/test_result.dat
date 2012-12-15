@@ -1,1 +1,5 @@
-(TOP (SINV (S (NP (DT No) (, ,) (NP (PRP it))) (VP (VBD was) (ADVP (RB n't)))) (NP (NNP Black) (NNP Monday)) (. .)) ) 
+(TOP (S (NP (DT No) (, ,) (NP (PRP it))) (VP (VBD was) (ADVP (RB n't)) (NP (NNP Black) (NNP Monday))) (. .)) ) 
+(TOP (S (NP (DT The) (JJ finger-pointing)) (VP (VBZ has) (ADJP (RB already) (VBN begun))) (. .)) ) 
+(TOP (S (`` ``) (NP (DT The) (NN equity) (NN market)) (VP (VBD was) (ADJP (JJ illiquid))) (. .)) ) 
+(TOP (S (SBAR (WHADVP (WRB When)) (S (NP (DT the) (NN dollar)) (VP (VBZ is) (PP (IN in) (NP (DT a) (NN free-fall)))))) (, ,) (ADVP (RB even)) (NP (JJ central) (NNS banks)) (VP (MD ca) (RB n't) (VP (VB stop) (NP (PRP it)))) (. .)) ) 
+(TOP (S (NP (JJ Final-hour) (NN trading)) (VP (VBD accelerated) (PP (TO to) (NP (QP (CD 108.1) (CD million)) (NNS shares))) (, ,) (NP (DT a) (NN record)) (PP (IN for) (NP (DT the) (NNP Big) (NNP Board)))) (. .)) ) 

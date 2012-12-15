@@ -116,6 +116,8 @@ void SentenceParser::CYKLineBaseCase() {
           }
           else {
             CYKTable[i][i][LHSsRec[l].first] = rightEntry;
+            LHSs.push_back(Grammar::stringAndDouble(LHSsRec[l].first, prob));
+            LHSsSize++;
           }
         }
         k++;
@@ -151,16 +153,16 @@ void SentenceParser::CYKLineRecursiveCase() {
             myCFG->getLHSs(RHS1 + " " + RHS2, As); // get all rules A --> B C
             int AsSize = As.size();
 
-            if (iteratorB->first == "nt_NNP" && iteratorC->first == "nt_NNP") {
-              cout << " entry " << begin-1 << ", " << end-1 << endl;
-            }
+//            if (iteratorB->first == "nt_NNP" && iteratorC->first == "nt_NNP") {
+//              cout << " entry " << begin-1 << ", " << end-1 << endl;
+//            }
             for (int a_i = 0; a_i < AsSize; a_i++) {
               sAdded = true;
 
               double prob = As[a_i].second + iteratorB->second.prob + iteratorC->second.prob;
-              if (iteratorB->first == "nt_NNP" && iteratorC->first == "nt_NNP") {
-                 cout << " prob for " << As[a_i].first << " = " << As[a_i].second + iteratorB->second.prob + iteratorC->second.prob << endl;
-              }
+//              if (iteratorB->first == "nt_NNP" && iteratorC->first == "nt_NNP") {
+//                 cout << " prob for " << As[a_i].first << " = " << As[a_i].second + iteratorB->second.prob + iteratorC->second.prob << endl;
+//              }
 
               location locC_i = {split, end - 1};
               location locB_i = {begin - 1, split - 1};
@@ -170,16 +172,17 @@ void SentenceParser::CYKLineRecursiveCase() {
               cellIterator findA_i = CYKTable[begin - 1][end - 1].find(As[a_i].first);
               if (findA_i != CYKTable[begin - 1][end - 1].end()) { // element exists already
                 if (findA_i->second.prob < prob /* As[a_i].second*/) { // if probability is higher
-                   if (iteratorB->first == "nt_NNP" && iteratorC->first == "nt_NNP") {
-                      cout << " prob for " << As[a_i].first << " is higher than for " << findA_i->first << ", " << prob << " is higher than " << findA_i->second.prob << endl;
-                   }
+//                   if (iteratorB->first == "nt_NNP" && iteratorC->first == "nt_NNP") {
+//                      cout << " prob for " << As[a_i].first << " is higher than for " << findA_i->first << ", " << prob << " is higher than " << findA_i->second.prob << endl;
+//                   }
                   findA_i->second = rightEntry; // swap right hand side entry
+                   addedToCell.push_back(Grammar::stringAndDouble({As[a_i].first, prob}));
                 }
               }
               else {
-                 if (iteratorB->first == "nt_NNP" && iteratorC->first == "nt_NNP") {
-                   cout <<  As[a_i].first << " didnt  exist yet "<< endl;
-                 }
+//                 if (iteratorB->first == "nt_NNP" && iteratorC->first == "nt_NNP") {
+//                   cout <<  As[a_i].first << " didnt  exist yet "<< endl;
+//                 }
                 CYKTable[begin - 1][end - 1][As[a_i].first] = rightEntry;
                 addedToCell.push_back(Grammar::stringAndDouble({As[a_i].first, prob}));
               }
@@ -192,18 +195,13 @@ void SentenceParser::CYKLineRecursiveCase() {
               while (k < addedToCellSize) { // for each added entry to this cell
                 vector<Grammar::stringAndDouble> LHSsRec;
 
-                myCFG->getLHSs(addedToCell[k].first, LHSsRec); // get all rules B --> A
+                myCFG->getLHSs(addedToCell[k].first, LHSsRec); // get all rules A --> B
 
                 int LHSsRecSize = LHSsRec.size();
-                for (int l = 0; l < LHSsRecSize; l++) { // for all B's
-
-				          Grammar::stringAndDouble lhsCurrentEntry = LHSsRec[l];
-
-                  double recProb = lhsCurrentEntry.second + CYKTable[begin - 1][end - 1][addedToCell[k].first].prob;
-                  double prob = addedToCell[k].second;
-                  //if (recProb > prob) {
-                    prob = recProb;
-                 // }
+                for (int l = 0; l < LHSsRecSize; l++) { // for all A's
+				         
+                  double prob = LHSsRec[l].second + CYKTable[begin - 1][end - 1][addedToCell[k].first].prob;
+                  
                   location back1 = (location{begin - 1, end - 1});
                   RHSEntry rightEntry = RHSEntry({stringAndLocation({addedToCell[k].first, back1}), emptyRHS, prob, false});
 
@@ -212,6 +210,8 @@ void SentenceParser::CYKLineRecursiveCase() {
                   if (findAdded_i != CYKTable[begin - 1][end - 1].end()) { // element exists already
                     if (findAdded_i->second.prob < prob /*LHSsRec[l].second */) { // if probability is higher
                       findAdded_i->second = rightEntry; // swap right hand side entry
+                      addedToCell.push_back(Grammar::stringAndDouble({LHSsRec[l].first, prob}));
+                      addedToCellSize++;
                     }
                   }
                   else {

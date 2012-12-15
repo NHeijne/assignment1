@@ -1,0 +1,5 @@
+(TOP (S (INTJ (RB No)) (, ,) (NP-SBJ (PRP it)) (VP (VBD was) (RB n't) (NP-PRD (NNP Black) (NNP Monday))) (. .)) )
+(TOP (S (NP-SBJ (DT The) (NN finger-pointing)) (VP (VBZ has) (ADVP-TMP (RB already)) (VP (VBN begun))) (. .)) )
+(TOP (S (`` ``) (NP-SBJ (DT The) (NN equity) (NN market)) (VP (VBD was) (ADJP-PRD (JJ illiquid))) (. .)) )
+(TOP (S (SBAR-TMP (WHADVP-1 (WRB When)) (S (NP-SBJ (DT the) (NN dollar)) (VP (VBZ is) (PP-LOC-PRD (IN in) (NP (DT a) (NN free-fall)))))) (, ,) (NP-SBJ (RB even) (JJ central) (NNS banks)) (VP (MD ca) (RB n't) (VP (VB stop) (NP (PRP it)))) (. .)) )
+(TOP (S (NP-SBJ (JJ Final-hour) (NN trading)) (VP (VBD accelerated) (PP-DIR (TO to) (NP (NP (QP (CD 108.1) (CD million)) (NNS shares)) (, ,) (NP (NP (DT a) (NN record)) (PP (IN for) (NP (DT the) (NNP Big) (NNP Board))))))) (. .)) )

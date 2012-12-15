@@ -64,11 +64,11 @@ void Main::testStuff1() {
 
   sentenceParser = new SentenceParser(myGrammar);
 
- sentenceParser->parseLine("Ms. Haag plays Elianti . ");
-//  sentenceParser->parseLine("Hurr durr herp derp . ");
-// sentenceParser->parseLine("He believes in what he plays , and he plays superbly . ");
- //sentenceParser->parseLine("No , it was n't Black Monday . ");
- // sentenceParser->parseLine("Exchange officials emphasized that the Big Board is considering a variety of actions to deal with program trading . ");
+ //sentenceParser->parseLine("Ms. Haag plays Elianti . ");
+ // sentenceParser->parseLine("Nobody likes me . ");
+ //sentenceParser->parseLine("He believes in what he plays , and he plays superbly . ");
+ sentenceParser->parseLine("No , it was n't Black Monday . ");
+  //sentenceParser->parseLine("Exchange officials emphasized that the Big Board is trading . ");
 
   sentenceParser->writeTOPs("toptest.dat");
 
@@ -162,10 +162,10 @@ int main(int argc, const char * argv[]) {
 //
 //  main->assignment2();
 
-  main->testStuff1();
+ // main->testStuff1();
 
- // main->parser = new Parser("treebank.dat", "testsentencespart.dat", "testsentencesparttrees.dat", "test_result.dat");
- // main->parser->start();
+  main->parser = new Parser("treebank.dat", "testsentencespart.dat", "testtreespart.dat", "test_result.dat");
+ main->parser->start();
   
   return 0;
 }

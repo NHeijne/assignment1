@@ -202,7 +202,8 @@ void Grammar::getLHSs(string RHS, vector<stringAndDouble>& LHSs, bool RHSisTermi
 }
 
 void Grammar::getLHSsUnknownTerm(string RHS, vector<stringAndDouble>& LHSs,  bool RHSisFirstTerminal) {
-  cout << RHS << " is first term " << endl;
+  if (RHSisFirstTerminal)
+    cout << RHS << " is first term " << endl;
   
   int capitalChoice = getCapitalChoicesNumber(RHS, RHSisFirstTerminal);
   int suffixChoice = getSuffixChoicesNumber(RHS) ;
