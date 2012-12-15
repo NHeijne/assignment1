@@ -1,24 +1,18 @@
-/* 
+/*
  * File:   Parser.cpp
  * Author: agnes
- * 
+ *
  * Created on December 14, 2012, 7:24 PM
  */
 
 #include "Parser.h"
 
-#include <iostream>
-#include <cstdio>
-#include <fstream>
-#include <string>
-#include <cstring>
 
 Parser::Parser(string treebankFileName, string testSentencesFileName, string testSentencesTreesFileName, string outputFileName, bool smoothing  /* = true */) {
   this->treebankFileName = treebankFileName;
   this->testSentencesFileName = testSentencesFileName;
   this->outputFileName = outputFileName;
   this->testSentencesTreesFileName = testSentencesTreesFileName;
-
   newTestSentencesTreesFileName = testSentencesTreesFileName + "new";
 
   grammar = new Grammar(treebankFileName, smoothing);
@@ -36,8 +30,6 @@ void Parser::start() {
   parseTestSentences();
 }
 
-
-
 void Parser::parseTestSentences() {
   cout << "Parsing. " << endl;
   try {
@@ -45,7 +37,7 @@ void Parser::parseTestSentences() {
     ofstream outputFile(outputFileName.c_str());
     ifstream treeInputFile(testSentencesTreesFileName.c_str());
     ofstream newTestTreeFile(newTestSentencesTreesFileName.c_str());
-    
+
     string sentence;
     string sentenceTreeTestData;
     DerivationTree sentenceDerivationTree;
@@ -57,19 +49,14 @@ void Parser::parseTestSentences() {
 
       while (getline(inputFile, sentence) && getline(treeInputFile, sentenceTreeTestData )) {
         if (!sentence.empty()) {
-          //cout << sentence << endl;
-          // system("pause");
-         
-          if (sentenceParser->parseLine(sentence)) {
+
+          if (sentenceParser->parseLine(sentence)) { // if it was within size limit
             sentenceParser->getDerivationTree(sentenceDerivationTree);
-           // TreeManager::printTree(sentenceDerivationTree);
             derivationString = TreeManager::getPennWSJstring(sentenceDerivationTree);
             outputFile << derivationString << endl;
             newTestTreeFile << sentenceTreeTestData << endl;
             numberParsed++;
-           
             cout << "Parsed " << numberParsed << " lines, skipped " << numberSkipped << " (total " << numberParsed+numberSkipped << ") " <<  endl;
-           
           }
           else {
             numberSkipped++;

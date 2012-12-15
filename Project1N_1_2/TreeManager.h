@@ -23,7 +23,6 @@ using namespace std;
  */
 class TreeManager {
 
-
 public:
   /* attributes and other stuff */  
 
@@ -33,7 +32,7 @@ public:
 
   static void debinarize(tree<string>& theTree);
   static void removeSpecialUnaryRules(tree<string>& theTree);
-
+  
   static string getPennWSJstring(tree<string> theTree) ;
   
 private:
@@ -46,7 +45,6 @@ private:
   
   /* attributes and other stuff */
   
-
   /* methods */
 
 };

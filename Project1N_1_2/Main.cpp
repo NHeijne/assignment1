@@ -7,8 +7,8 @@
 #include <iostream>
 #include <cstdio>
 #include <fstream>
-#include<string>
-#include<cstring>
+#include <string>
+#include <cstring>
 
 #include "Grammar.h"
 #include "SentenceParser.h"
@@ -64,12 +64,12 @@ void Main::testStuff1() {
 
   sentenceParser = new SentenceParser(myGrammar);
 
-// sentenceParser->parseLine("Ms. Haag plays Elianti . ");
-  sentenceParser->parseLine("Hurr durr derp . ");
- //sentenceParser->parseLine("He believes in what he plays , and he plays superbly . ");
+ //sentenceParser->parseLine("Ms. Haag plays Elianti . ");
+  //sentenceParser->parseLine("Hurr durr derp . ");
+ sentenceParser->parseLine("He believes in what he plays , and he plays superbly . ");
  //sentenceParser->parseLine("No , it was n't Black Monday . ");
   //sentenceParser->parseLine("I saw the man with the telescope . ");
-  //sentenceParser->parseLine("Exchange officials emphasized that the Big Board is trading . ");
+ // sentenceParser->parseLine("Exchange officials emphasized that the Big Board is trading . ");
 
   //sentenceParser->writeTOPs("toptest.dat");
 
@@ -167,8 +167,14 @@ int main(int argc, const char * argv[]) {
 
   main->testStuff1();
 
-//  main->parser = new Parser("treebank.dat", "testsentencespart.dat", "testtreespart.dat", "test_result.dat");
-// main->parser->start();
+//  string treebankFileName = "treebank.dat";
+//  string testSentencesFileName = "testsentences.dat";
+//  string testSentencesTreesFileName =  "testsentencestrees.dat";
+//  string outputFileName = "testsentences_result.dat";
+//  bool smoothing = false;
+//
+//  main->parser = new Parser(treebankFileName, testSentencesFileName, testSentencesTreesFileName, outputFileName, smoothing);
+//  main->parser->start();
 //
   return 0;
 }

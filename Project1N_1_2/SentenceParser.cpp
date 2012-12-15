@@ -1,17 +1,12 @@
 
 #include "SentenceParser.h"
 
-SentenceParser::SentenceParser(Grammar * aGrammar) {
+SentenceParser::SentenceParser(Grammar * aGrammar) : emptyRHS(stringAndLocation({"", {-1, -1}})) {
   myCFG = aGrammar;
   CYKTable = NULL;
-
-  location n = {-1, -1};
-  emptyRHS = stringAndLocation({"", n});
-
 }
 
-SentenceParser::SentenceParser(const SentenceParser &orig) {
-
+SentenceParser::SentenceParser(const SentenceParser &orig) : emptyRHS(stringAndLocation({"", {-1, -1}})) {
 }
 
 SentenceParser::~SentenceParser() {
@@ -49,7 +44,6 @@ bool SentenceParser::parseLine(const string givenLine) {
   lineTerms = split(line);
   nrTerms = lineTerms.size();
 
-
   if (nrTerms > maxTerms){
     allTOPs.push_back(pair<string, RHSEntry>(Grammar::nonTerminalSymbol+"TOP", RHSEntry({emptyRHS, emptyRHS, 1, false})));
     return false;
@@ -64,7 +58,6 @@ bool SentenceParser::parseLine(const string givenLine) {
 }
 
 void SentenceParser::CYKLine() {
-
   CYKLineBaseCase();
   if (nrTerms > 1) {
     CYKLineRecursiveCase();
@@ -72,25 +65,19 @@ void SentenceParser::CYKLine() {
 }
 
 void SentenceParser::CYKLineBaseCase() {
-
   for (int i = 0; i < nrTerms; i++) { // for each terminal
-
     bool firstTerminal = (i==0);
     vector<Grammar::stringAndDouble> LHSs;
 
     myCFG->getLHSs(lineTerms[i], LHSs, true, firstTerminal); // true means it's a terminal. get all rules A_j --> terminal_i
-    //cout << "Nr LHS's for " << lineTerms[i] << ": " << LHSs.size() << endl;
-
     bool sAdded = false;
 
     int LHSsSize = LHSs.size();
     for (int j = 0; j < LHSsSize; j++) { // for each A_j(LHS), add it to table
-      //cout << "Processed LHS " << j << endl;
       sAdded = true;
       location back1 = (location{i, -1}); // the terminal is the "back"
       CYKTable[i][i][LHSs[j].first] = RHSEntry({stringAndLocation(lineTerms[i], back1), emptyRHS, LHSs[j].second, true}); // true = backIsTerminal
     }
-
     // handle unaries
     if (sAdded) {
       int k = 0;
@@ -127,13 +114,11 @@ void SentenceParser::CYKLineBaseCase() {
 }
 
 void SentenceParser::CYKLineRecursiveCase() {
-
   for (int span = 2; span <= nrTerms; span++) {
     for (int begin = 1; begin <= (nrTerms - span) + 1; begin++) {
       int end = (begin + span) - 1;
       for (int split = begin; split <= (end - 1); split++) {
 
-        //cout << "begin: " << begin - 1 << " end: " << end - 1 << endl;
         // we do these indices minus 1 because or table starts at index 0
         tableEntryMap Bs = CYKTable[begin - 1][split - 1];
         tableEntryMap Cs = CYKTable[split][end - 1];
@@ -149,66 +134,48 @@ void SentenceParser::CYKLineRecursiveCase() {
 
             vector<Grammar::stringAndDouble> As;
             string RHS1 = iteratorB->first;
-            string RHS2 = iteratorC->first; // Cs[c_i].nonTerm;
+            string RHS2 = iteratorC->first; 
             myCFG->getLHSs(RHS1 + " " + RHS2, As); // get all rules A --> B C
             int AsSize = As.size();
 
-//            if (iteratorB->first == "nt_NNP" && iteratorC->first == "nt_NNP") {
-//              cout << " entry " << begin-1 << ", " << end-1 << endl;
-//            }
             for (int a_i = 0; a_i < AsSize; a_i++) {
               sAdded = true;
-
               double prob = As[a_i].second + iteratorB->second.prob + iteratorC->second.prob;
-//              if (iteratorB->first == "nt_NNP" && iteratorC->first == "nt_NNP") {
-//                 cout << " prob for " << As[a_i].first << " = " << As[a_i].second + iteratorB->second.prob + iteratorC->second.prob << endl;
-//              }
 
               location locC_i = {split, end - 1};
               location locB_i = {begin - 1, split - 1};
-
               RHSEntry rightEntry = {stringAndLocation({iteratorB->first, locB_i}), stringAndLocation( {iteratorC->first, locC_i}), prob, false};
 
               cellIterator findA_i = CYKTable[begin - 1][end - 1].find(As[a_i].first);
               if (findA_i != CYKTable[begin - 1][end - 1].end()) { // element exists already
-                if (findA_i->second.prob < prob /* As[a_i].second*/) { // if probability is higher
-//                   if (iteratorB->first == "nt_NNP" && iteratorC->first == "nt_NNP") {
-//                      cout << " prob for " << As[a_i].first << " is higher than for " << findA_i->first << ", " << prob << " is higher than " << findA_i->second.prob << endl;
-//                   }
-                  findA_i->second = rightEntry; // swap right hand side entry
+                if (findA_i->second.prob < prob ) { // if probability is higher
+                   findA_i->second = rightEntry; // swap right hand side entry
                    addedToCell.push_back(Grammar::stringAndDouble({As[a_i].first, prob}));
                 }
               }
-              else {
-//                 if (iteratorB->first == "nt_NNP" && iteratorC->first == "nt_NNP") {
-//                   cout <<  As[a_i].first << " didnt  exist yet "<< endl;
-//                 }
+              else {           
                 CYKTable[begin - 1][end - 1][As[a_i].first] = rightEntry;
                 addedToCell.push_back(Grammar::stringAndDouble({As[a_i].first, prob}));
               }
-
             }
-            // recursive case
+            // handle unaries
             if ((begin - 1) == 0 && ((end - 1) == (nrTerms - 1)) && sAdded) {
               int k = 0;
               int addedToCellSize = addedToCell.size();
               while (k < addedToCellSize) { // for each added entry to this cell
                 vector<Grammar::stringAndDouble> LHSsRec;
-
                 myCFG->getLHSs(addedToCell[k].first, LHSsRec); // get all rules A --> B
 
                 int LHSsRecSize = LHSsRec.size();
-                for (int l = 0; l < LHSsRecSize; l++) { // for all A's
-				         
+                for (int l = 0; l < LHSsRecSize; l++) { // for all A's				         
                   double prob = LHSsRec[l].second + CYKTable[begin - 1][end - 1][addedToCell[k].first].prob;
                   
                   location back1 = (location{begin - 1, end - 1});
                   RHSEntry rightEntry = RHSEntry({stringAndLocation({addedToCell[k].first, back1}), emptyRHS, prob, false});
 
                   cellIterator findAdded_i = CYKTable[begin - 1][end - 1].find(LHSsRec[l].first);
-
                   if (findAdded_i != CYKTable[begin - 1][end - 1].end()) { // element exists already
-                    if (findAdded_i->second.prob < prob /*LHSsRec[l].second */) { // if probability is higher
+                    if (findAdded_i->second.prob < prob) { // if probability is higher
                       findAdded_i->second = rightEntry; // swap right hand side entry
                       addedToCell.push_back(Grammar::stringAndDouble({LHSsRec[l].first, prob}));
                       addedToCellSize++;
@@ -219,7 +186,7 @@ void SentenceParser::CYKLineRecursiveCase() {
                     addedToCell.push_back(Grammar::stringAndDouble({LHSsRec[l].first, prob}));
                     addedToCellSize++;
                   }
-                  if (LHSsRec[l].first == Grammar::nonTerminalSymbol + "TOP") {
+                  if (LHSsRec[l].first == Grammar::nonTerminalSymbol + "TOP") { // keep track of ALL TOPs (part of assignment 2)
                     allTOPs.push_back(pair<string, RHSEntry>(LHSsRec[l].first,rightEntry ));
                   }
                 }
@@ -276,7 +243,6 @@ void SentenceParser::printTOPs() {
 }
 
 void SentenceParser::writeTOPs(string fileName) {
-
   ofstream outputFile;
   outputFile.open(fileName.c_str());
 
@@ -284,7 +250,7 @@ void SentenceParser::writeTOPs(string fileName) {
   int allTOPsSize = allTOPs.size();
   for (int i=0; i< allTOPsSize; i++) {
     outputFile << allTOPs[i].first << "(" << allTOPs[i].second.prob << ")";
-    // print backs
+    // write backs
     outputFile << "(";
     outputFile << "(" << allTOPs[i].second.RHS1.first << " " << allTOPs[i].second.RHS1.second.i << " " << allTOPs[i].second.RHS1.second.j << ")";
     if ( allTOPs[i].second.RHS2.first != "") {
@@ -318,22 +284,14 @@ void SentenceParser::makeFailureTree(tree<string>& myTree, tree<string>::iterato
   }
 }
 
-void SentenceParser::makeDerivationTreeFromCYKTable(tree<string>& myTree, tree<string>::iterator node, location locLHS, string lhsString){
-  //cout << lhsString << endl;
-
- 
-  
+void SentenceParser::makeDerivationTreeFromCYKTable(tree<string>& myTree, tree<string>::iterator node, location locLHS, string lhsString){  
   RHSEntry thisRHSentry = CYKTable[locLHS.i][locLHS.j][lhsString];
- // cout << ", " << thisRHSentry.RHS1.first << " & " << thisRHSentry.RHS2.first << endl;
-
-
-  // first rhs
+   // first rhs
   tree<string>::iterator node2 = myTree.append_child(node, thisRHSentry.RHS1.first);
 
   if (! thisRHSentry.backIsTerminal){ // stop condition
-      makeDerivationTreeFromCYKTable(myTree, node2, thisRHSentry.RHS1.second, thisRHSentry.RHS1.first);
+      makeDerivationTreeFromCYKTable(myTree, node2, thisRHSentry.RHS1.second, thisRHSentry.RHS1.first); // first rhs
   }
-
   if (!(thisRHSentry.RHS2.first == "")) { // second rhs
     node2 = myTree.append_child(node, thisRHSentry.RHS2.first);
     makeDerivationTreeFromCYKTable(myTree, node2, thisRHSentry.RHS2.second, thisRHSentry.RHS2.first);
@@ -342,27 +300,23 @@ void SentenceParser::makeDerivationTreeFromCYKTable(tree<string>& myTree, tree<s
 
 
 void SentenceParser::makeDerivationTree() {
-
   tree<string>::iterator node = myTree.begin();
-  location locLHS = {0, nrTerms-1}; // upper right corner
-  string lhsString = Grammar::nonTerminalSymbol + "TOP" ;
+  location locLHS = {0, nrTerms-1}; // start at upper right corner
+  string lhsString = Grammar::nonTerminalSymbol + "TOP" ; // with TOP symbol
   node = myTree.insert(node, lhsString);
 
-  if (CYKTable[locLHS.i][locLHS.j].size() == 0) { // no derivation found!
-    makeFailureTree( myTree, node, locLHS, lhsString);
+  if (CYKTable[locLHS.i][locLHS.j].size() == 0) { // if no derivation was found
+    makeFailureTree( myTree, node, locLHS, lhsString); // make fake POS-tag tree
   }
   else {
     makeDerivationTreeFromCYKTable(myTree, node, locLHS, lhsString);
   }
-
 }
 
 
 void SentenceParser::getDerivationTree(tree<string>& theTree) {
-
   if (myTree.empty()) {
     makeDerivationTree();
   }
   theTree = myTree;
-
 }

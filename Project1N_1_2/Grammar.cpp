@@ -40,7 +40,6 @@ Grammar::Grammar(const Grammar& orig) : capitalChoices(3), suffixChoices(5), hyp
  * Destructor
  */
 Grammar::~Grammar() {
-
   if (unknownProbTable != NULL) {
     for (int i = 0; i < capitalChoices; i++) {
       for (int j = 0; j < suffixChoices; j++) {
@@ -60,7 +59,6 @@ Grammar::~Grammar() {
  * Start
  */
 void Grammar::init(bool print /* = true */) {
-
   if (!archivesExists()) {
     cout << "Will read and process treebank file and save the grammar..." << endl;
     readGrammar(print);
@@ -101,7 +99,6 @@ bool Grammar::archivesExists() {
 void Grammar::saveTreebankArchive() {  
   ofstream file(archiveNameTreebank.c_str());
   boost::archive::xml_oarchive outputArchive(file);
-
   // "&" has same effect as "<<" in outputArchive & BOOST_SERIALIZATION_NVP(l2rTable);
   // The macro BOOST_SERIALIZATION_NVP expands to  boost::serialization::make_nvp
   // see http://www.boost.org/doc/libs/1_44_0/libs/serialization/doc/wrappers.html#nvp
@@ -115,7 +112,6 @@ void Grammar::loadTreebankArchive() {
 }
 
 /**
- *
  * We can't use simple serialization because the array is dynamic but the size of
  * unknownProbTable is relatively small anyway
  */
@@ -142,14 +138,12 @@ void Grammar::saveUnknownProbTable() {
     double prob;
     if (file.is_open()) {
         while (getline(file, line)) {
-          //cout << "line: " << line << endl;
           if (! line.empty()) {
             iss.clear();
             iss.str(line);
             iss >> i; iss >> j; iss >> k;
             iss >> nonTerm;
             iss >> prob;
-            //cout << "insert " << nonTerm << ", " << prob << " at " << i << " " << j << " k " << endl;
             unknownProbTable[i][j][k].insert(stringAndDouble(nonTerm, prob));
           }
         }
@@ -164,7 +158,6 @@ void Grammar::saveUnknownProbTable() {
     exit(1);
   }
 }
-
 
 /**
  *
@@ -196,18 +189,14 @@ void Grammar::getLHSs(string RHS, vector<stringAndDouble>& LHSs, bool RHSisTermi
   for (ruleIterator = ruleRangeIterator.first; ruleIterator != ruleRangeIterator.second; ruleIterator++) {
     LHSs.push_back((*ruleIterator).second);
   }
-  if (smoothing) {
-    if (RHSisTerminal && LHSs.empty()) { // it is a terminal but nothing found in r2lTable
-      cout << "unknown term: " << RHS << endl;
-      getLHSsUnknownTerm(RHS, LHSs,  RHSisFirstTerminal) ;
+  if (smoothing) { // if smoothing parameter is set to "true" (see constructor)
+    if (RHSisTerminal && LHSs.empty()) { // if it is a terminal but nothing found in r2lTable
+      getLHSsUnknownTerm(RHS, LHSs,  RHSisFirstTerminal) ; // get all LHS's from unknownProbTable
     }
   }
 }
 
 void Grammar::getLHSsUnknownTerm(string RHS, vector<stringAndDouble>& LHSs,  bool RHSisFirstTerminal) {
-  if (RHSisFirstTerminal)
-    cout << RHS << " is first term " << endl;
-  
   int capitalChoice = getCapitalChoicesNumber(RHS, RHSisFirstTerminal);
   int suffixChoice = getSuffixChoicesNumber(RHS) ;
   int hyphenChoice = getHyphenChoicesNumber(RHS);
@@ -259,9 +248,6 @@ void Grammar::unknownProbTableCountToProbability() {
    for (int i = 0; i < capitalChoices; i++) {
     for (int j = 0; j < suffixChoices; j++) {
       for (int k = 0; k < hyphenChoices; k++) {
-//        for (lhsCountTableIterator = lhsCountTable.begin(); lhsCountTableIterator != lhsCountTable.end(); lhsCountTableIterator++) {
-//           unknownProbTable[i][j][k][lhsCountTableIterator->first]
-//        }
         int totalCount =0;
         for (unknownProbLHSiterator = unknownProbTable[i][j][k].begin(); unknownProbLHSiterator != unknownProbTable[i][j][k].end(); unknownProbLHSiterator++) {          
           totalCount += unknownProbLHSiterator->second;
@@ -314,18 +300,15 @@ int Grammar::getSuffixChoicesNumber(string term) {
   const string s2 = "ly";
   const string s3a = "es";  const char s3b = 's';
   const string s4 = "ed";
-
   int termLength = term.length();
 
   if (term.length() > 3) {
     string termEnd = term.substr(termLength - 3, 3); // size of 3
-   // cout << "check " << termEnd << " of " << term << endl;
     if (termEnd == s1) {
       return 0;
     }
     else {
       termEnd = termEnd.substr(1, 2); // size of 2
-     // cout << "check " << termEnd << " of " << term << endl;
       if (termEnd == s2) {
         return 1;
       }
@@ -369,7 +352,7 @@ int Grammar::getHyphenChoicesNumber(string term) {
   }
  }
  void Grammar::insertUnknownProbTable(string nonTerm, string term, bool firstTerm) {
-   // add nonTerm producing a term always to any category (for smoothing)
+   // add nonTerm producing a term always to any category (for smoothing in unknownProbTable)
    insertNonTermUnknownProbTable(nonTerm);
    
    int capitalChoice = getCapitalChoicesNumber(term, firstTerm);
@@ -377,7 +360,6 @@ int Grammar::getHyphenChoicesNumber(string term) {
    int hyphenChoice = getHyphenChoicesNumber(term);
 
    unknownProbLHSiterator = unknownProbTable[capitalChoice][suffixChoice][hyphenChoice].find(nonTerm);
-
    unknownProbLHSiterator->second++; // increase count
 
  }
@@ -390,8 +372,6 @@ int Grammar::getHyphenChoicesNumber(string term) {
  * @param valueString
  */
 void Grammar::insertL2rTable(string key, string valueString) {
-
-
   ruleRangeIterator = l2rTable.equal_range(key);
 
   if (ruleRangeIterator.first == ruleRangeIterator.second) { // LHS didnt occur yet
@@ -456,7 +436,7 @@ bool Grammar::isWord(string term) {
  * @param level
  */
 void Grammar::processLineRecursively(const char * line, int linePos, stack <stringAndInt> stringLevelStack, int level, bool firstTerm) {
-  char nextChar = line[linePos]; // cout << "nextChar: " << nextChar << endl;
+  char nextChar = line[linePos];
   while (nextChar == ' ' && linePos < strlen(line)) {
     linePos++;
     nextChar = line[linePos];
@@ -479,7 +459,6 @@ void Grammar::processLineRecursively(const char * line, int linePos, stack <stri
       }
       LHS = stringLevelStack.top(); //stringLevelStack.pop();
       insertL2rTable(nonTerminalSymbol + LHS.first, nonTerminalSymbol + RHS1.first + RHS2.first);
-      //cout << "insert " << LHS.first << " ==> " << RHS1.first + RHS2.first << endl;
       return processLineRecursively(line, linePos + 1, stringLevelStack, level - 1, firstTerm);
     }
     if (nextChar != ')' && nextChar != '(') { //  ========> non-terminal LHS found
@@ -488,9 +467,7 @@ void Grammar::processLineRecursively(const char * line, int linePos, stack <stri
         nonTerm += line[linePos];
         linePos++;
       }
-      //cout << "nonterm: " << nonTerm << endl;
-      stringLevelStack.push(stringAndInt(nonTerm, level));
-      //cout << "enter " << nonTerm << " at stack at level " << level << endl;
+      stringLevelStack.push(stringAndInt(nonTerm, level));    
       linePos++; // go beyond space
       nextChar = line[linePos];
     }
@@ -503,15 +480,12 @@ void Grammar::processLineRecursively(const char * line, int linePos, stack <stri
         term += line[linePos];
         linePos++;
       }
-      //cout << "term: " << term << endl;
       string nonTerm = stringLevelStack.top().first;
       if (isNumber(term)) { // if its number, number-entry
         term = Grammar::numberRHS;
       }
-      insertL2rTable(nonTerminalSymbol + nonTerm, term);
-      //insertNonTermUnknownProbTable(nonTerminalSymbol + nonTerm);
+      insertL2rTable(nonTerminalSymbol + nonTerm, term);    
       insertUnknownProbTable(nonTerminalSymbol + nonTerm, term, firstTerm);
-      //cout << "insert " << nonTerm << " ==> " << term << endl;
       firstTerm = false;
       return processLineRecursively(line, linePos + 1, stringLevelStack, level - 1, firstTerm);
     }
@@ -525,14 +499,11 @@ void Grammar::processLineRecursively(const char * line, int linePos, stack <stri
  * @param line
  */
 void Grammar::processLine(string line) {
-
   stack<stringAndInt> stringLevelStack;
   int level = 0;
   int linePos = 0;
   bool firstTerm = true;
   processLineRecursively(line.c_str(), linePos, stringLevelStack, level, firstTerm);
-
-  //cout << "line: " << line << endl;
 }
 
 /**
@@ -548,8 +519,6 @@ void Grammar::readGrammar(bool print) {
       int numberLines = 0;
       while (getline(myfile, line)) {
         if (!line.empty()) {
-          //cout << line << endl;
-          // system("pause");
           line.append(" ");
           processLine(line);
           numberLines++;

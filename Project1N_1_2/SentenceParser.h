@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   CYKParser.h
  * Author: agnes
  *
@@ -10,8 +10,6 @@
 
 using namespace std;
 
-#include "Grammar.h"
-
 #include <vector>
 #include <string>
 #include <sstream>
@@ -19,22 +17,22 @@ using namespace std;
 #include <cmath>
 #include <fstream>
 
-#include "tree.hh" 
-#include <boost/unordered_map.hpp> 
-
+#include "Grammar.h"
+#include "tree.hh"
+#include <boost/unordered_map.hpp>
 
 
 class SentenceParser {
 
+  // forward declarations
   struct location;
+  struct RHSEntry;
 
     public:
       /* attributes and other stuff */
-      
-      // what seperates the terms/words in a sentence
-      static const char termDelimiter = ' ';
+      static const char termDelimiter = ' ';  // what seperates the terms/words in a sentence
       static const int  maxTerms = 16;
-      
+
        /* constructors */
       SentenceParser(Grammar * aGrammar);
       SentenceParser(const SentenceParser &orig);
@@ -42,44 +40,42 @@ class SentenceParser {
 
       /* methods */
       bool parseLine(const string givenLine);
+      void reset();
+
       void printCYKTable();
       void printTOPs();
       void writeTOPs(string fileName);
-      
-      void reset();
 
       void makeDerivationTreeFromCYKTable(tree<string>& myTree, tree<string>::iterator node, location locLHS, string lhsString);
       void makeDerivationTree();
       void makeFailureTree(tree<string>& myTree, tree<string>::iterator node, location locLHS, string lhsString);
-
       void getDerivationTree(tree<string>&);
-      
+
     private:
-      /* attributes and other stuff */
-      Grammar * myCFG;
+      /* attributes and other stuff */       
+      typedef pair<string, location> stringAndLocation;
+      typedef boost::unordered_map<string, RHSEntry> tableEntryMap;
+      typedef boost::unordered_map<string, RHSEntry>::iterator cellIterator;
 
       struct location {
         int i;
         int j;
       };
-
       struct RHSEntry {
-        pair<string, location> RHS1;
-        pair<string, location> RHS2;
+        stringAndLocation RHS1;
+        stringAndLocation RHS2;
         double prob;
         bool backIsTerminal;
       };
+      
+      const stringAndLocation emptyRHS;
 
-      typedef pair<string, location> stringAndLocation;
-      stringAndLocation emptyRHS;
-
-      typedef boost::unordered_map<string, RHSEntry> tableEntryMap;
-      typedef boost::unordered_map<string, RHSEntry>::iterator cellIterator;
-
+      Grammar * myCFG;
+      
       // will be changed per to-be-parsed line
       string line;
       vector<string> lineTerms;
-      int nrTerms;      
+      int nrTerms;
       tableEntryMap * * CYKTable;
       vector <pair<string, RHSEntry> > allTOPs;
       tree<string> myTree;
@@ -87,11 +83,11 @@ class SentenceParser {
       /* methods */
       void splitHelper(const string line, vector<string> &terms);
       vector<string> split(const string line);
-      
+
       void CYKLine();
       void CYKLineBaseCase() ;
       void CYKLineRecursiveCase();
-    
+
 };
 
 

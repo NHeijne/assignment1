@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   Parser.h
  * Author: agnes
  *
@@ -7,6 +7,12 @@
 
 #ifndef PARSER_H
 #define	PARSER_H
+
+#include <iostream>
+#include <cstdio>
+#include <fstream>
+#include <string>
+#include <cstring>
 
 #include "SentenceParser.h"
 #include "TreeManager.h"
@@ -17,15 +23,15 @@ class Parser {
 public:
    /* attributes and other stuff */
   typedef tree<string> DerivationTree;
-  
-  /* constructors */ 
+
+  /* constructors */
   Parser(string treebankFileName, string testSentencesFileName, string testSentencesTreesFileName, string outputFileName, bool smoothing = true);
   Parser(const Parser& orig);
   virtual ~Parser();
 
   /* methods */
   void start();
-  
+
 private:
    /* attributes and other stuff */
   Grammar * grammar;
@@ -38,7 +44,6 @@ private:
   string outputFileName;
 
   /* methods */
-
   void parseTestSentences();
 };
 
