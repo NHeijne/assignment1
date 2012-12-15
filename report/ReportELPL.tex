@@ -50,15 +50,11 @@ Formal definition of the PCFG \cite{slides2}:
 \end{enumerate}
 
 \section{CYK - Cocke–Younger–Kasami Algorithm}
-The CYK algorithm is a bottom up chart parsing algorithm, the simplest form PCFG is required to be in Chomsky Normal Form (CNF). Since our treebank still contains unary rules at the lowest branches and at one unary rule at the top ($\texttt{TOP} \rightarrow S$), these are handled by the algorithm as a special case.
+The CYK algorithm is a bottom up chart parsing algorithm, the simplest form PCFG is required to be in Chomsky Normal Form (CNF). Since our treebank still contains unary rules at the lowest branches and at one unary rule at the top ($\texttt{TOP} \rightarrow S$), these are handled by the algorithm as a special case \cite{slides3}. The pseudo code of the CYK algorithm with the Viterbi addition is shown in algorithm block \ref{cyk1} and \ref{cyk2}, the algorithm is based on the pseudo code provided in by \cite{ss}.
 
 "The method works as follows. Let $G = (N, \Sigma , P, S)$ be a Chomsky normal form CFG with no $e$-production. A simple generalization works for non-CNF grammars as well. 
 
 Let $w = a_1 a_2 \cdots a_n$ be the input string which is to be parsed according to $G$. The essence of the algorithm is the construction of a triangular parse table. If we want one (or all) parses of $w$, we can use the parse table to construct these parses. \cite{cyk}"
-
-% pseudocode CYK
-
-
 
 \section{Viterbi Algorithm}
 The Viterbi algorithm in the case of the CYK chart is storing back pointers to the right hand sides that are produced by the corresponding left hand side with the highest probability. In our case that means attaching a reference to the position(s) of the corresponding right hand side(s) in the CYK chart for every left hand side in each cell. Starting with the non-terminal \texttt{TOP}, the right hand side(s) are appended to \texttt{TOP} as children. The next left hand side(s) are looked up in the referred position(s), the corresponding right hand side(s) are then appended as children. The right hand side(s) are then looked up again in their referred position(s) and used as the next left hand side(s). This repeats itself until all right hand sides that are found through the back pointers are terminals.
@@ -69,16 +65,14 @@ A more detailed description of how the tree is built with the back pointers in t
 \label{viterbi}
 \begin{algorithmic}[1]
 \Require tree $t$, table containing objects
-\Ensure each object contains: \\
-left hand side: $lhs1$\\right hand sides: $r1$, r2\\
-locations of right hand sides: $l1, l2$
-\\
+\Ensure each object contains: \newline
+left hand side non-terminal: $lhs1$\newline right hand sides \texttt{or} back pointers: $r1$, $r2$\newline
+locations of right hand sides in the CYK chart: $l1, l2$
 \State current object $c \gets$ \texttt{TOP} 
 \State next location $nl \gets l1$
 \State insert $lhs1$ of $c$ into $t$ as \texttt{root}
 \State position in the tree $p \gets$ \texttt{root}
 \State \Call{recursion}{$t, p, nl, r1$}
-\\
 \Procedure{recursion}{$t, p, l, lhs$}
 \State $c \gets$ object where $lhs=lhs1$ in $l$
 \State add child node with $r1$ to $p$ in tree $t$
@@ -101,7 +95,7 @@ We also use a a couple of smoothing methods regardless of whether or not the abo
 
 The smoothing algorithm classifies an unknown term to a non-term using the following characteristics: Capitalization, suffixes, and hyphen presence. 
 Capitalization contains three categories. A word begins with a capital letter and is not the first term of a sentence. A term contains only capital letters. And the term contains no capital letters or is not a word.
-The suffixes used are "ing", "ly", "s", and "ed". Any word that does not end with any of these suffixes falls into a different category.
+The suffixes used are "ing", "ly", "s", and "ed". Any word that does not end with any of these suffixes falls into the "other" category.
 And whether or not the word contains a hyphen or not.
 The conditional log probability $\texttt{log}(P (\text{non-term} | c, s, h))$ where $c=$ capitalization category, $s=$ suffix category, and $h=$ hyphen category, is calculated using the frequency of the characteristics in the training data.
 
@@ -145,7 +139,7 @@ Bracketing Recall         &  59.79\% & 74.43\% \\
 Bracketing Precision      &  75.37\% & 75.51\% \\
 Bracketing FMeasure       &  66.68\% & 74.97\% \\
 Complete match            &  16.52\% & 21.20\% \\
-Average crossing          &   0.66\% & 0.83\% \\
+Average crossing          &   0.66 & 0.83 \\
 No crossing               &  73.83\% & 66.81\% \\
 2 or less crossing        &  90.50\% & 88.01\% \\
 Tagging accuracy          &  71.68\% & 92.48\% \\
@@ -162,6 +156,83 @@ Smoothing had a large effect on the tagging accuracy, which would make it likely
 
 \bibliography{references}
 
-\bibliographystyle{Science}
+\bibliographystyle{plainnat}
+
+
+% pseudocode CYK
+\begin{algorithm*}[!htb]
+\caption{CYK chart part 1}
+\label{cyk1}
+\begin{algorithmic}[1]
+\Require numWords, numNonterminals, prob[numWords, numWords, numNonterminals], grammar, nonterms
+\Procedure {baseCYK}{}
+\For {$i \gets$ 1, numWords}
+         \For{ $A \gets$ 1, numNonterminals}
+             \If {$A \rightarrow w_i$ is in grammar}
+             \State prob [i, i, A] = P($A \rightarrow w_i$)
+             \EndIf
+		\State added $\gets$ \texttt{true}
+		\While{added}
+			\State added $\gets$ \texttt{false}
+			\For {$A, B$ in nonterms}
+				\If{prob $[i][i+1][B] > 0$ \texttt{and} $A \rightarrow B$ in grammar}
+					\State tempProb $=$ P($A \rightarrow B$)*prob$[i][i+1][B]$
+					\If{tempProb $>$ prob$[i][i+1][A]$}
+						\State prob$[i][i+1][A] =$ tempProb
+						\State back$[i][i+1] [A] = B$ and chart location of $B$
+						\State added $\gets$ \texttt{true}
+					\EndIf
+				\EndIf
+			\EndFor
+		\EndWhile
+\EndFor
+\EndFor
+\EndProcedure
+\algstore{bkbreak}
+\end{algorithmic}
+\end{algorithm*}
+
+\begin{algorithm*}[!htb]
+\caption{CYK chart part 2}
+\label{cyk2}
+\begin{algorithmic}[1]
+\algrestore{bkbreak}
+\Procedure {recursiveCYK}{}
+\For{span $\gets$ 2, numWords}
+	\For{begin $\gets$ 1, numWords - span + 1}
+             \State end $\gets$ begin + span - 1
+             \For{$m$ = begin to end - 1}		 
+                 \For{$A$ = 1 to numNonterminals}
+                     \For{$B$ = 1, numNonterminals}
+                         \For{$C$ = 1 to numNonterminals}
+                            \State tempProb = prob [begin,$ m, B]$ * prob $[m + 1,$ end,$ C]$ * P($A \rightarrow BC$) 
+                             \If{tempProb $>$ prob[begin, end, A]}
+                              \State  prob [begin, end, $A$] = tempProb
+                              \State  back[begin, end, $A$] = $B, C$ and chart locations of $B$ and $C$
+                              \EndIf
+				 \State added $\gets$ \texttt{true}
+				 \While{added}
+			\State added $\gets$ \texttt{false}
+			\For{$A, B$ in nonterms}
+				\If{prob $[i][i+1][B] > 0$ \texttt{and} $A \rightarrow B$ in grammar}
+					\State tempProb $=$ P($A \rightarrow B$) * prob$[i][i+1][B]$
+					\If{tempProb $>$ prob$[i][i+1][A]$}
+						\State prob$[i][i+1][A] =$ tempProb
+						\State back$[i][i+1] [A] = B$ and chart location of $B$
+						\State added $\gets$ \texttt{true}
+					\EndIf
+				\EndIf
+			\EndFor
+		\EndWhile
+\EndFor
+\EndFor
+\EndFor
+\EndFor
+\EndFor
+\EndFor
+\EndProcedure
+\end{algorithmic}
+\end{algorithm*}
+
 
 \end{document}
