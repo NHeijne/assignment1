@@ -123,7 +123,7 @@ The conditional log probability $\texttt{log}(P (\text{non-term} | c, s, h))$ wh
 %pseudocode... maybe
 
 \section{Results and Analysis}
-For our results we compare the effects of smoothing to not smoothing on the algorithm. The test set we use was provided to us by the course. The test set contains 2416 sentences. The sentences that were longer than 16 terms were cut out because the algorithm could not handle longer sentences well enough to compute them within a reasonable time frame. Which leaves us with 684 sentences.
+For our results we compare the effects of smoothing to not smoothing on the algorithm. The comparison is done with the program EvalC \cite{evalc}; the EvalC tool is used for evaluating constituency parsing. The test set we use was provided to us by the course which contains 2416 sentences. The sentences that were longer than 16 terms were cut out because the algorithm could not handle longer sentences well enough to compute them within a reasonable time frame. Which leaves us with 684 sentences.
 
 %no smoothing vs smoothing
 \begin{table}[!htb]
@@ -165,7 +165,7 @@ Smoothing had a large effect on the tagging accuracy, which would make it likely
 \caption{CYK chart part 1}
 \label{cyk1}
 \begin{algorithmic}[1]
-\Require numWords, numNonterminals, prob[numWords, numWords, numNonterminals], grammar, nonterms
+\Require numWords, numNonterminals, prob[numWords, numWords, numNonterminals],\newline back[numWords, numWords, numNonterminals], grammar, nonterms
 \Procedure {baseCYK}{}
 \For {$i \gets$ 1, numWords}
          \For{ $A \gets$ 1, numNonterminals}
