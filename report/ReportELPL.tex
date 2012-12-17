@@ -51,16 +51,17 @@ Formal definition of the PCFG \cite{slides2}:
 \end{enumerate}
 
 \section{CYK - Cocke–Younger–Kasami Algorithm}
-The CYK algorithm is a bottom up chart parsing algorithm, the simplest form PCFG is required to be in Chomsky Normal Form (CNF). Since our treebank still contains unary rules at the lowest branches and at one unary rule at the top ($\texttt{TOP} \rightarrow S$), these are handled by the algorithm as a special case \cite{slides3}. The pseudo code of the CYK algorithm with the Viterbi addition is shown in algorithm block \ref{cyk1} and \ref{cyk2}, the algorithm is based on the pseudo code provided in by \cite{ss}.
+The CYK algorithm is a bottom up chart parsing algorithm. The algorithm requires the simplest form of PCFG to be in Chomsky Normal Form (CNF) for it to work properly. However, since our treebank still contains unary rules at the lowest branches and at one unary rule at the top ($\texttt{TOP} \rightarrow S$), these are handled by the algorithm as a special case \cite{slides3}. The pseudo code of the CYK algorithm with the Viterbi addition is shown in algorithm block \ref{cyk1} and \ref{cyk2}, the algorithm is based on the pseudo code provided in by \cite{ss}.
 
 "The method works as follows. Let $G = (N, \Sigma , P, S)$ be a Chomsky normal form CFG with no $e$-production. A simple generalization works for non-CNF grammars as well. 
 
 Let $w = a_1 a_2 \cdots a_n$ be the input string which is to be parsed according to $G$. The essence of the algorithm is the construction of a triangular parse table. If we want one (or all) parses of $w$, we can use the parse table to construct these parses. \cite{cyk}"
 
 \section{Viterbi Algorithm}
-The Viterbi algorithm in the case of the CYK chart is storing back pointers to the right hand sides that are produced by the corresponding left hand side with the highest probability. In our case that means attaching a reference to the position(s) of the corresponding right hand side(s) in the CYK chart for every left hand side in each cell. Starting with the non-terminal \texttt{TOP}, the right hand side(s) are appended to \texttt{TOP} as children. The next left hand side(s) are looked up in the referred position(s), the corresponding right hand side(s) are then appended as children. The right hand side(s) are then looked up again in their referred position(s) and used as the next left hand side(s). This repeats itself until all right hand sides that are found through the back pointers are terminals.
+The Viterbi algorithm in the case of the CYK chart is storing back pointers to the right hand sides that are produced by the corresponding left hand side with the highest probability. In our case that means attaching a reference to the position(s) of the corresponding right hand side(s) in the CYK chart for every left hand side in each cell. The resulting tree from the CYK algorithm is produced as follows. Starting with the non-terminal \texttt{TOP}, the right hand side(s) are appended to \texttt{TOP} as children. The next left hand side(s) are looked up in the referred position(s), the corresponding right hand side(s) are then appended as children. The right hand side(s) are then looked up again in their referred position(s) and used as the next left hand side(s). This repeats itself until all right hand sides that are found through the back pointers are terminals.
 
-A more detailed description of how the tree is built with the back pointers in the form of pseudocode can be found in the appendix under algorithm \ref{viterbi}.
+A more detailed description of how the tree is built with the back pointers in the form of pseudocode can be found in algorithm block \ref{viterbi}.
+
 \begin{algorithm}[!htb]
 \caption{buildTree}
 \label{viterbi}
@@ -152,8 +153,16 @@ Tagging accuracy          &  71.68\% & 92.48\% \\
 
 Smoothing had a large effect on the tagging accuracy, which would make it likely that the correct tagging would result in better bracketing in the CYK algorithm explaining the increase in recall.
 
+% opvallende uitschieters
+
 
 \section{Conclusion}
+% samenvatting algoritme (PCFG, CYK, VITERBI)
+% samenvatting smoothing 
+% samenvatting effect smoothing
+% samenvatting analyse
+% conclusie smoothing vs non-smoothing
+
 
 \bibliography{references}
 
