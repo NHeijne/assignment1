@@ -128,33 +128,29 @@ void Grammar::saveUnknownProbTable() {
   }
 }
 
- void Grammar::loadUnknownProbTable() {
-  try {
-    ifstream file(archiveNameProbTable.c_str());
-    string line;
-    istringstream iss;
-    int i, j, k;
-    string nonTerm;
-    double prob;
-    if (file.is_open()) {
-        while (getline(file, line)) {
-          if (! line.empty()) {
-            iss.clear();
-            iss.str(line);
-            iss >> i; iss >> j; iss >> k;
-            iss >> nonTerm;
-            iss >> prob;
-            unknownProbTable[i][j][k].insert(stringAndDouble(nonTerm, prob));
-          }
+ void Grammar::loadUnknownProbTable() { 
+  ifstream file(archiveNameProbTable.c_str());
+  string line;
+  istringstream iss;
+  int i, j, k;
+  string nonTerm;
+  double prob;
+  if (file) {
+      while (getline(file, line)) {
+        if (! line.empty()) {
+          iss.clear();
+          iss.str(line);
+          iss >> i; iss >> j; iss >> k;
+          iss >> nonTerm;
+          iss >> prob;
+          unknownProbTable[i][j][k].insert(stringAndDouble(nonTerm, prob));
         }
-        file.close();
       }
-      else {
-        throw ("Unable to open probtable archive file " + archiveNameProbTable);
-      }
-  }
-  catch (const char * e) {
-    cerr << "Exception caught: " << e << endl;
+      file.close();
+    }
+  else {
+    cerr << " !!! " << "Unable to open file " << archiveNameProbTable << endl;
+    cerr << " Exiting."<< endl;
     exit(1);
   }
 }
@@ -511,11 +507,11 @@ void Grammar::processLine(string line) {
  * parse it, fill l2rTable accordingly
  */
 void Grammar::readGrammar(bool print) {
-  try {
+  
     ifstream myfile(treeBankFileName.c_str());
     string line;
-
-    if (myfile.is_open()) {
+    //assert(myfile);
+    if (myfile) {
       int numberLines = 0;
       while (getline(myfile, line)) {
         if (!line.empty()) {
@@ -529,13 +525,9 @@ void Grammar::readGrammar(bool print) {
       }
       myfile.close();
     }
-    else {
-      throw ("Unable to open treebank file " + treeBankFileName);
+    else {  
+      cerr << " !!! " << "Unable to open treebank file " << treeBankFileName << endl;
+      cerr << " Exiting."<< endl;
+      exit(1);
     }
-  }
-  catch (const char * e) {
-    cerr << "Exception caught: " << e << endl;
-    exit(1);
-  }
-
 }

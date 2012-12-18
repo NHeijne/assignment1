@@ -43,8 +43,11 @@ private:
   string treebankFileName;
   string outputFileName;
 
+
   /* methods */
   void parseTestSentences();
+
+  
 };
 
 #endif	/* PARSER_H */

@@ -46,7 +46,7 @@ class SentenceParser {
       void printTOPs();
       void writeTOPs(string fileName);
 
-      void makeDerivationTreeFromCYKTable(tree<string>& myTree, tree<string>::iterator node, location locLHS, string lhsString);
+      bool makeDerivationTreeFromCYKTable(tree<string>& myTree, tree<string>::iterator node, location locLHS, string lhsString);
       void makeDerivationTree();
       void makeFailureTree(tree<string>& myTree, tree<string>::iterator node, location locLHS, string lhsString);
       void getDerivationTree(tree<string>&);

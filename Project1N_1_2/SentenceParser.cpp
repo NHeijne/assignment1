@@ -284,8 +284,15 @@ void SentenceParser::makeFailureTree(tree<string>& myTree, tree<string>::iterato
   }
 }
 
-void SentenceParser::makeDerivationTreeFromCYKTable(tree<string>& myTree, tree<string>::iterator node, location locLHS, string lhsString){  
-  RHSEntry thisRHSentry = CYKTable[locLHS.i][locLHS.j][lhsString];
+bool SentenceParser::makeDerivationTreeFromCYKTable(tree<string>& myTree, tree<string>::iterator node, location locLHS, string lhsString){
+   RHSEntry thisRHSentry;
+  // cellIterator findLHS = CYKTable[locLHS.i][locLHS.j].find(lhsString);
+  // if (findLHS != CYKTable[locLHS.i][locLHS.j].end()) { // if lhsString element exists
+    thisRHSentry = CYKTable[locLHS.i][locLHS.j][lhsString];
+  // }
+  // else {
+  ///   return false;
+ //  }
    // first rhs
   tree<string>::iterator node2 = myTree.append_child(node, thisRHSentry.RHS1.first);
 
@@ -305,12 +312,13 @@ void SentenceParser::makeDerivationTree() {
   string lhsString = Grammar::nonTerminalSymbol + "TOP" ; // with TOP symbol
   node = myTree.insert(node, lhsString);
 
-  if (CYKTable[locLHS.i][locLHS.j].size() == 0) { // if no derivation was found
-    makeFailureTree( myTree, node, locLHS, lhsString); // make fake POS-tag tree
-  }
-  else {
+  cellIterator findTOP = CYKTable[locLHS.i][locLHS.j].find(lhsString);
+  if (findTOP != CYKTable[locLHS.i][locLHS.j].end()) { // if TOP element exists
     makeDerivationTreeFromCYKTable(myTree, node, locLHS, lhsString);
   }
+  else {
+    makeFailureTree( myTree, node, locLHS, lhsString); // make fake POS-tag tree
+  } 
 }
 
 
